@@ -1,0 +1,39 @@
+package co.edu.unal.alife.dynamic;
+
+/**
+ * @author jjfigueredou
+ *
+ */
+public abstract class Simulation {
+	
+	private Solver solver;
+	private Simulable simulable;
+		
+	/**
+	 * @return
+	 */
+	public Solver getSolver() {
+		return solver;
+	}
+	
+	/**
+	 * @param solver
+	 */
+	public void setSolver(Solver solver) {
+		this.solver = solver;
+	}
+	
+	/**
+	 * @return
+	 */
+	public Simulable getSimulable() {
+		return simulable;
+	}
+	
+	/**
+	 * @param simulable
+	 */
+	public void setSimulable(Simulable simulable) {
+		this.simulable = simulable;
+	}
+}
