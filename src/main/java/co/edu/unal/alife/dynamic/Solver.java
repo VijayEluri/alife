@@ -5,5 +5,5 @@ public interface Solver {
 	/**
 	 * @param simulable
 	 */
-	public abstract void solve(Simulable simulable);
+	public abstract void evaluateStep(Simulable simulable);
 }

@@ -1,13 +1,20 @@
 package co.edu.unal.alife.dynamic;
 
+import java.util.Observable;
+
 /**
  * @author jjfigueredou
  *
  */
-public abstract class Simulation {
+public abstract class Simulation extends Observable implements Runnable {
 	
 	private Solver solver;
 	private Simulable simulable;
+	
+	/**
+	 * @return
+	 */
+	public abstract Object runSimulation();
 		
 	/**
 	 * @return

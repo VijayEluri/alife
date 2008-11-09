@@ -3,6 +3,8 @@
  */
 package co.edu.unal.alife.neuralfield;
 
+import java.util.ArrayList;
+
 import co.edu.unal.alife.dynamic.Simulable;
 
 /**
@@ -11,8 +13,8 @@ import co.edu.unal.alife.dynamic.Simulable;
  */
 public abstract class NeuralField implements Simulable {
 	
-	private NeuralPopulation neuralPopulation;
-	private NeuralFieldEquation fieldEquation;
+	private ArrayList<NeuralPopulation> neuralPopulations;
+	private ArrayList<NeuralFieldEquation> fieldEquations;
 	
 	/* (non-Javadoc)
 	 * @see co.edu.unal.alife.dynamic.Simulable#evaluateSimulable()
@@ -20,35 +22,35 @@ public abstract class NeuralField implements Simulable {
 	@Override
 	public void evaluateSimulable() {
 		// TODO Auto-generated method stub
-
 	}
 
 	/**
-	 * @return the neuralPopulation
+	 * @return the neuralPopulations
 	 */
-	public NeuralPopulation getNeuralPopulation() {
-		return neuralPopulation;
+	public ArrayList<NeuralPopulation> getNeuralPopulations() {
+		return neuralPopulations;
 	}
 
 	/**
-	 * @param neuralPopulation the neuralPopulation to set
+	 * @param neuralPopulations the neuralPopulations to set
 	 */
-	public void setNeuralPopulation(NeuralPopulation neuralPopulation) {
-		this.neuralPopulation = neuralPopulation;
+	public void setNeuralPopulations(ArrayList<NeuralPopulation> neuralPopulations) {
+		this.neuralPopulations = neuralPopulations;
 	}
 
 	/**
-	 * @return the fieldEquation
+	 * @return the fieldEquations
 	 */
-	public NeuralFieldEquation getFieldEquation() {
-		return fieldEquation;
+	public ArrayList<NeuralFieldEquation> getFieldEquations() {
+		return fieldEquations;
 	}
 
 	/**
-	 * @param fieldEquation the fieldEquation to set
+	 * @param fieldEquations the fieldEquations to set
 	 */
-	public void setFieldEquation(NeuralFieldEquation fieldEquation) {
-		this.fieldEquation = fieldEquation;
+	public void setFieldEquations(ArrayList<NeuralFieldEquation> fieldEquations) {
+		this.fieldEquations = fieldEquations;
 	}
-
+	
+	
 }

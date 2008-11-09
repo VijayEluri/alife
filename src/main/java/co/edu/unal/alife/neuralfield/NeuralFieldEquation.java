@@ -1,20 +1,25 @@
 package co.edu.unal.alife.neuralfield;
 
-public abstract class NeuralFieldEquation {
-	
-	private KernelFunction kernelFunction;
+import co.edu.unal.alife.dynamic.Function;
+import co.edu.unal.alife.dynamic.IntegralOperator;
+
+public abstract class NeuralFieldEquation implements Function {
+
+	private IntegralOperator operator;
 
 	/**
-	 * @return
+	 * @return the operator
 	 */
-	public KernelFunction getKernelFunction() {
-		return kernelFunction;
+	public IntegralOperator getOperator() {
+		return operator;
 	}
 
 	/**
-	 * @param kernelFunction
+	 * @param operator
+	 *            the operator to set
 	 */
-	public void setKernelFunction(KernelFunction kernelFunction) {
-		this.kernelFunction = kernelFunction;
+	public void setOperator(IntegralOperator operator) {
+		this.operator = operator;
 	}
+
 }
