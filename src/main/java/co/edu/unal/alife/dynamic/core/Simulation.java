@@ -1,4 +1,4 @@
-package co.edu.unal.alife.dynamic;
+package co.edu.unal.alife.dynamic.core;
 
 import java.util.Observable;
 

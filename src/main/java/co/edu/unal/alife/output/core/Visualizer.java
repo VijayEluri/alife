@@ -1,7 +1,7 @@
 /**
  * 
  */
-package co.edu.unal.alife.output;
+package co.edu.unal.alife.output.core;
 
 import java.util.Observer;
 

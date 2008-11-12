@@ -1,8 +1,8 @@
-package co.edu.unal.alife.neuralfield;
+package co.edu.unal.alife.neuralfield.core;
 
 import java.util.List;
 
-import co.edu.unal.alife.dynamic.CoordinateVector;
+import co.edu.unal.alife.dynamic.core.CoordinateVector;
 
 
 

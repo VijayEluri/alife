@@ -1,9 +1,9 @@
 /**
  * 
  */
-package co.edu.unal.alife.dynamic;
+package co.edu.unal.alife.dynamic.core;
 
-import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.core.KernelFunction;
 
 /**
  * @author jjfigueredou

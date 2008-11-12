@@ -1,7 +1,7 @@
 /**
  * 
  */
-package co.edu.unal.alife.neuralfield;
+package co.edu.unal.alife.neuralfield.core;
 
 /**
  * @author jjfigueredou

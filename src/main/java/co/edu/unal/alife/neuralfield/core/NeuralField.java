@@ -1,12 +1,12 @@
 /**
  * 
  */
-package co.edu.unal.alife.neuralfield;
+package co.edu.unal.alife.neuralfield.core;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import co.edu.unal.alife.dynamic.Simulable;
+import co.edu.unal.alife.dynamic.core.Simulable;
 
 /**
  * @author jjfigueredou
