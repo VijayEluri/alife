@@ -18,11 +18,4 @@ public class SimpleInputLayer extends NeuralFieldLayer {
 		// TODO Auto-generated method stub
 
 	}
-	
-	public static void main(String[] args) {
-		int i = 5;
-		Number n = i;
-		HashMap h;
-	}
-
 }
