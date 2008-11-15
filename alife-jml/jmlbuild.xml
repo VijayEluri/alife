@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="dist" name="Jml-v1.0">
+	<description>Java Machine Learning</description>
+	<!-- Propiedades Globales del Proyecto -->
+	<property name="Class-path" value="bin"/>
+	<property name="class-include" value="**"/>
+	<property name="Specification-Title" value="Jml"/>
+	<property name="company" value="Universidad Nacional de Colombia"/>
+	<property name="version" value="1.0"/>
+	<property name="proyecto" value="Jml"/>
+	<property location="bin" name="bin"/>
+	<property location="dist" name="dist"/>
+	<target name="init">
+		<!-- Crear folder de distribucion -->
+		<mkdir dir="${dist}"/>
+		<mkdir dir="${dist}/doc"/>
+	</target>
+	<target depends="init" name="copia doc">
+		<copy todir="${dist}/doc">
+			<fileset dir="./doc">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+	</target>
+	<target depends="copia doc" description="Genera el jar" name="dist">
+		<!-- Para que puede imprimir la Fecha y hora actual -->
+		<tstamp/>
+		<mkdir dir="${dist}/doc"/>
+		<!-- Crea en el directorio ${build} el JAR 	${name}-${DSTAMP}.jar  -->
+		<jar basedir="${bin}" includes="${bin-include}" jarfile="${dist}/${proyecto}-${DSTAMP}${TSTAMP}_v${version}.jar" update="true">
+			<manifest>
+				<section name="Presentation">
+					<attribute name="Specification-Title" value="${Specification-Title}"/>
+					<attribute name="Specification-Version" value="${version}/>"/>
+					<attribute name="Implementation-Title" value="${proyecto}"/>
+					<attribute name="Implementation-Version" value="${version} ${TODAY}"/>
+					<attribute name="Implementation-Vendor" value="${company}"/>
+				</section>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Class-path" value="${Class-path}"/>
+			</manifest>
+		</jar>
+		<jar basedir="${bin}" includes="bin" jarfile="${dist}/${proyecto}_v${version}.jar" update="true">
+			<manifest>
+				<section name="Presentation">
+					<attribute name="Specification-Title" value="${Specification-Title}"/>
+					<attribute name="Specification-Version" value="${version}/>"/>
+					<attribute name="Implementation-Title" value="${proyecto}"/>
+					<attribute name="Implementation-Version" value="${version} ${TODAY}"/>
+					<attribute name="Implementation-Vendor" value="${company}"/>
+				</section>
+				<attribute name="Built-By" value="${user.name}"/>
+				<attribute name="Class-path" value="${Class-path}"/>
+			</manifest>
+		</jar>
+		
+	</target>
+</project>
