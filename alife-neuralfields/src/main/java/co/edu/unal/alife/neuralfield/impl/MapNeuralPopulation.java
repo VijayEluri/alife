@@ -3,22 +3,33 @@
  */
 package co.edu.unal.alife.neuralfield.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import co.edu.unal.alife.neuralfield.core.KernelFunction;
 import co.edu.unal.alife.neuralfield.core.NeuralPopulation;
+import co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation;
 
 /**
  * @author jjfigueredou
  * Class that implements a Map-based Neural Population.
  */
+/**
+ * @author Blanca Maria NG
+ *
+ * @param <K>
+ * @param <V>
+ */
 public class MapNeuralPopulation<K,V> implements NeuralPopulation<K,V> {
-
+	
 	private Map<K,Element<V>> populationMap = new HashMap<K,Element<V>>();
-
+	
 	/* (non-Javadoc)
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElement(java.lang.Object)
 	 */
@@ -73,6 +84,62 @@ public class MapNeuralPopulation<K,V> implements NeuralPopulation<K,V> {
 	@Override
 	public void setElementValue(K position, V value) {
 		populationMap.get(position).setValue(value);
-	} 
+	}
+
+	/* (non-Javadoc)
+	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementDeltas()
+	 */
+	@Override
+	public Collection<V> getElementDeltas() {
+		Collection<Element<V>> elements = getElements();
+		Collection<V> deltas = new ArrayList<V>(elements.size());
+		for (Element<V> element : elements) {
+			deltas.add(element.getDelta());
+		}
+		return deltas;
+	}
+
+	/* (non-Javadoc)
+	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementValues()
+	 */
+	@Override
+	public Collection<V> getElementValues() {
+		Collection<Element<V>> elements = getElements();
+		Collection<V> values = new ArrayList<V>(elements.size());
+		for (Element<V> element : elements) {
+			values.add(element.getValue());
+		}
+		return values;
+	}
+
+	/* (non-Javadoc)
+	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#setElementValues(java.util.Collection)
+	 */
+	@Override
+	public void setElementValues(Collection<V> elementValues) {
+		Iterator<V> iterator = elementValues.iterator();
+		Collection<Element<V>> elements = getElements();
+		for (Element<V> element : elements) {
+			element.setValue(iterator.next());
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#updatePopulationDelta(java.util.List, co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation, java.util.List)
+	 */
+	@Override
+	public void updatePopulationDelta(List<NeuralPopulation<K, V>> populations,
+			NeuralPopulationEquation equation, List<KernelFunction> kernelList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getSize()
+	 */
+	@Override
+	public int getSize() {
+		return populationMap.size();
+	}
 	
 }

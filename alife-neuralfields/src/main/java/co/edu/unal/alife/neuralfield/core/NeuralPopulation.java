@@ -1,6 +1,7 @@
 package co.edu.unal.alife.neuralfield.core;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -58,6 +59,20 @@ public abstract interface NeuralPopulation<K, V> {
 	 * @return collection of elements
 	 */
 	public abstract Collection<Element<V>> getElements();
+	
+	/**
+	 * Gets the values of the elements contained in the neural population.
+	 * @return the values
+	 */
+	public abstract Collection<V> getElementValues();
+	
+	public abstract void setElementValues(Collection<V> elementValues);
+	
+	/**
+	 * Gets the deltas of the elements contained in the neural population.
+	 * @return the deltas
+	 */
+	public abstract Collection<V> getElementDeltas();
 
 	/**
 	 * Get the tuples {Position,Element} contained in the neural population.
@@ -67,6 +82,26 @@ public abstract interface NeuralPopulation<K, V> {
 	public abstract Set<Map.Entry<K, Element<V>>> getTuples();
 
 	/**
+	 * Prepares the population for the update rule applied by a ODE solver.
+	 * Updates the state of the delta of all elements contained in the
+	 * population.
+	 * 
+	 * @param populations
+	 * @param equation
+	 * @param kernelTable
+	 */
+	public abstract void updatePopulationDelta(
+			List<NeuralPopulation<K, V>> populations,
+			NeuralPopulationEquation equation, List<KernelFunction> kernelList);
+	
+	
+	/**
+	 * Gets the size of the population, i.e the number of elements contained on it.
+	 * @return the size
+	 */
+	public int getSize();
+	
+	/**
 	 * Interface that represent an element of a neural population, i.e. a point
 	 * with an associated value and a delta.
 	 * 
@@ -75,7 +110,6 @@ public abstract interface NeuralPopulation<K, V> {
 	 * @param <K>
 	 * @param <V>
 	 */
-
 	public interface Element<V> {
 		/**
 		 * Gets the value of the element.
