@@ -19,10 +19,7 @@ import co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation;
 /**
  * @author jjfigueredou
  * Class that implements a Map-based Neural Population.
- */
-/**
- * @author Blanca Maria NG
- *
+ * 
  * @param <K>
  * @param <V>
  */
