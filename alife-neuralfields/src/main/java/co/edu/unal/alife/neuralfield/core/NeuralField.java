@@ -8,7 +8,7 @@ import java.util.List;
 import co.edu.unal.alife.dynamic.core.Simulable;
 
 /**
- * @author jjfigueredou
+ * @author Juan Figueredo
  *
  */
 public abstract class NeuralField<K,V> implements Simulable {
