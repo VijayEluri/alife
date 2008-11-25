@@ -16,7 +16,7 @@ public interface Derivable<V> {
 	 * @param t the independent variable
 	 * @return
 	 */
-	public List<V> getDeltas(List<V> x, V t);
+	public List<V> getDeltas(List<V> x, double t);
 	
-	public V getDeltas(int i, List<V> x, V t);
+	public V getDeltas(int i, List<V> x, double t);
 }
