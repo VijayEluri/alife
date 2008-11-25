@@ -2,7 +2,6 @@ package co.edu.unal.alife.dynamics;
 
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 
 /**
  * @author Juan Figueredo
