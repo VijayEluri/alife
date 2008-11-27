@@ -2,6 +2,8 @@ package co.edu.unal.alife.dynamic.core;
 
 import java.util.Observable;
 
+import co.edu.unal.alife.dynamics.Simulable;
+
 /**
  * @author jjfigueredou
  *

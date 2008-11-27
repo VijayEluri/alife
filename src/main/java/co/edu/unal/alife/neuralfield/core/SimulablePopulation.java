@@ -11,7 +11,7 @@ import java.util.Set;
  * @author jjfigueredou
  * 
  */
-public abstract interface NeuralPopulation<K, V> {
+public abstract interface SimulablePopulation<K, V> {
 
 	/**
 	 * Gets the value of an element at the specified position.
@@ -91,7 +91,7 @@ public abstract interface NeuralPopulation<K, V> {
 	 * @param kernelTable
 	 */
 	public abstract void updatePopulationDelta(
-			List<NeuralPopulation<K, V>> populations,
+			List<SimulablePopulation<K, V>> populations,
 			NeuralPopulationEquation equation, List<KernelFunction> kernelList);
 	
 	
