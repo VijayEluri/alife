@@ -23,7 +23,7 @@ public class DerivableNeuralField<K, V> extends NeuralField<K, V> {
 	
 	public void setValuesAsDerivable(List<V> valuesAsDerivable) {
 		int fromIndex = 0;
-		for (SimulablePopulation<K, V> population : populations) {
+		for (DeltaPopulation<K, V> population : populations) {
 			int toIndex = fromIndex + population.getSize();
 			population.setElementValues(valuesAsDerivable.subList(fromIndex, toIndex));
 			fromIndex = toIndex;
