@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import co.edu.unal.alife.neuralfield.core.KernelFunction;
-import co.edu.unal.alife.neuralfield.core.SimulablePopulation;
+import co.edu.unal.alife.neuralfield.core.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation;
 
 /**
@@ -23,7 +23,7 @@ import co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation;
  * @param <K>
  * @param <V>
  */
-public class MapNeuralPopulation<K,V> implements SimulablePopulation<K,V> {
+public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	
 	private Map<K,Element<V>> populationMap = new HashMap<K,Element<V>>();
 	
@@ -125,7 +125,7 @@ public class MapNeuralPopulation<K,V> implements SimulablePopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#updatePopulationDelta(java.util.List, co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation, java.util.List)
 	 */
 	@Override
-	public void updatePopulationDelta(List<SimulablePopulation<K, V>> populations,
+	public void updatePopulationDelta(List<DeltaPopulation<K, V>> populations,
 			NeuralPopulationEquation equation, List<KernelFunction> kernelList) {
 		// TODO Auto-generated method stub
 		
