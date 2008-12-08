@@ -13,6 +13,8 @@ import co.edu.unal.alife.neuralfield.core.DerivableNeuralField;
 import co.edu.unal.alife.neuralfield.core.KernelFunction;
 import co.edu.unal.alife.neuralfield.core.MexicanHatKernel;
 import co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation;
+import co.edu.unal.alife.neuralfield.core.SimpleEquation;
+import co.edu.unal.alife.neuralfield.core.StaticEquation;
 import co.edu.unal.alife.neuralfield.impl.MapNeuralPopulation;
 
 /**
@@ -22,7 +24,7 @@ import co.edu.unal.alife.neuralfield.impl.MapNeuralPopulation;
 public class FirstProblemSimulation implements Derivable<Double>{
 
 	private InvertedPendulum pendulum;
-	private DerivableNeuralField<Integer, Double> field;
+	private DerivableNeuralField<Double> field;
 	private List<Double> pendulumValues = new ArrayList<Double>(4);
 	
 	/**
@@ -30,7 +32,7 @@ public class FirstProblemSimulation implements Derivable<Double>{
 	 * @param pendulum
 	 * @param pendulumValues
 	 */
-	public FirstProblemSimulation(DerivableNeuralField<Integer, Double> field,
+	public FirstProblemSimulation(DerivableNeuralField<Double> field,
 			InvertedPendulum pendulum, List<Double> pendulumValues) {
 		super();
 		this.field = field;
@@ -61,19 +63,20 @@ public class FirstProblemSimulation implements Derivable<Double>{
 	
 	public static void main(String[] args) {
 		int layers = 2;
+		int halfSize = 10;
 		InvertedPendulum pendulum = new InvertedPendulum();
 		
 		//Populations setup
-		List<DeltaPopulation<Integer, Double>> populations = new ArrayList<DeltaPopulation<Integer,Double>>(2);
-		MapNeuralPopulation<Integer, Double> inputPopulation = new MapNeuralPopulation<Integer, Double>();
-		MapNeuralPopulation<Integer, Double> outputPopulation = new MapNeuralPopulation<Integer, Double>();
+		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(layers);
+		MapNeuralPopulation inputPopulation = new MapNeuralPopulation(halfSize);
+		MapNeuralPopulation outputPopulation = new MapNeuralPopulation(halfSize);
 		populations.add(inputPopulation);
 		populations.add(outputPopulation);
 		
 		//Kernel Matrix setup
-		List<List<KernelFunction>> kernelMatrix = new ArrayList<List<KernelFunction>>(2);
-		List<KernelFunction> firstRow = new ArrayList<KernelFunction>(2);
-		List<KernelFunction> secondRow = new ArrayList<KernelFunction>(2);
+		List<List<KernelFunction>> kernelMatrix = new ArrayList<List<KernelFunction>>(layers);
+		List<KernelFunction> firstRow = new ArrayList<KernelFunction>(layers);
+		List<KernelFunction> secondRow = new ArrayList<KernelFunction>(layers);
 		KernelFunction kernelFunction = new MexicanHatKernel();
 		firstRow.set(0, kernelFunction);
 		firstRow.set(1, kernelFunction);
@@ -83,8 +86,12 @@ public class FirstProblemSimulation implements Derivable<Double>{
 		kernelMatrix.add(secondRow);
 		
 		//Equations setup
-		List<NeuralPopulationEquation> equations = new ArrayList<NeuralPopulationEquation>(2);
+		List<NeuralPopulationEquation<Double>> equations = new ArrayList<NeuralPopulationEquation<Double>>(layers);
+		StaticEquation staticEquation = new StaticEquation();
+		SimpleEquation simpleEquation = new SimpleEquation();
+		equations.add(staticEquation);
+		equations.add(simpleEquation);
+		
 		
 	}
-
 }

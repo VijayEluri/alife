@@ -21,17 +21,35 @@ import co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation;
  * Class that implements a Map-based Neural Population.
  * 
  * @param <K>
- * @param <V>
+ * @param <Double>
  */
-public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
+public class MapNeuralPopulation implements DeltaPopulation<Double> {
 	
-	private Map<K,Element<V>> populationMap = new HashMap<K,Element<V>>();
+	private Map<Double,DeltaPopulation.Element> populationMap = new HashMap<Double,DeltaPopulation.Element>();
 	
+	/**
+	 * 
+	 */
+	public MapNeuralPopulation() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	/**
+	 * 
+	 */
+	public MapNeuralPopulation(int halfSize) {
+		super();
+		for (int i = -halfSize; i <= halfSize; i++) {
+			populationMap.put((double)i, new Element());
+		}
+	}
+
 	/* (non-Javadoc)
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElement(java.lang.Object)
 	 */
 	@Override
-	public Element<V> getElement(K position) {
+	public DeltaPopulation.Element getElement(Double position) {
 		return populationMap.get(position);
 	}
 
@@ -39,7 +57,7 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementDelta(java.lang.Object)
 	 */
 	@Override
-	public V getElementDelta(K position) {
+	public Double getElementDelta(Double position) {
 		return populationMap.get(position).getDelta();
 	}
 
@@ -47,7 +65,7 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElements()
 	 */
 	@Override
-	public Collection<Element<V>> getElements() {
+	public Collection<DeltaPopulation.Element> getElements() {
 		return populationMap.values();
 	}
 
@@ -55,7 +73,7 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementValue(java.lang.Object)
 	 */
 	@Override
-	public V getElementValue(K position) {
+	public Double getElementValue(Double position) {
 		return populationMap.get(position).getValue();
 	}
 
@@ -63,7 +81,7 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getTuples()
 	 */
 	@Override
-	public Set<Entry<K, Element<V>>> getTuples() {
+	public Set<Entry<Double, DeltaPopulation.Element>> getTuples() {
 		return populationMap.entrySet();
 	}
 
@@ -71,7 +89,7 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#setElementDelta(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public void setElementDelta(K position, V value) {
+	public void setElementDelta(Double position, Double value) {
 		populationMap.get(position).setDelta(value);
 	}
 
@@ -79,7 +97,7 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#setElementValue(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public void setElementValue(K position, V value) {
+	public void setElementValue(Double position, Double value) {
 		populationMap.get(position).setValue(value);
 	}
 
@@ -87,10 +105,10 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementDeltas()
 	 */
 	@Override
-	public List<V> getElementDeltas() {
-		Collection<Element<V>> elements = getElements();
-		List<V> deltas = new ArrayList<V>(elements.size());
-		for (Element<V> element : elements) {
+	public List<Double> getElementDeltas() {
+		Collection<DeltaPopulation.Element> elements = getElements();
+		List<Double> deltas = new ArrayList<Double>(elements.size());
+		for (DeltaPopulation.Element element : elements) {
 			deltas.add(element.getDelta());
 		}
 		return deltas;
@@ -100,10 +118,10 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementValues()
 	 */
 	@Override
-	public List<V> getElementValues() {
-		Collection<Element<V>> elements = getElements();
-		List<V> values = new ArrayList<V>(elements.size());
-		for (Element<V> element : elements) {
+	public List<Double> getElementValues() {
+		Collection<DeltaPopulation.Element> elements = getElements();
+		List<Double> values = new ArrayList<Double>(elements.size());
+		for (DeltaPopulation.Element element : elements) {
 			values.add(element.getValue());
 		}
 		return values;
@@ -113,10 +131,10 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#setElementValues(java.util.Collection)
 	 */
 	@Override
-	public void setElementValues(Collection<V> elementValues) {
-		Iterator<V> iterator = elementValues.iterator();
-		Collection<Element<V>> elements = getElements();
-		for (Element<V> element : elements) {
+	public void setElementValues(Collection<Double> elementValues) {
+		Iterator<Double> iterator = elementValues.iterator();
+		Collection<DeltaPopulation.Element> elements = getElements();
+		for (DeltaPopulation.Element element : elements) {
 			element.setValue(iterator.next());
 		}
 	}
@@ -125,12 +143,12 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#updatePopulationDelta(java.util.List, co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation, java.util.List)
 	 */
 	@Override
-	public void updatePopulationDelta(List<DeltaPopulation<K, V>> populations, int populationIndex,
-			NeuralPopulationEquation<K,V> equation, List<KernelFunction> kernelList) {
-		List<V> deltas = equation.evalEquation(populations, populationIndex, kernelList);
-		Set<Entry<K,Element<V>>> entrySet = populationMap.entrySet();
+	public void updatePopulationDelta(List<DeltaPopulation<Double>> populations, int populationIndex,
+			NeuralPopulationEquation<Double> equation, List<KernelFunction> kernelList) {
+		List<Double> deltas = equation.evalEquation(populations, populationIndex, kernelList);
+		Set<Entry<Double,DeltaPopulation.Element>> entrySet = populationMap.entrySet();
 		int i = 0;
-		for (Entry<K, Element<V>> entry : entrySet) {
+		for (Entry<Double, DeltaPopulation.Element> entry : entrySet) {
 			entry.getValue().setDelta(deltas.get(i++));
 		}
 	}
@@ -143,4 +161,24 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 		return populationMap.size();
 	}
 	
+	public class Element implements DeltaPopulation.Element {
+		private Double value;
+		private Double delta;
+		
+		public Double getValue() {
+			return value;
+		}
+
+		public void setValue(Double value) {
+			this.value = value;
+		}
+
+		public Double getDelta() {
+			return delta;
+		}
+
+		public void setDelta(Double delta) {
+			this.delta = delta;
+		}
+	};
 }

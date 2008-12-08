@@ -12,10 +12,10 @@ import co.edu.unal.alife.dynamics.Simulable;
  * @author Juan Figueredo
  *
  */
-public abstract class NeuralField<K,V> implements Simulable<V> {
+public abstract class NeuralField<K> implements Simulable<Double> {
 	
-	protected List<DeltaPopulation<K, V>> populations;
-	protected List<NeuralPopulationEquation<K,V>> equations;
+	protected List<DeltaPopulation<K>> populations;
+	protected List<NeuralPopulationEquation<K>> equations;
 	protected List<List<KernelFunction>> kernelMatrix;
 	
 	/**
@@ -23,9 +23,9 @@ public abstract class NeuralField<K,V> implements Simulable<V> {
 	 * @param kernelMatrix
 	 * @param populations
 	 */
-	public NeuralField(List<NeuralPopulationEquation<K,V>> equations,
+	public NeuralField(List<NeuralPopulationEquation<K>> equations,
 			List<List<KernelFunction>> kernelMatrix,
-			List<DeltaPopulation<K, V>> populations) {
+			List<DeltaPopulation<K>> populations) {
 		super();
 		this.equations = equations;
 		this.kernelMatrix = kernelMatrix;
@@ -38,13 +38,13 @@ public abstract class NeuralField<K,V> implements Simulable<V> {
 	 * @see co.edu.unal.alife.dynamic.Simulable#evaluateSimulable()
 	 */
 	@Override
-	public List<List<V>> evaluateSimulable(List<List<V>> newValues) {
-		List<List<V>> newDeltas = new ArrayList<List<V>>();
+	public List<List<Double>> evaluateSimulable(List<List<Double>> newValues) {
+		List<List<Double>> newDeltas = new ArrayList<List<Double>>();
 		for (int i = 0; i < populations.size(); i++) {
-			DeltaPopulation<K, V> population = populations.get(i);
+			DeltaPopulation<K> population = populations.get(i);
 			population.setElementValues(newValues.get(i));
 			population.updatePopulationDelta(populations, i, equations.get(i), kernelMatrix.get(i));
-			newDeltas.add(new ArrayList<V>(population.getElementDeltas()));
+			newDeltas.add(new ArrayList<Double>(population.getElementDeltas()));
 		}
 		return newDeltas;
 	}
