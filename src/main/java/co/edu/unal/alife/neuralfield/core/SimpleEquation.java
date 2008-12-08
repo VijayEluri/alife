@@ -18,8 +18,7 @@ import co.edu.unal.alife.neuralfield.core.DeltaPopulation.Element;
  * @author Juan Figueredo
  * 
  */
-public class SimpleEquation implements
-		NeuralPopulationEquation<Integer, Double> {
+public class SimpleEquation implements NeuralPopulationEquation<Double> {
 
 	private double tao = 1;
 
@@ -31,25 +30,24 @@ public class SimpleEquation implements
 	 * (java.util.List, java.util.List)
 	 */
 	@Override
-	public List<Double> evalEquation(
-			List<DeltaPopulation<Integer, Double>> populations,
-			Integer localIndex, List<KernelFunction> kernelList) {
-		Set<Entry<Integer, Element<Double>>> localTuples = populations.get(
-				localIndex).getTuples();
+	public List<Double> evalEquation(List<DeltaPopulation<Double>> populations,
+			int localIndex, List<KernelFunction> kernelList) {
+		Set<Entry<Double, Element>> localTuples = populations.get(localIndex)
+				.getTuples();
 		List<Double> deltas = new ArrayList<Double>(localTuples.size());
 		// For each element (or tuple) in the local population do...
-		for (Entry<Integer, Element<Double>> localEntry : localTuples) {
+		for (Entry<Double, Element> localEntry : localTuples) {
 			double localPos = localEntry.getKey();
 			double localValue = localEntry.getValue().getValue();
 			double totalSum = 0;
 			// For each population in the field do...
 			for (int i = 0; i < populations.size(); i++) {
-				Set<Entry<Integer, Element<Double>>> tuples = populations
-						.get(i).getTuples();
+				Set<Entry<Double, Element>> tuples = populations.get(i)
+						.getTuples();
 				KernelFunction kernelFunction = kernelList.get(i);
 				double kernelSum = 0;
 				// For each element from a given population do...
-				for (Entry<Integer, Element<Double>> entry : tuples) {
+				for (Entry<Double, Element> entry : tuples) {
 					double pos = entry.getKey();
 					double value = entry.getValue().getValue();
 					// Evaluate the Sum

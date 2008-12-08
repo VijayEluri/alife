@@ -2,8 +2,8 @@ package co.edu.unal.alife.neuralfield.core;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  * Interface that represents a population of a neural field.
@@ -11,7 +11,7 @@ import java.util.Set;
  * @author jjfigueredou
  * 
  */
-public abstract interface DeltaPopulation<K, V> {
+public abstract interface DeltaPopulation<K> {
 
 	/**
 	 * Gets the value of an element at the specified position.
@@ -19,7 +19,7 @@ public abstract interface DeltaPopulation<K, V> {
 	 * @param position
 	 * @return element value
 	 */
-	public abstract V getElementValue(K position);
+	public abstract Double getElementValue(K position);
 
 	/**
 	 * Sets the value of an element at the specified position.
@@ -27,7 +27,7 @@ public abstract interface DeltaPopulation<K, V> {
 	 * @param position
 	 * @param value
 	 */
-	public abstract void setElementValue(K position, V value);
+	public abstract void setElementValue(K position, Double value);
 
 	/**
 	 * Gets the delta of an element at the specified position.
@@ -35,7 +35,7 @@ public abstract interface DeltaPopulation<K, V> {
 	 * @param position
 	 * @return element value
 	 */
-	public abstract V getElementDelta(K position);
+	public abstract Double getElementDelta(K position);
 
 	/**
 	 * Sets the delta of an element at the specified position.
@@ -43,7 +43,7 @@ public abstract interface DeltaPopulation<K, V> {
 	 * @param position
 	 * @param value
 	 */
-	public abstract void setElementDelta(K position, V value);
+	public abstract void setElementDelta(K position, Double value);
 
 	/**
 	 * Gets an element at the specified position.
@@ -51,35 +51,35 @@ public abstract interface DeltaPopulation<K, V> {
 	 * @param position
 	 * @return element
 	 */
-	public abstract Element<V> getElement(K position);
+	public abstract Element getElement(K position);
 
 	/**
 	 * Gets the elements contained in the neural population.
 	 * 
 	 * @return collection of elements
 	 */
-	public abstract Collection<Element<V>> getElements();
+	public abstract Collection<? extends Element> getElements();
 	
 	/**
 	 * Gets the values of the elements contained in the neural population.
 	 * @return the values
 	 */
-	public abstract List<V> getElementValues();
+	public abstract List<Double> getElementValues();
 	
-	public abstract void setElementValues(Collection<V> elementValues);
+	public abstract void setElementValues(Collection<Double> elementValues);
 	
 	/**
 	 * Gets the deltas of the elements contained in the neural population.
 	 * @return the deltas
 	 */
-	public abstract List<V> getElementDeltas();
+	public abstract List<Double> getElementDeltas();
 
 	/**
 	 * Get the tuples {Position,Element} contained in the neural population.
 	 * 
 	 * @return set of tuples
 	 */
-	public abstract Set<Map.Entry<K, Element<V>>> getTuples();
+	public abstract Set<Entry<K, Element>> getTuples();
 
 	/**
 	 * Prepares the population for the update rule applied by a ODE solver.
@@ -91,8 +91,8 @@ public abstract interface DeltaPopulation<K, V> {
 	 * @param kernelTable
 	 */
 	public abstract void updatePopulationDelta(
-			List<DeltaPopulation<K, V>> populations, int populationIndex,
-			NeuralPopulationEquation<K,V> equation, List<KernelFunction> kernelList);
+			List<DeltaPopulation<K>> populations, int populationIndex,
+			NeuralPopulationEquation<K> equation, List<KernelFunction> kernelList);
 	
 	
 	/**
@@ -108,36 +108,36 @@ public abstract interface DeltaPopulation<K, V> {
 	 * @author jjfigueredou
 	 * 
 	 * @param <K>
-	 * @param <V>
+	 * @param 
 	 */
-	public interface Element<V> {
+	public interface Element {
 		/**
 		 * Gets the value of the element.
 		 * 
 		 * @return value
 		 */
-		V getValue();
+		Double getValue();
 
 		/**
 		 * Sets the value of the element.
 		 * 
 		 * @param value
 		 */
-		void setValue(V value);
+		void setValue(Double value);
 
 		/**
 		 * Gets the delta of the element.
 		 * 
 		 * @return delta
 		 */
-		V getDelta();
+		Double getDelta();
 
 		/**
 		 * Sets the delta of the element.
 		 * 
 		 * @param value
 		 */
-		void setDelta(V value);
+		void setDelta(Double value);
 	};
 
 }
