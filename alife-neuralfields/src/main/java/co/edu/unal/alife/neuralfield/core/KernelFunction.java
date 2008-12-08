@@ -1,6 +1,5 @@
 package co.edu.unal.alife.neuralfield.core;
 
-import co.edu.unal.alife.dynamic.core.Function;
 
 public abstract class KernelFunction  {
 

@@ -9,7 +9,7 @@ import co.edu.unal.alife.neuralfield.core.KernelFunction;
  * @author jjfigueredou
  *
  */
-public abstract class IntegralFunction implements Function {
+public abstract class IntegralFunction {
 	
 	private KernelFunction kernel;
 	
