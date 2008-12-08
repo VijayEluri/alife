@@ -15,9 +15,25 @@ import co.edu.unal.alife.dynamics.Simulable;
 public abstract class NeuralField<K,V> implements Simulable<V> {
 	
 	protected List<DeltaPopulation<K, V>> populations;
-	protected List<NeuralPopulationEquation> equations;
+	protected List<NeuralPopulationEquation<K,V>> equations;
 	protected List<List<KernelFunction>> kernelMatrix;
 	
+	/**
+	 * @param equations
+	 * @param kernelMatrix
+	 * @param populations
+	 */
+	public NeuralField(List<NeuralPopulationEquation<K,V>> equations,
+			List<List<KernelFunction>> kernelMatrix,
+			List<DeltaPopulation<K, V>> populations) {
+		super();
+		this.equations = equations;
+		this.kernelMatrix = kernelMatrix;
+		this.populations = populations;
+	}
+
+
+
 	/* (non-Javadoc)
 	 * @see co.edu.unal.alife.dynamic.Simulable#evaluateSimulable()
 	 */
@@ -27,7 +43,7 @@ public abstract class NeuralField<K,V> implements Simulable<V> {
 		for (int i = 0; i < populations.size(); i++) {
 			DeltaPopulation<K, V> population = populations.get(i);
 			population.setElementValues(newValues.get(i));
-			population.updatePopulationDelta(populations, equations.get(i), kernelMatrix.get(i));
+			population.updatePopulationDelta(populations, i, equations.get(i), kernelMatrix.get(i));
 			newDeltas.add(new ArrayList<V>(population.getElementDeltas()));
 		}
 		return newDeltas;

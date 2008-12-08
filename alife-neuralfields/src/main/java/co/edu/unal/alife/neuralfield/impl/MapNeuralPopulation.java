@@ -12,8 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import co.edu.unal.alife.neuralfield.core.KernelFunction;
 import co.edu.unal.alife.neuralfield.core.DeltaPopulation;
+import co.edu.unal.alife.neuralfield.core.KernelFunction;
 import co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation;
 
 /**
@@ -87,9 +87,9 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementDeltas()
 	 */
 	@Override
-	public Collection<V> getElementDeltas() {
+	public List<V> getElementDeltas() {
 		Collection<Element<V>> elements = getElements();
-		Collection<V> deltas = new ArrayList<V>(elements.size());
+		List<V> deltas = new ArrayList<V>(elements.size());
 		for (Element<V> element : elements) {
 			deltas.add(element.getDelta());
 		}
@@ -100,9 +100,9 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementValues()
 	 */
 	@Override
-	public Collection<V> getElementValues() {
+	public List<V> getElementValues() {
 		Collection<Element<V>> elements = getElements();
-		Collection<V> values = new ArrayList<V>(elements.size());
+		List<V> values = new ArrayList<V>(elements.size());
 		for (Element<V> element : elements) {
 			values.add(element.getValue());
 		}
@@ -125,10 +125,14 @@ public class MapNeuralPopulation<K,V> implements DeltaPopulation<K,V> {
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#updatePopulationDelta(java.util.List, co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation, java.util.List)
 	 */
 	@Override
-	public void updatePopulationDelta(List<DeltaPopulation<K, V>> populations,
-			NeuralPopulationEquation equation, List<KernelFunction> kernelList) {
-		// TODO Auto-generated method stub
-		
+	public void updatePopulationDelta(List<DeltaPopulation<K, V>> populations, int populationIndex,
+			NeuralPopulationEquation<K,V> equation, List<KernelFunction> kernelList) {
+		List<V> deltas = equation.evalEquation(populations, populationIndex, kernelList);
+		Set<Entry<K,Element<V>>> entrySet = populationMap.entrySet();
+		int i = 0;
+		for (Entry<K, Element<V>> entry : entrySet) {
+			entry.getValue().setDelta(deltas.get(i++));
+		}
 	}
 
 	/* (non-Javadoc)

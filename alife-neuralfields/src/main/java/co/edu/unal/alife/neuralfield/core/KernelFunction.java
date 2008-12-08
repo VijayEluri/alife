@@ -2,12 +2,13 @@ package co.edu.unal.alife.neuralfield.core;
 
 import co.edu.unal.alife.dynamic.core.Function;
 
-public abstract class KernelFunction implements Function {
+public abstract class KernelFunction  {
 
 	/**
-	 * 
+	 * Evaluates the kernel function between x and y 
+	 * @param x
+	 * @param y
+	 * @return the kernel value
 	 */
-	public Object evaluateKernel(Object obj1, Object obj2) {
-		return eval(obj1,obj2);
-	}
+	public abstract Double evaluateKernel(Double x, Double y);
 }
