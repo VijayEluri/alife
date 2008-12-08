@@ -64,7 +64,7 @@ public abstract interface DeltaPopulation<K, V> {
 	 * Gets the values of the elements contained in the neural population.
 	 * @return the values
 	 */
-	public abstract Collection<V> getElementValues();
+	public abstract List<V> getElementValues();
 	
 	public abstract void setElementValues(Collection<V> elementValues);
 	
@@ -72,7 +72,7 @@ public abstract interface DeltaPopulation<K, V> {
 	 * Gets the deltas of the elements contained in the neural population.
 	 * @return the deltas
 	 */
-	public abstract Collection<V> getElementDeltas();
+	public abstract List<V> getElementDeltas();
 
 	/**
 	 * Get the tuples {Position,Element} contained in the neural population.
@@ -91,8 +91,8 @@ public abstract interface DeltaPopulation<K, V> {
 	 * @param kernelTable
 	 */
 	public abstract void updatePopulationDelta(
-			List<DeltaPopulation<K, V>> populations,
-			NeuralPopulationEquation equation, List<KernelFunction> kernelList);
+			List<DeltaPopulation<K, V>> populations, int populationIndex,
+			NeuralPopulationEquation<K,V> equation, List<KernelFunction> kernelList);
 	
 	
 	/**
