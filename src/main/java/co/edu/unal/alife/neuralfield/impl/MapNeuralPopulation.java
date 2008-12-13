@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import co.edu.unal.alife.neuralfield.core.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.core.KernelFunction;
-import co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation;
+import co.edu.unal.alife.neuralfield.DeltaPopulation;
+import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.NeuralPopulationEquation;
 
 /**
  * @author jjfigueredou

@@ -1,6 +1,7 @@
-package co.edu.unal.alife.neuralfield.core;
+package co.edu.unal.alife.neuralfield;
 
 import java.util.List;
+
 
 public interface NeuralPopulationEquation<K> {
 	
