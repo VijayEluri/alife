@@ -1,14 +1,17 @@
 /**
  * 
  */
-package co.edu.unal.alife.neuralfield.core;
+package co.edu.unal.alife.neuralfield.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import co.edu.unal.alife.neuralfield.core.DeltaPopulation.Element;
+import co.edu.unal.alife.neuralfield.DeltaPopulation;
+import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.NeuralPopulationEquation;
+import co.edu.unal.alife.neuralfield.DeltaPopulation.Element;
 
 /**
  * @author Juan Figueredo

@@ -1,4 +1,4 @@
-package co.edu.unal.alife.neuralfield.core;
+package co.edu.unal.alife.neuralfield;
 
 
 public abstract class KernelFunction  {

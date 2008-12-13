@@ -1,7 +1,7 @@
 /**
  * 
  */
-package co.edu.unal.alife.neuralfield.core;
+package co.edu.unal.alife.neuralfield;
 
 import java.util.ArrayList;
 import java.util.List;

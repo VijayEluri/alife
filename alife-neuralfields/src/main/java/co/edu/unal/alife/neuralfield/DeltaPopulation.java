@@ -1,9 +1,10 @@
-package co.edu.unal.alife.neuralfield.core;
+package co.edu.unal.alife.neuralfield;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
+
 
 /**
  * Interface that represents a population of a neural field.

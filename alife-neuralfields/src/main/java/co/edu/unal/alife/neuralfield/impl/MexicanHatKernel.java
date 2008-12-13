@@ -1,7 +1,9 @@
 /**
  * 
  */
-package co.edu.unal.alife.neuralfield.core;
+package co.edu.unal.alife.neuralfield.impl;
+
+import co.edu.unal.alife.neuralfield.KernelFunction;
 
 /**
  * @author Juan Figueredo
