@@ -44,14 +44,16 @@ public class InputEquation implements NeuralPopulationEquation<Double> {
 	}
 	
 	public static double bipolarSigmoid(double t) {
-		return (1 - Math.exp(-t)) / (1 + Math.exp(-t));
+		return (1 - Math.exp(-t/10)) / (1 + Math.exp(-t/10));
 	}
 	
 	public List<Double> applyInput() {
 		double thetaDot = pendulum.sense();
-		
+		System.out.println("tethaDot\t:"+thetaDot);
 		double boundedValue = bipolarSigmoid(thetaDot) * halfSize;
+		System.out.println("boundedVal\t:"+boundedValue);
 		long eqPosition = Math.round(boundedValue + halfSize);
+		System.out.println("eqPosition\t:"+eqPosition);
 		List<Double> list = new ArrayList<Double>();
 		for (int i = 0; i < 2 * halfSize + 1; i++) {
 			if (i == eqPosition) {
@@ -60,7 +62,7 @@ public class InputEquation implements NeuralPopulationEquation<Double> {
 				list.add(0.0);
 			}
 		}
-		list.add(thetaDot);
+		System.out.println("list\t:"+list);
 		return list;
 	}
 

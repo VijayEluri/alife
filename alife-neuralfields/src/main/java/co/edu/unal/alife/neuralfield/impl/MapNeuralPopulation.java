@@ -178,6 +178,7 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 			for (Entry<Double, DeltaPopulation.Element> entry : entrySet) {
 				Double value = values.get(i++);
 				entry.getValue().setValue(value);
+				entry.getValue().setDelta(0.0);
 			}
 		}
 	}

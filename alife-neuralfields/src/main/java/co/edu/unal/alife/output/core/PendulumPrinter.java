@@ -9,7 +9,7 @@ import java.util.List;
  * @author Juan Figueredo
  *
  */
-public class PendulumTracer extends SimpleOutputTracer {
+public class PendulumPrinter extends SimpleOutputPrinter {
 	private int pendulumStates;
 	private int inputFieldStates;
 	private int outputFieldStates;
@@ -24,7 +24,7 @@ public class PendulumTracer extends SimpleOutputTracer {
 	 * @param inputFieldStates
 	 * @param outputFieldStates
 	 */
-	public PendulumTracer(int pendulumStates, int inputFieldStates, int outputFieldStates) {
+	public PendulumPrinter(int pendulumStates, int inputFieldStates, int outputFieldStates) {
 		super();
 		this.inputFieldStates = inputFieldStates;
 		this.outputFieldStates = outputFieldStates;
