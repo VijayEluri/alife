@@ -14,7 +14,7 @@ public abstract class AbstractSolver<V> extends Observable implements Solver<V> 
 	protected double t;
 	protected Derivable<V> f;
 	protected boolean isTraceEnabled;
-	protected double tracePeriod;
+	protected int traceSkip;
 
 	/**
 	 * @param x
@@ -27,17 +27,18 @@ public abstract class AbstractSolver<V> extends Observable implements Solver<V> 
 	 *            the function dx=f(x,t)
 	 * @param isTraceEnabled
 	 *            the boolean indicating if observers are notified
-	 * @param tracePeriod
+	 * @param traceSkip
 	 *            the period of observer notification
 	 */
 	public AbstractSolver(List<V> x, double h, double t,
-			Derivable<V> f, boolean isTraceEnabled, double tracePeriod) {
+			Derivable<V> f, boolean isTraceEnabled, int traceSkip) {
+//		System.out.println("AS - Init:\n"+x);
 		this.x = x;
 		this.h = h;
 		this.t = t;
 		this.f = f;
 		this.isTraceEnabled = isTraceEnabled;
-		this.tracePeriod = tracePeriod;
+		this.traceSkip = traceSkip;
 	}
 
 	/**
@@ -51,9 +52,10 @@ public abstract class AbstractSolver<V> extends Observable implements Solver<V> 
 		for (int i = 0; i < n; i++) {
 			t = t0 + h * i;
 			x = step();
-			if (isTraceEnabled && t >= evalTime) {
-				evalTime += tracePeriod;
-				this.notifyObservers(x);
+			if (isTraceEnabled && i%traceSkip==0) {
+				evalTime += traceSkip;
+				this.setChanged();
+				this.notifyObservers(new Object[]{t,x});
 			}
 		}
 		return x;
