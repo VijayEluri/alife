@@ -10,5 +10,5 @@ import java.util.Observer;
  *
  */
 public interface Visualizer extends Observer {
-
+	
 }

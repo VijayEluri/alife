@@ -23,10 +23,13 @@ import co.edu.unal.alife.neuralfield.NeuralPopulationEquation;
  * @param <K>
  * @param <Double>
  */
+/**
+ * @author Juan Figueredo
+ */
 public class MapNeuralPopulation implements DeltaPopulation<Double> {
-	
-	private Map<Double,DeltaPopulation.Element> populationMap = new HashMap<Double,DeltaPopulation.Element>();
-	
+
+	private Map<Double, DeltaPopulation.Element> populationMap = new HashMap<Double, DeltaPopulation.Element>();
+
 	/**
 	 * 
 	 */
@@ -34,18 +37,19 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * 
 	 */
 	public MapNeuralPopulation(int halfSize) {
 		super();
 		for (int i = -halfSize; i <= halfSize; i++) {
-			populationMap.put((double)i, new Element());
+			populationMap.put((double) i, new Element());
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElement(java.lang.Object)
 	 */
 	@Override
@@ -53,7 +57,8 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		return populationMap.get(position);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementDelta(java.lang.Object)
 	 */
 	@Override
@@ -61,7 +66,8 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		return populationMap.get(position).getDelta();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElements()
 	 */
 	@Override
@@ -69,7 +75,8 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		return populationMap.values();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementValue(java.lang.Object)
 	 */
 	@Override
@@ -77,7 +84,8 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		return populationMap.get(position).getValue();
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getTuples()
 	 */
 	@Override
@@ -85,23 +93,28 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		return populationMap.entrySet();
 	}
 
-	/* (non-Javadoc)
-	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#setElementDelta(java.lang.Object, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#setElementDelta(java.lang.Object,
+	 * java.lang.Object)
 	 */
 	@Override
 	public void setElementDelta(Double position, Double value) {
 		populationMap.get(position).setDelta(value);
 	}
 
-	/* (non-Javadoc)
-	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#setElementValue(java.lang.Object, java.lang.Object)
+	/*
+	 * (non-Javadoc)
+	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#setElementValue(java.lang.Object,
+	 * java.lang.Object)
 	 */
 	@Override
 	public void setElementValue(Double position, Double value) {
 		populationMap.get(position).setValue(value);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementDeltas()
 	 */
 	@Override
@@ -114,7 +127,8 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		return deltas;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getElementValues()
 	 */
 	@Override
@@ -127,8 +141,10 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		return values;
 	}
 
-	/* (non-Javadoc)
-	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#setElementValues(java.util.Collection)
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * co.edu.unal.alife.neuralfield.core.NeuralPopulation#setElementValues(java.util.Collection)
 	 */
 	@Override
 	public void setElementValues(Collection<Double> elementValues) {
@@ -139,32 +155,55 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#updatePopulationDelta(java.util.List, co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation, java.util.List)
+	/*
+	 * (non-Javadoc)
+	 * @see co.edu.unal.alife.neuralfield.DeltaPopulation#updatePopulationDelta(java.util.List, int,
+	 * co.edu.unal.alife.neuralfield.NeuralPopulationEquation, java.util.List)
 	 */
-	@Override
-	public void updatePopulationDelta(List<DeltaPopulation<Double>> populations, int populationIndex,
-			NeuralPopulationEquation<Double> equation, List<KernelFunction> kernelList) {
+	public void updatePopulationDelta(List<DeltaPopulation<Double>> populations,
+			int populationIndex, NeuralPopulationEquation<Double> equation,
+			List<KernelFunction> kernelList) {
 		List<Double> deltas = equation.evalEquation(populations, populationIndex, kernelList);
-		Set<Entry<Double,DeltaPopulation.Element>> entrySet = populationMap.entrySet();
+		Set<Entry<Double, DeltaPopulation.Element>> entrySet = populationMap.entrySet();
 		int i = 0;
-		for (Entry<Double, DeltaPopulation.Element> entry : entrySet) {
-			entry.getValue().setDelta(deltas.get(i++));
+		if (deltas != null) {
+//			System.out.println("MapNeuralPopulation - entrySetSize: " + entrySet.size());
+//			System.out.println("MapNeuralPopulation - DeltasSize: " + deltas.size());
+			for (Entry<Double, DeltaPopulation.Element> entry : entrySet) {
+				Double delta = deltas.get(i++);
+				entry.getValue().setDelta(delta);
+			}
+		} else {
+			List<Double> values = equation.applyInput();
+			for (Entry<Double, DeltaPopulation.Element> entry : entrySet) {
+				Double value = values.get(i++);
+				entry.getValue().setValue(value);
+			}
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
 	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulation#getSize()
 	 */
 	@Override
 	public int getSize() {
 		return populationMap.size();
 	}
-	
+
 	public class Element implements DeltaPopulation.Element {
 		private Double value;
 		private Double delta;
 		
+		/**
+		 * 
+		 */
+		public Element() {
+			super();
+			value = 0.0;
+			delta = 0.0;
+		}
+
 		public Double getValue() {
 			return value;
 		}
