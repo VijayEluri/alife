@@ -31,6 +31,41 @@ public abstract class NeuralField<K> implements Simulable<Double> {
 		this.kernelMatrix = kernelMatrix;
 		this.populations = populations;
 	}
+	
+	
+
+
+
+	/**
+	 * @return the populations
+	 */
+	public List<DeltaPopulation<K>> getPopulations() {
+		return populations;
+	}
+
+
+
+
+
+	/**
+	 * @return the equations
+	 */
+	public List<NeuralPopulationEquation<K>> getEquations() {
+		return equations;
+	}
+
+
+
+
+
+	/**
+	 * @return the kernelMatrix
+	 */
+	public List<List<KernelFunction>> getKernelMatrix() {
+		return kernelMatrix;
+	}
+
+
 
 
 

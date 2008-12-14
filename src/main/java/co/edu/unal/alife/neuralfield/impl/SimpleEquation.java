@@ -75,7 +75,7 @@ public class SimpleEquation implements NeuralPopulationEquation<Double> {
 	 */
 	@Override
 	public List<Double> applyInput() {
-		throw new NotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 

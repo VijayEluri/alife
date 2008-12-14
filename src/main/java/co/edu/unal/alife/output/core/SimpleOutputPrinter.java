@@ -10,7 +10,7 @@ import java.util.Observable;
  * @author Juan Figueredo
  *
  */
-public class SimpleOutputTracer implements Visualizer {
+public class SimpleOutputPrinter implements Visualizer {
 	
 	private List<Double> values;
 	private double t;
