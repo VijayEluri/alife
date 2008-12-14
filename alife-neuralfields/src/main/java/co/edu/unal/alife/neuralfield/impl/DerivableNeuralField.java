@@ -1,6 +1,7 @@
 package co.edu.unal.alife.neuralfield.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import co.edu.unal.alife.neuralfield.DeltaPopulation;
@@ -29,21 +30,29 @@ public class DerivableNeuralField<K> extends NeuralField<K>{
 		return valuesAsDerivable;
 	}
 	
-	public List<Double> getDeltasAsDerivable() {
-		List<Double> deltasAsDerivable = new ArrayList<Double>();
-		for (int i = 0; i < populations.size(); i++) {
-			deltasAsDerivable.addAll(populations.get(i).getElementDeltas());
+	public List<Double> valuesListToDerivable(List<List<Double>> valuesList) {
+		List<Double> derivable = new ArrayList<Double>();
+		for (List<Double> values : valuesList) {
+			derivable.addAll(values);
 		}
-		return deltasAsDerivable;
+		return derivable;
 	}
 	
-	public void setValuesAsDerivable(List<Double> valuesAsDerivable) {
+	public List<List<Double>> derivableToValuesList(List<Double> derivable) {
 		int fromIndex = 0;
+		List<List<Double>> valuesList = new ArrayList<List<Double>>();
 		for (DeltaPopulation<K> population : populations) {
 			int toIndex = fromIndex + population.getSize();
-			population.setElementValues(valuesAsDerivable.subList(fromIndex, toIndex));
+			valuesList.add(derivable.subList(fromIndex, toIndex));
 			fromIndex = toIndex;
 		}
+		return valuesList;
+	}
+	
+	public List<Double> evaluateSimulableAsDerivable(List<Double> derivableValues) {
+		List<List<Double>> valuesList = derivableToValuesList(derivableValues);
+		List<List<Double>> deltasList = evaluateSimulable(valuesList);
+		return valuesListToDerivable(deltasList);
 	}
 
 }
