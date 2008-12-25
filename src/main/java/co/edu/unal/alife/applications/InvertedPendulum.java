@@ -29,7 +29,17 @@ public class InvertedPendulum {
 	public List<Double> getPendulumDeltas(List<Double> newX, List<Double> inputs, double newT) {	
 		double u = 0;
 		if (inputs != null) {
-			u = inputs.get(0);
+			double maxSoFar = Double.MIN_VALUE;
+			int argMaxSoFar = -1;
+			for (int j = 1; j < inputs.size()-1; j++) {
+				double value = inputs.get(j-1)+2*inputs.get(j)+inputs.get(j+1);
+				if (value>maxSoFar) {
+					argMaxSoFar = j;
+					maxSoFar = value;
+				}
+			}
+			System.out.println(argMaxSoFar);
+			u = (argMaxSoFar - 10)/10.0;
 		}
 		newX.set(1,stdAngle(newX.get(1)));
 		Collections.copy(x, newX);

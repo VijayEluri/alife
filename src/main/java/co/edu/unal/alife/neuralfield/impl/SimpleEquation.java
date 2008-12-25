@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import co.edu.unal.alife.neuralfield.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
 import co.edu.unal.alife.neuralfield.NeuralPopulationEquation;
@@ -24,6 +23,7 @@ import co.edu.unal.alife.neuralfield.DeltaPopulation.Element;
 public class SimpleEquation implements NeuralPopulationEquation<Double> {
 
 	private double tao = 1;
+	private double restingPotential = -0.2;
 
 	/*
 	 * (non-Javadoc)
@@ -49,20 +49,26 @@ public class SimpleEquation implements NeuralPopulationEquation<Double> {
 				if (kernelFunction != null) {
 					double kernelSum = 0;
 					// For each element from a given population do...
+//					System.out.println("SimpleEquation - Begin Sum");
 					for (Entry<Double, Element> entry : tuples) {
 						double pos = entry.getKey();
 						double value = entry.getValue().getValue();
 						// Evaluate the Sum
-						double kernelValue = kernelFunction.evaluateKernel(localPos, pos);
-						kernelSum += kernelValue * firingRateFunction(value);
+						double firingRate = firingRateFunction(value);
+						if (firingRate > 0.0) {
+							double kernelValue = kernelFunction.evaluateKernel(localPos, pos);
+							kernelSum += kernelValue * firingRate;
+						}
 					}
+//					System.out.println("SimpleEquation - Kernel Sum: "+kernelSum);
 					// Totalize the sum
 					totalSum += kernelSum;
 				}
 			}
 			// Evaluate the delta of the element using the totalSum, the
 			// localValue and tao
-			double delta = (-localValue + totalSum) / tao;
+			double delta = (-localValue + totalSum - restingPotential) / tao;
+//			System.out.println("SimpleEquation - Index: "+localIndex+" Delta: "+delta);
 			// and add it to the list of deltas.
 			deltas.add(delta);
 		}
@@ -87,6 +93,6 @@ public class SimpleEquation implements NeuralPopulationEquation<Double> {
 	 * @return the firing rate for the given value
 	 */
 	public static Double firingRateFunction(Double value) {
-		return value > 0 ? value : 0;
+		return value > 0 ? 1.0 : 0.0;
 	}
 }
