@@ -44,7 +44,12 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 	public MapNeuralPopulation(int halfSize) {
 		super();
 		for (int i = -halfSize; i <= halfSize; i++) {
-			populationMap.put((double) i, new Element());
+			Element element = new Element();
+			if(true) {
+				element.setValue(10.0);
+				element.setDelta(0.0);
+			}
+			populationMap.put((double) i, element);
 		}
 	}
 

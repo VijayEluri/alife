@@ -17,6 +17,7 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -38,6 +39,7 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 
 	final Circles circles = new Circles();
 	final Grafica grafica = new Grafica();
+	final Field field = new Field();
 	final JPanel animadoInf = new JPanel();
 	final JPanel animadoSup = new JPanel();
 	final int MAX_FPS = 40;
@@ -98,7 +100,8 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 				try {
 					timer.setDelay(25);
 					circles.animar((int) 40, (int) 20000);
-					grafica.animar((int) 40, (int) 20000);
+					// grafica.animar((int) 40, (int) 20000);
+					field.animar((int) 40, (int) 20000);
 					animadoSup.repaint();
 					iniciarAnimacion();
 				} catch (Exception ex) {
@@ -155,9 +158,13 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		tics++;
 		// System.out.println(tics);
-		if (grafica.count < tracer.getData().size()) {
-			grafica.actualizar();
-			SwingUtilities.invokeLater(grafica);
+		// if (grafica.count < tracer.getData().size()) {
+		// grafica.actualizar();
+		// SwingUtilities.invokeLater(grafica);
+		// }
+		if (field.count < tracer.getData().size()) {
+			field.actualizar();
+			SwingUtilities.invokeLater(field);
 		}
 		if (circles.count < tracer.getData().size()) {
 			circles.actualizar();
@@ -229,6 +236,63 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 		}
 	}
 
+	public class Field implements Runnable {
+		int frameNumber = -1;
+		Timer timer;
+		JPanel jP;
+		Graphics2D g2d;
+		float posicionX, posicionY, posicionX2, posicionY2;
+		int count, h, tf;
+		int fromIndex = 4 + 21;
+		int toIndex = fromIndex + 21;
+		List<Double> fieldValues;
+		List<Double> prevFieldValues = new ArrayList<Double>();
+
+		public Field() {
+			count = 0;
+			this.posicionX = 500;
+			this.posicionY = 100;
+		}
+
+		public void animar(int h, int tf) {
+			g2d = (Graphics2D) animadoSup.getGraphics();
+			this.h = h;
+			this.tf = tf;
+			count = 0;
+		}
+
+		public void run() {
+			g2d.setColor(Color.WHITE);
+			int i = 0;
+			for (Double value : prevFieldValues) {
+				int dx = (-10 + i++) * 10;
+				float dy = (float) value.floatValue()*100;
+				// g2d.draw(new Ellipse2D.Float(posicionX + dx, posicionY + dy, 5, 5));
+				g2d.draw(new Line2D.Float(posicionX + dx, posicionY, posicionX + dx, posicionY
+								- dy));
+			}
+			g2d.setColor(Color.BLUE);
+			i = 0;
+			for (Double value : fieldValues) {
+				int dx = (-10 + i++) * 10;
+				float dy = (float) value.floatValue()*100;
+				// g2d.draw(new Ellipse2D.Float(posicionX + dx, posicionY + dy, 5, 5));
+				g2d.draw(new Line2D.Float(posicionX + dx, posicionY, posicionX + dx, posicionY
+								- dy));
+			}
+			g2d.setColor(Color.RED);
+			g2d.draw(new Line2D.Float(posicionX - 270, posicionY, posicionX + 270,
+					posicionY));
+		}
+
+		public void actualizar() {
+			count++;
+			prevFieldValues = fieldValues!= null ? fieldValues : prevFieldValues;
+			List<Double> data = tracer.getData().get(count - 1);
+			fieldValues = data.subList(fromIndex, toIndex);
+		}
+	}
+
 	public class Grafica implements Runnable {
 		int frameNumber = -1;
 		Timer timer;
@@ -248,7 +312,7 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 		}
 
 		public void animar(int h, int tf) {
-			g2d = (Graphics2D) animadoSup.getGraphics();
+			// g2d = (Graphics2D) animadoSup.getGraphics();
 			g2d.setColor(Color.RED);
 			this.h = h;
 			this.tf = tf;
