@@ -7,15 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.unal.alife.applications.InvertedPendulum;
-import co.edu.unal.alife.neuralfield.DeltaPopulation;
+import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
-import co.edu.unal.alife.neuralfield.NeuralPopulationEquation;
+import co.edu.unal.alife.neuralfield.DeltaPopulationEquation;
 
 /**
  * @author Juan Figueredo
  * 
  */
-public class InputEquation implements NeuralPopulationEquation<Double> {
+public class InputEquation implements DeltaPopulationEquation<Double> {
 
 	private InvertedPendulum pendulum;
 	private double halfSize;
@@ -30,16 +30,15 @@ public class InputEquation implements NeuralPopulationEquation<Double> {
 		this.pendulum = pendulum;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation#evalEquation
-	 * (java.util.List, java.lang.Integer, java.util.List)
+	
+	
+	/* (non-Javadoc)
+	 * @see co.edu.unal.alife.neuralfield.DeltaPopulationEquation#evalEquation(co.edu.unal.alife.neuralfield.DeltaPopulation, java.util.List, java.util.List)
 	 */
 	@Override
-	public List<Double> evalEquation(List<DeltaPopulation<Double>> populations,
-			int localIndex, List<KernelFunction> kernelList) {
+	public List<Double> evalEquation(DeltaPopulation<Double> localPopulation,
+			List<DeltaPopulation<Double>> populations, List<KernelFunction> kernelList) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	
