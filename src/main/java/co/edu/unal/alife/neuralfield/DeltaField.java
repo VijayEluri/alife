@@ -6,16 +6,17 @@ package co.edu.unal.alife.neuralfield;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.dynamics.Simulable;
 
 /**
  * @author Juan Figueredo
  *
  */
-public abstract class NeuralField<K> implements Simulable<Double> {
+public abstract class DeltaField<K> implements Simulable<Double> {
 	
 	protected List<DeltaPopulation<K>> populations;
-	protected List<NeuralPopulationEquation<K>> equations;
+	protected List<DeltaPopulationEquation<K>> equations;
 	protected List<List<KernelFunction>> kernelMatrix;
 	
 	/**
@@ -23,7 +24,7 @@ public abstract class NeuralField<K> implements Simulable<Double> {
 	 * @param kernelMatrix
 	 * @param populations
 	 */
-	public NeuralField(List<NeuralPopulationEquation<K>> equations,
+	public DeltaField(List<DeltaPopulationEquation<K>> equations,
 			List<List<KernelFunction>> kernelMatrix,
 			List<DeltaPopulation<K>> populations) {
 		super();
@@ -31,10 +32,6 @@ public abstract class NeuralField<K> implements Simulable<Double> {
 		this.kernelMatrix = kernelMatrix;
 		this.populations = populations;
 	}
-	
-	
-
-
 
 	/**
 	 * @return the populations
@@ -50,7 +47,7 @@ public abstract class NeuralField<K> implements Simulable<Double> {
 	/**
 	 * @return the equations
 	 */
-	public List<NeuralPopulationEquation<K>> getEquations() {
+	public List<DeltaPopulationEquation<K>> getEquations() {
 		return equations;
 	}
 
@@ -66,21 +63,23 @@ public abstract class NeuralField<K> implements Simulable<Double> {
 	}
 
 
-
+	public  List<List<Double>> evaluateStep(List<List<Double>> newValues) {
+		return null;	
+	}
 
 
 	/* (non-Javadoc)
 	 * @see co.edu.unal.alife.dynamic.Simulable#evaluateSimulable()
 	 */
-	@Override
+
 	public List<List<Double>> evaluateSimulable(List<List<Double>> newValues) {
 		List<List<Double>> newDeltas = new ArrayList<List<Double>>();
-		for (int i = 0; i < populations.size(); i++) {
-			DeltaPopulation<K> population = populations.get(i);
-			population.setElementValues(newValues.get(i));
-			population.updatePopulationDelta(populations, i, equations.get(i), kernelMatrix.get(i));
-			newDeltas.add(new ArrayList<Double>(population.getElementDeltas()));
-		}
+//		for (int i = 0; i < populations.size(); i++) {
+//			DeltaPopulation<K> population = populations.get(i);
+//			population.setElementValues(newValues.get(i));
+//			population.updatePopulationDelta(this, i);
+//			newDeltas.add(new ArrayList<Double>(population.getElementDeltas()));
+//		}
 		return newDeltas;
 	}
 		

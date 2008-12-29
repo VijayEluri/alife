@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import co.edu.unal.alife.neuralfield.DeltaPopulation;
+import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
-import co.edu.unal.alife.neuralfield.NeuralField;
-import co.edu.unal.alife.neuralfield.NeuralPopulationEquation;
+import co.edu.unal.alife.neuralfield.DeltaField;
+import co.edu.unal.alife.neuralfield.DeltaPopulationEquation;
 
-public class DerivableNeuralField<K> extends NeuralField<K>{
+public class DerivableNeuralField<K> extends DeltaField<K>{
 	
 	/**
 	 * @param equations
 	 * @param kernelMatrix
 	 * @param populations
 	 */
-	public DerivableNeuralField(List<NeuralPopulationEquation<K>> equations,
+	public DerivableNeuralField(List<DeltaPopulationEquation<K>> equations,
 			List<List<KernelFunction>> kernelMatrix,
 			List<DeltaPopulation<K>> populations) {
 		super(equations, kernelMatrix, populations);
@@ -24,9 +24,9 @@ public class DerivableNeuralField<K> extends NeuralField<K>{
 
 	public List<Double> getValuesAsDerivable() {
 		List<Double> valuesAsDerivable = new ArrayList<Double>();
-		for (int i = 0; i < populations.size(); i++) {
-			valuesAsDerivable.addAll(populations.get(i).getElementValues());
-		}
+//		for (int i = 0; i < populations.size(); i++) {
+//			valuesAsDerivable.addAll(populations.get(i).getElementValues());
+//		}
 		return valuesAsDerivable;
 	}
 	

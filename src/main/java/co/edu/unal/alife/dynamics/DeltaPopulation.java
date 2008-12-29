@@ -1,16 +1,13 @@
-package co.edu.unal.alife.neuralfield;
+package co.edu.unal.alife.dynamics;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
-import java.util.Map.Entry;
 
+import co.edu.unal.alife.neuralfield.DeltaField;
 
 /**
  * Interface that represents a population of a neural field.
  * 
  * @author jjfigueredou
- * 
  */
 public abstract interface DeltaPopulation<K> {
 
@@ -59,57 +56,57 @@ public abstract interface DeltaPopulation<K> {
 	 * 
 	 * @return collection of elements
 	 */
-	public abstract Collection<? extends Element> getElements();
-	
+	// public abstract Collection<? extends Element> getElements();
 	/**
 	 * Gets the values of the elements contained in the neural population.
+	 * 
 	 * @return the values
 	 */
-	public abstract List<Double> getElementValues();
-	
-	public abstract void setElementValues(Collection<Double> elementValues);
-	
+	// public abstract List<Double> getElementValues();
+	// public abstract void setElementValues(Collection<Double> elementValues);
 	/**
 	 * Gets the deltas of the elements contained in the neural population.
+	 * 
 	 * @return the deltas
 	 */
-	public abstract List<Double> getElementDeltas();
-
+	// public abstract List<Double> getElementDeltas();
 	/**
 	 * Get the tuples {Position,Element} contained in the neural population.
 	 * 
 	 * @return set of tuples
 	 */
-	public abstract Set<Entry<K, Element>> getTuples();
+	// public abstract Set<Entry<K, Element>> getTuples();
+	/**
+	 * Get the positions from elements contained in the neural population.
+	 * 
+	 * @return set of positions
+	 */
+	public abstract Set<K> getPositions();
 
 	/**
-	 * Prepares the population for the update rule applied by a ODE solver.
-	 * Updates the state of the delta of all elements contained in the
-	 * population.
+	 * Prepares the population for the update rule applied by a ODE solver. Updates the state of the
+	 * delta of all elements contained in the population.
 	 * 
 	 * @param populations
 	 * @param equation
 	 * @param kernelTable
 	 */
-	public abstract void updatePopulationDelta(
-			List<DeltaPopulation<K>> populations, int populationIndex,
-			NeuralPopulationEquation<K> equation, List<KernelFunction> kernelList);
-	
-	
+	public abstract void updatePopulationDelta(DeltaField<K> environment, int localIndex);
+
 	/**
 	 * Gets the size of the population, i.e the number of elements contained on it.
+	 * 
 	 * @return the size
 	 */
 	public int getSize();
-	
+
 	/**
-	 * Interface that represent an element of a neural population, i.e. a point
-	 * with an associated value and a delta.
+	 * Interface that represent an element of a neural population, i.e. a point with an associated
+	 * value and a delta.
 	 * 
 	 * @author jjfigueredou
-	 * 
 	 * @param <K>
-	 * @param 
+	 * @param
 	 */
 	public interface Element {
 		/**
