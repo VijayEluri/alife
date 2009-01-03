@@ -10,8 +10,8 @@ import java.util.List;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.dynamics.Derivable;
 import co.edu.unal.alife.dynamics.RungeKutta4thSolver;
-import co.edu.unal.alife.neuralfield.KernelFunction;
 import co.edu.unal.alife.neuralfield.DeltaPopulationEquation;
+import co.edu.unal.alife.neuralfield.KernelFunction;
 import co.edu.unal.alife.neuralfield.impl.DerivableNeuralField;
 import co.edu.unal.alife.neuralfield.impl.InputEquation;
 import co.edu.unal.alife.neuralfield.impl.MapNeuralPopulation;
@@ -134,15 +134,14 @@ public class FirstProblemSimulation implements Derivable<Double> {
 				pendulumValues); 
 		// Solver setup
 		//System.out.println("Initial Values " + initialValues);
-		RungeKutta4thSolver solver = new RungeKutta4thSolver(initialValues, hh, t0,
-				problemSimulation, true, traceSkip);
+		RungeKutta4thSolver solver = new RungeKutta4thSolver();
 		Visualizer printer = new PendulumPrinter(pendulumStates,mainSize,mainSize);
 		Tracer tracer = new Tracer();
 		solver.addObserver(printer);
 		solver.addObserver(tracer);
 		
 		// Run simulation
-		solver.simulate(tf);
+		//solver.simulate(tf);
 		
 		//Run animation
 		new AnimationFrameGait(tracer);
