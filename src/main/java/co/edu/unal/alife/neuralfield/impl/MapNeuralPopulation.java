@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,8 +15,8 @@ import java.util.Map.Entry;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.DeltaField;
-import co.edu.unal.alife.neuralfield.KernelFunction;
 import co.edu.unal.alife.neuralfield.DeltaPopulationEquation;
+import co.edu.unal.alife.neuralfield.KernelFunction;
 
 /**
  * @author jjfigueredou
@@ -37,6 +38,11 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 	public MapNeuralPopulation() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public MapNeuralPopulation(DeltaPopulation<Double> population) {
+		this.populationMap = new LinkedHashMap<Double, DeltaPopulation.Element>(
+				population.getPopulationMap());
 	}
 
 	/**
@@ -169,8 +175,7 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 			element.setValue(iterator.next());
 		}
 	}
-	
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see co.edu.unal.alife.neuralfield.DeltaPopulation#updatePopulationDelta(java.util.List, int,
@@ -197,6 +202,20 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 				entry.getValue().setDelta(0.0);
 			}
 		}
+	}
+	
+	/**
+	 * @return the populationMap
+	 */
+	public Map<Double, DeltaPopulation.Element> getPopulationMap() {
+		return populationMap;
+	}
+
+	/**
+	 * @param populationMap the populationMap to set
+	 */
+	public void setPopulationMap(Map<Double, DeltaPopulation.Element> populationMap) {
+		this.populationMap = populationMap;
 	}
 
 	/*

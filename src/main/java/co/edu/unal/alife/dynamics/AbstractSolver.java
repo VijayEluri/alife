@@ -7,7 +7,15 @@ import java.util.Observable;
  * @author Juan Figueredo
  * 
  */
-public abstract class AbstractSolver<V> extends Observable implements Solver<V> {
+public abstract class AbstractSolver<K,V> extends Observable implements Solver<K,V> {
+	
+	/**
+	 * 
+	 */
+	public AbstractSolver() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	protected List<V> x;
 	protected double h;
