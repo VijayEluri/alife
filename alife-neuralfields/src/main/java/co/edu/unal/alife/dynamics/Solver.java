@@ -1,7 +1,5 @@
 package co.edu.unal.alife.dynamics;
 
-import java.util.List;
-
 import co.edu.unal.alife.neuralfield.DeltaField;
 
 /**
@@ -11,9 +9,9 @@ import co.edu.unal.alife.neuralfield.DeltaField;
  */
 public interface Solver<K,V> {
 	
-	List<V> simulate(double tf);
+	//List<V> simulate(double tf);
 	
-	DeltaPopulation<K> step(DeltaField<K> field, int localIndex);
+	DeltaPopulation<K> step(DeltaField<K> field, int localIndex, double h);
 	
-	List<V> step();
+	//List<V> step();
 }

@@ -1,13 +1,12 @@
 package co.edu.unal.alife.neuralfield.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.KernelFunction;
 import co.edu.unal.alife.neuralfield.DeltaField;
 import co.edu.unal.alife.neuralfield.DeltaPopulationEquation;
+import co.edu.unal.alife.neuralfield.KernelFunction;
 
 public class DerivableNeuralField<K> extends DeltaField<K>{
 	
