@@ -1,5 +1,8 @@
 package co.edu.unal.alife.dynamics;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import co.edu.unal.alife.neuralfield.DeltaField;
@@ -56,7 +59,8 @@ public abstract interface DeltaPopulation<K> {
 	 * 
 	 * @return collection of elements
 	 */
-	// public abstract Collection<? extends Element> getElements();
+	public abstract Collection<? extends Element> getElements();
+	
 	/**
 	 * Gets the values of the elements contained in the neural population.
 	 * 
@@ -69,7 +73,8 @@ public abstract interface DeltaPopulation<K> {
 	 * 
 	 * @return the deltas
 	 */
-	// public abstract List<Double> getElementDeltas();
+	
+	//public abstract List<Double> getElementDeltas();
 	/**
 	 * Get the tuples {Position,Element} contained in the neural population.
 	 * 
@@ -92,7 +97,9 @@ public abstract interface DeltaPopulation<K> {
 	 * @param kernelTable
 	 */
 	public abstract void updatePopulationDelta(DeltaField<K> environment, int localIndex);
-
+	
+	public Map<K,Element> getPopulationMap();
+	
 	/**
 	 * Gets the size of the population, i.e the number of elements contained on it.
 	 * 
