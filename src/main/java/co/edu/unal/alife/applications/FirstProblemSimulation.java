@@ -28,7 +28,7 @@ public class FirstProblemSimulation {
 	public static void main(String[] args) {
 		int N = 3;
 		int halfSize = 10;
-		double initialAngle = 0.0;
+		double initialAngle = 0.1;
 		
 		double hh = 1.0 / 100;
 		double t0 = 0.0;
@@ -37,7 +37,7 @@ public class FirstProblemSimulation {
 		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(N);
 		MapNeuralPopulation inputPopulation = new MapNeuralPopulation(halfSize);
 		MapNeuralPopulation outputPopulation = new MapNeuralPopulation(halfSize);
-		MapNeuralPopulation pendulumPopulation = new MapNeuralPopulation();
+		MapNeuralPopulation pendulumPopulation = new MapNeuralPopulation(4,false);
 		populations.add(inputPopulation);
 		populations.add(outputPopulation);
 		populations.add(pendulumPopulation);
@@ -53,8 +53,10 @@ public class FirstProblemSimulation {
 		KernelFunction kernelFunction = new MexicanHatKernel();
 		firstRow.add(null); // self-connectivity of input field
 		firstRow.add(null); // connectivity from output to input
+		firstRow.add(null); // connectivity from plant to input
 		secondRow.add(kernelFunction); // connectivity from input to output
 		secondRow.add(kernelFunction); // self-connectivity of output field
+		secondRow.add(null); // connectivity from plant to output
 		kernelMatrix.add(firstRow);
 		kernelMatrix.add(secondRow);
 		kernelMatrix.add(thirdRow);

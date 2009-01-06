@@ -57,6 +57,7 @@ public abstract class DeltaField<K> extends Observable implements Simulable<Doub
 
 	@Override
 	public void evaluateStep(double h, int nextStepCount) {
+		double t = nextStepCount*h;
 		for (int i = 0; i < populations.size(); i++) {
 			DeltaPopulation<K> deltaPopulation = null;
 			try {
@@ -66,7 +67,7 @@ public abstract class DeltaField<K> extends Observable implements Simulable<Doub
 				equations.get(i).applyInput(deltaPopulation);
 			}
 			this.setChanged();
-			this.notifyObservers(new Object[]{i, nextStepCount, deltaPopulation});
+			this.notifyObservers(new Object[]{i, t, deltaPopulation});
 		}
 	}
 

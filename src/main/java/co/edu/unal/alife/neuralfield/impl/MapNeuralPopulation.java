@@ -5,7 +5,6 @@ package co.edu.unal.alife.neuralfield.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,8 +13,8 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.DeltaField;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
+import co.edu.unal.alife.neuralfield.DeltaField;
 import co.edu.unal.alife.neuralfield.KernelFunction;
 
 /**
@@ -30,7 +29,7 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
  */
 public class MapNeuralPopulation implements DeltaPopulation<Double> {
 
-	private Map<Double, DeltaPopulation.Element> populationMap = new HashMap<Double, DeltaPopulation.Element>();
+	private Map<Double, DeltaPopulation.Element> populationMap = new LinkedHashMap<Double, DeltaPopulation.Element>();
 
 	/**
 	 * 
@@ -41,22 +40,42 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 	}
 
 	public MapNeuralPopulation(DeltaPopulation<Double> population) {
-		this.populationMap = new LinkedHashMap<Double, DeltaPopulation.Element>(
-				population.getPopulationMap());
+		this.populationMap = new LinkedHashMap<Double, DeltaPopulation.Element>(population
+				.getPopulationMap());
 	}
 
 	/**
 	 * 
 	 */
-	public MapNeuralPopulation(int halfSize) {
+	public MapNeuralPopulation(int providedSize, boolean isHalfSize) {
 		super();
-		for (int i = -halfSize; i <= halfSize; i++) {
-			Element element = new Element();
-			if (true) {
-				element.setValue(10.0);
+		if (isHalfSize) {
+			for (int i = -providedSize; i <= providedSize; i++) {
+				Element element = new Element();
+				element.setValue(0.0);
 				element.setDelta(0.0);
+				populationMap.put((double) i, element);
 			}
-			populationMap.put((double) i, element);
+		} else {
+			for (int i = 0; i < providedSize; i++) {
+				Element element = new Element();
+				element.setValue(0.0);
+				element.setDelta(0.0);
+				populationMap.put((double) i, element);
+			}
+		}
+	}
+
+	public MapNeuralPopulation(int halfSize) {
+		this(halfSize, true);
+	}
+
+	public MapNeuralPopulation(Set<Double> positions) {
+		for (Double position : positions) {
+			Element element = new Element();
+			element.setValue(0.0);
+			element.setDelta(0.0);
+			populationMap.put(position, element);
 		}
 	}
 
@@ -193,7 +212,7 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 			throw e;
 		}
 	}
-	
+
 	/**
 	 * @return the populationMap
 	 */
@@ -202,7 +221,8 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 	}
 
 	/**
-	 * @param populationMap the populationMap to set
+	 * @param populationMap
+	 *            the populationMap to set
 	 */
 	public void setPopulationMap(Map<Double, DeltaPopulation.Element> populationMap) {
 		this.populationMap = populationMap;
