@@ -10,7 +10,6 @@ import static java.lang.Math.sin;
 import java.util.List;
 import java.util.Set;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
@@ -39,7 +38,7 @@ public class PendulumEquation implements DeltaEquation<Double> {
 	@Override
 	public void applyInput(DeltaPopulation<Double> deltaPopulation) {
 		// TODO Auto-generated method stub
-		throw new NotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	/*

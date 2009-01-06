@@ -186,7 +186,12 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		List<DeltaPopulation<Double>> populations = environment.getPopulations();
 		DeltaEquation<Double> equation = environment.getEquations().get(localIndex);
 		List<KernelFunction> kernelList = environment.getKernelMatrix().get(localIndex);
-		equation.evalEquation(this, populations, kernelList);
+		try {
+			equation.evalEquation(this, populations, kernelList);
+		} catch (UnsupportedOperationException e) {
+			// TODO Auto-generated catch block
+			throw e;
+		}
 	}
 	
 	/**

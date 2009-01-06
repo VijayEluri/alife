@@ -16,5 +16,5 @@ public interface Solver<K,V> {
 	 * @param h
 	 * @return A NEW population with values evaluated after the solver step
 	 */
-	DeltaPopulation<K> step(DeltaField<K> field, int localIndex, double h);
+	DeltaPopulation<K> step(DeltaField<K> field, int localIndex, double h) throws UnsupportedOperationException;
 }

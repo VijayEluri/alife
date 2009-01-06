@@ -95,7 +95,7 @@ public abstract interface DeltaPopulation<K> {
 	 * @param equation
 	 * @param kernelTable
 	 */
-	public abstract void updatePopulationDelta(DeltaField<K> environment, int localIndex);
+	public abstract void updatePopulationDelta(DeltaField<K> environment, int localIndex) throws UnsupportedOperationException;
 	
 	public Map<K,Element> getPopulationMap();
 	

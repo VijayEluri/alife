@@ -7,7 +7,7 @@ import co.edu.unal.alife.dynamics.DeltaPopulation;
 public interface DeltaEquation<K> {
 
 	public abstract void evalEquation(DeltaPopulation<K> localPopulation,
-			List<DeltaPopulation<K>> populations, List<KernelFunction> kernelList);
+			List<DeltaPopulation<K>> populations, List<KernelFunction> kernelList) throws UnsupportedOperationException;
 
-	public abstract void applyInput(DeltaPopulation<K> localPopulation);
+	public abstract void applyInput(DeltaPopulation<K> localPopulation) throws UnsupportedOperationException;
 }
