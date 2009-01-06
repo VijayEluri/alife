@@ -19,6 +19,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -27,6 +28,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+
+import co.edu.unal.alife.applications.PendulumEquation;
+import co.edu.unal.alife.dynamics.DeltaPopulation;
 
 public class AnimationFrameGait extends JFrame implements ActionListener {
 	/**
@@ -226,11 +230,15 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 			prevY = dy;
 			prevY2 = dy2;
 			prevXr = dxr;
-			List<Double> data = tracer.getData().get(count - 1);
+			DeltaPopulation<Double> pendulumData = tracer.getData().get(2).get(count - 1);
+
+			Double xValue = pendulumData.getElementValue(PendulumEquation.STATE_X);
+			Double thetaValue = pendulumData.getElementValue(PendulumEquation.STATE_THETA);
+
 			dy = 0;
-			dx = data.get(0).floatValue() * 50;
-			dy2 = -(float) cos(data.get(1)) * 50;
-			dx2 = (float) (data.get(0) + sin(data.get(1))) * 50;
+			dx = xValue.floatValue() * 50;
+			dy2 = -(float) cos(thetaValue) * 50;
+			dx2 = (float) (xValue + sin(thetaValue)) * 50;
 			// dxr = (float) InvertedPendulum.rFun((count - 1) * 0.040) * 50;
 			dxr = (float) 0.0 * 50;
 		}
@@ -266,30 +274,34 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 			int i = 0;
 			for (Double value : prevFieldValues) {
 				int dx = (-10 + i++) * 10;
-				float dy = (float) value.floatValue()*100;
+				float dy = (float) value.floatValue() * 100;
 				// g2d.draw(new Ellipse2D.Float(posicionX + dx, posicionY + dy, 5, 5));
-				g2d.draw(new Line2D.Float(posicionX + dx, posicionY, posicionX + dx, posicionY
+				g2d
+						.draw(new Line2D.Float(posicionX + dx, posicionY, posicionX + dx, posicionY
 								- dy));
 			}
 			g2d.setColor(Color.BLUE);
 			i = 0;
 			for (Double value : fieldValues) {
 				int dx = (-10 + i++) * 10;
-				float dy = (float) value.floatValue()*100;
+				float dy = (float) value.floatValue() * 100;
 				// g2d.draw(new Ellipse2D.Float(posicionX + dx, posicionY + dy, 5, 5));
-				g2d.draw(new Line2D.Float(posicionX + dx, posicionY, posicionX + dx, posicionY
+				g2d
+						.draw(new Line2D.Float(posicionX + dx, posicionY, posicionX + dx, posicionY
 								- dy));
 			}
 			g2d.setColor(Color.RED);
-			g2d.draw(new Line2D.Float(posicionX - 270, posicionY, posicionX + 270,
-					posicionY));
+			g2d.draw(new Line2D.Float(posicionX - 270, posicionY, posicionX + 270, posicionY));
 		}
 
 		public void actualizar() {
 			count++;
-			prevFieldValues = fieldValues!= null ? fieldValues : prevFieldValues;
-			List<Double> data = tracer.getData().get(count - 1);
-			fieldValues = data.subList(fromIndex, toIndex);
+			prevFieldValues = fieldValues != null ? fieldValues : prevFieldValues;
+			DeltaPopulation<Double> fieldData = tracer.getData().get(1).get(count - 1);
+			Set<Double> positions = fieldData.getPositions();
+			for (Double position : positions) {
+				fieldValues.add(fieldData.getElementValue(position));
+			}
 		}
 	}
 
@@ -328,11 +340,15 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 
 		public void actualizar() {
 			count++;
-			List<Double> data = tracer.getData().get(count - 1);
+			DeltaPopulation<Double> pendulumData = tracer.getData().get(2).get(count - 1);
+
+			Double xValue = pendulumData.getElementValue(PendulumEquation.STATE_X);
+			Double thetaValue = pendulumData.getElementValue(PendulumEquation.STATE_THETA);
+
 			dy = 0;
-			dx = data.get(0).floatValue() * 50;
-			dy2 = -(float) cos(data.get(1)) * 50;
-			dx2 = (float) (data.get(0) + sin(data.get(1))) * 50;
+			dx = xValue.floatValue() * 50;
+			dy2 = -(float) cos(thetaValue) * 50;
+			dx2 = (float) (xValue + sin(thetaValue)) * 50;
 		}
 	}
 

@@ -15,7 +15,7 @@ import java.util.Map.Entry;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.DeltaField;
-import co.edu.unal.alife.neuralfield.DeltaPopulationEquation;
+import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
 
 /**
@@ -184,7 +184,7 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 	@Override
 	public void updatePopulationDelta(DeltaField<Double> environment, int localIndex) {
 		List<DeltaPopulation<Double>> populations = environment.getPopulations();
-		DeltaPopulationEquation<Double> equation = environment.getEquations().get(localIndex);
+		DeltaEquation<Double> equation = environment.getEquations().get(localIndex);
 		List<KernelFunction> kernelList = environment.getKernelMatrix().get(localIndex);
 		equation.evalEquation(this, populations, kernelList);
 	}

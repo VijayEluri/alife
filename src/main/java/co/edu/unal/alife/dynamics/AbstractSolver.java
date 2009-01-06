@@ -2,6 +2,8 @@ package co.edu.unal.alife.dynamics;
 
 import java.util.Observable;
 
+import co.edu.unal.alife.neuralfield.DeltaField;
+
 /**
  * @author Juan Figueredo
  * 
@@ -14,6 +16,15 @@ public abstract class AbstractSolver<K,V> extends Observable implements Solver<K
 	public AbstractSolver() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public static void simulate(double t0, double tf, double h, DeltaField<Double> field) {
+		int n = (int) Math.ceil(tf / h);
+//		double t = 0;
+		for (int i = 0; i < n; i++) {
+//			t = t0 + h * i;
+			field.evaluateStep(h, i);
+		}
 	}
 
 //	/**

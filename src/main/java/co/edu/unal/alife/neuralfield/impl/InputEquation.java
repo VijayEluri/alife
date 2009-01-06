@@ -3,22 +3,20 @@
  */
 package co.edu.unal.alife.neuralfield.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import co.edu.unal.alife.applications.InvertedPendulum;
+import co.edu.unal.alife.applications.PendulumEquation;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
+import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
-import co.edu.unal.alife.neuralfield.DeltaPopulationEquation;
 
 /**
  * @author Juan Figueredo
  * 
  */
-public class InputEquation implements DeltaPopulationEquation<Double> {
+public class InputEquation implements DeltaEquation<Double> {
 
 	private DeltaPopulation<Double> pendulum;
 	private double halfSize;
@@ -47,13 +45,12 @@ public class InputEquation implements DeltaPopulationEquation<Double> {
 	}
 	
 	public void applyInput(DeltaPopulation<Double> localPopulation) {
-		double thetaDot = pendulum.getElementDelta(InvertedPendulum.STATE_THETA);
+		double thetaDot = pendulum.getElementDelta(PendulumEquation.STATE_THETA);
 //		System.out.println("tethaDot\t:"+thetaDot);
 		double boundedValue = bipolarSigmoid(thetaDot) * 2 * halfSize;
 //		System.out.println("boundedVal\t:"+boundedValue);
 		double eqPosition = Math.round(boundedValue - halfSize);
 //		System.out.println("eqPosition\t:"+eqPosition);
-		List<Double> list = new ArrayList<Double>();
 		Set<Double> positions = localPopulation.getPositions();
 		for (Double position : positions) {
 			if(position.equals(eqPosition)) {

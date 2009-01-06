@@ -12,13 +12,13 @@ import java.util.Set;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.DeltaPopulationEquation;
+import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
 
 /**
  * @author Juan Figueredo
  */
-public class InvertedPendulum implements DeltaPopulationEquation<Double> {
+public class PendulumEquation implements DeltaEquation<Double> {
 
 	private static final double M = 1, m = 1, l = 1, g = 9.81, halfSize = 10;
 	public static final double STATE_X = 1.0, STATE_THETA = 2.0, STATE_V = 3.0, STATE_OMEGA = 4.0;
@@ -27,7 +27,7 @@ public class InvertedPendulum implements DeltaPopulationEquation<Double> {
 	/**
 	 * @param inputPopulation
 	 */
-	public InvertedPendulum(DeltaPopulation<Double> inputPopulation) {
+	public PendulumEquation(DeltaPopulation<Double> inputPopulation) {
 		super();
 		this.inputPopulation = inputPopulation;
 	}

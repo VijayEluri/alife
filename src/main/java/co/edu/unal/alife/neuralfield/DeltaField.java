@@ -16,7 +16,7 @@ import co.edu.unal.alife.dynamics.Solver;
 public abstract class DeltaField<K> extends Observable implements Simulable<Double> {
 
 	protected List<DeltaPopulation<K>> populations;
-	protected List<DeltaPopulationEquation<K>> equations;
+	protected List<DeltaEquation<K>> equations;
 	protected List<List<KernelFunction>> kernelMatrix;
 	protected Solver<K, Double> solver;
 
@@ -25,7 +25,7 @@ public abstract class DeltaField<K> extends Observable implements Simulable<Doub
 	 * @param kernelMatrix
 	 * @param populations
 	 */
-	public DeltaField(List<DeltaPopulationEquation<K>> equations,
+	public DeltaField(List<DeltaEquation<K>> equations,
 			List<List<KernelFunction>> kernelMatrix, List<DeltaPopulation<K>> populations, Solver<K,Double> solver) {
 		super();
 		this.equations = equations;
@@ -44,7 +44,7 @@ public abstract class DeltaField<K> extends Observable implements Simulable<Doub
 	/**
 	 * @return the equations
 	 */
-	public List<DeltaPopulationEquation<K>> getEquations() {
+	public List<DeltaEquation<K>> getEquations() {
 		return equations;
 	}
 
@@ -56,10 +56,11 @@ public abstract class DeltaField<K> extends Observable implements Simulable<Doub
 	}
 
 	@Override
-	public void evaluateStep(double h) {
+	public void evaluateStep(double h, int nextStepCount) {
 		for (int i = 0; i < populations.size(); i++) {
 			DeltaPopulation<K> deltaPopulation = solver.step(this, i, h);
-			this.notifyObservers(deltaPopulation);
+			this.setChanged();
+			this.notifyObservers(new Object[]{i, nextStepCount, deltaPopulation});
 		}
 	}
 
