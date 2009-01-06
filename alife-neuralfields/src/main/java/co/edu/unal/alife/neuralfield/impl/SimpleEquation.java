@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.DeltaPopulationEquation;
+import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
 
 /**
@@ -17,7 +17,7 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
 /**
  * @author Juan Figueredo
  */
-public class SimpleEquation implements DeltaPopulationEquation<Double> {
+public class SimpleEquation implements DeltaEquation<Double> {
 
 	private double tao = 1;
 	private double restingPotential = -0.2;

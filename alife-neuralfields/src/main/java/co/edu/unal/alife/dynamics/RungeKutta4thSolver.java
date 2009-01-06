@@ -64,9 +64,9 @@ public class RungeKutta4thSolver extends AbstractSolver<Double, Double> {
 			Double newValue = originalValue
 					+ (h / 6)
 					* (k1dh.get(position) + 2 * k2dh.get(position) + 2 * k3dh.get(position) + workingDelta);
-			population.setElementValue(position, newValue);
+			workingPopulation.setElementValue(position, newValue);
 		}
-		return population;
+		return workingPopulation;
 	}
 
 }
