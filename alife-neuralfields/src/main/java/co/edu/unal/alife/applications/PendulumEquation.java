@@ -83,6 +83,7 @@ public class PendulumEquation implements DeltaEquation<Double> {
 	private void getDx(DeltaPopulation<Double> deltaPopulation, double u, double tao) {
 		double theta = deltaPopulation.getElementValue(STATE_THETA);
 		double v = deltaPopulation.getElementValue(STATE_V);
+		System.out.println("v: "+v);
 		double omega = deltaPopulation.getElementValue(STATE_OMEGA);
 		deltaPopulation.setElementDelta(STATE_X, v);
 		deltaPopulation.setElementDelta(STATE_THETA, omega);

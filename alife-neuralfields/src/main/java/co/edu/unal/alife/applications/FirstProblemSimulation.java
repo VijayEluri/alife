@@ -30,7 +30,7 @@ public class FirstProblemSimulation {
 		int halfSize = 10;
 		double initialAngle = 0.1;
 		
-		double hh = 1.0 / 100;
+		double hh = 1.0 / 10;
 		double t0 = 0.0;
 		double tf = 10.0;
 		// Populations setup
