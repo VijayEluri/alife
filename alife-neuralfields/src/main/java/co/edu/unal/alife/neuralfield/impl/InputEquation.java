@@ -6,7 +6,6 @@ package co.edu.unal.alife.neuralfield.impl;
 import java.util.List;
 import java.util.Set;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import co.edu.unal.alife.applications.PendulumEquation;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
@@ -37,7 +36,7 @@ public class InputEquation implements DeltaEquation<Double> {
 	@Override
 	public void evalEquation(DeltaPopulation<Double> localPopulation,
 			List<DeltaPopulation<Double>> populations, List<KernelFunction> kernelList) {
-		throw new NotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 	
 	public static double bipolarSigmoid(double t) {

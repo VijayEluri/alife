@@ -21,7 +21,7 @@ public class RungeKutta4thSolver extends AbstractSolver<Double, Double> {
 	 * @see co.edu.unal.alife.dynamics.Solver#step(co.edu.unal.alife.neuralfield.DeltaField, int)
 	 */
 	@Override
-	public DeltaPopulation<Double> step(DeltaField<Double> field, int localIndex, double h) {
+	public DeltaPopulation<Double> step(DeltaField<Double> field, int localIndex, double h) throws UnsupportedOperationException {
 		DeltaPopulation<Double> population = field.getPopulations().get(localIndex);
 		int size = population.getSize();
 		DeltaPopulation<Double> workingPopulation = new MapNeuralPopulation(size);
@@ -30,7 +30,12 @@ public class RungeKutta4thSolver extends AbstractSolver<Double, Double> {
 		Map<Double, Double> k2dh = new LinkedHashMap<Double, Double>(size);
 		Map<Double, Double> k3dh = new LinkedHashMap<Double, Double>(size);
 		
-		population.updatePopulationDelta(field, localIndex);
+		try {
+			population.updatePopulationDelta(field, localIndex);
+		} catch (UnsupportedOperationException e) {
+			// TODO Auto-generated catch block
+			throw e;
+		}
 		for (Double position : positions) {
 			Double originalValue = population.getElementValue(position);
 			Double originalDelta = population.getElementDelta(position);
