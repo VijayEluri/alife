@@ -10,10 +10,9 @@ import java.util.List;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.dynamics.Derivable;
 import co.edu.unal.alife.dynamics.RungeKutta4thSolver;
+import co.edu.unal.alife.neuralfield.DeltaField;
 import co.edu.unal.alife.neuralfield.DeltaPopulationEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
-import co.edu.unal.alife.neuralfield.impl.DerivableNeuralField;
-import co.edu.unal.alife.neuralfield.impl.InputEquation;
 import co.edu.unal.alife.neuralfield.impl.MapNeuralPopulation;
 import co.edu.unal.alife.neuralfield.impl.MexicanHatKernel;
 import co.edu.unal.alife.neuralfield.impl.SimpleEquation;
@@ -27,22 +26,16 @@ import co.edu.unal.alife.output.core.Visualizer;
  */
 public class FirstProblemSimulation implements Derivable<Double> {
 
-	private InvertedPendulum pendulum;
-	private DerivableNeuralField<Double> field;
-	private List<Double> pendulumValues = new ArrayList<Double>(4);
-	private List<Double> fieldValues; 
+	private DeltaField<Double> field;
 
 	/**
 	 * @param field
 	 * @param pendulum
 	 * @param pendulumValues
 	 */
-	public FirstProblemSimulation(DerivableNeuralField<Double> field, InvertedPendulum pendulum,
-			List<Double> pendulumValues) {
+	public FirstProblemSimulation(DeltaField<Double> field) {
 		super();
 		this.field = field;
-		this.pendulum = pendulum;
-		this.pendulumValues = pendulumValues;
 	}
 
 	/*
@@ -51,18 +44,19 @@ public class FirstProblemSimulation implements Derivable<Double> {
 	 */
 	@Override
 	public List<Double> getDeltas(List<Double> values, double t) {
-//		pendulumValues = values.subList(0, pendulumValues.size());
-//		fieldValues = values.subList(pendulumValues.size(), values.size());
-//		List<Double> fieldDeltas = field.evaluateSimulableAsDerivable(fieldValues);
-//		List<Double> inputValues = field.getPopulations().get(0).getElementValues();
-//		List<Double> outputValues = field.getPopulations().get(1).getElementValues();
-//		List<Double> pendulumDeltas = pendulum.getPendulumDeltas(pendulumValues, outputValues, t);
-//		List<Double> deltas = new ArrayList<Double>(fieldDeltas.size() + pendulumDeltas.size());
-//		System.out.println("inputPopValues: "+inputValues);
-//		System.out.println("outputPopValues: "+outputValues);
-//		deltas.addAll(pendulumDeltas);
-//		deltas.addAll(fieldDeltas);
-//		return deltas;
+		// pendulumValues = values.subList(0, pendulumValues.size());
+		// fieldValues = values.subList(pendulumValues.size(), values.size());
+		// List<Double> fieldDeltas = field.evaluateSimulableAsDerivable(fieldValues);
+		// List<Double> inputValues = field.getPopulations().get(0).getElementValues();
+		// List<Double> outputValues = field.getPopulations().get(1).getElementValues();
+		// List<Double> pendulumDeltas = pendulum.getPendulumDeltas(pendulumValues, outputValues,
+		// t);
+		// List<Double> deltas = new ArrayList<Double>(fieldDeltas.size() + pendulumDeltas.size());
+		// System.out.println("inputPopValues: "+inputValues);
+		// System.out.println("outputPopValues: "+outputValues);
+		// deltas.addAll(pendulumDeltas);
+		// deltas.addAll(fieldDeltas);
+		// return deltas;
 		return null;
 	}
 
@@ -75,7 +69,6 @@ public class FirstProblemSimulation implements Derivable<Double> {
 		throw new UnsupportedOperationException();
 	}
 
-
 	public static void main(String[] args) {
 		int layers = 2;
 		int halfSize = 10;
@@ -83,13 +76,13 @@ public class FirstProblemSimulation implements Derivable<Double> {
 		int pendulumStates = 4;
 		int derivableSize = 2 * mainSize + pendulumStates;
 		double initialAngle = 0.0;
-		double hh = 1.0/100;
+		double hh = 1.0 / 100;
 		int traceSkip = 4;
 		double t0 = 0.0;
 		double tf = 10.0;
 
 		// Initial values setup
-		List<Double> pendulumValues = Arrays.asList(new Double[]{0.0, initialAngle, 0.0, 0.0});
+		List<Double> pendulumValues = Arrays.asList(new Double[] { 0.0, initialAngle, 0.0, 0.0 });
 		List<Double> fieldValues = new ArrayList<Double>(mainSize);
 		for (int i = 0; i < mainSize; i++) {
 			fieldValues.add(0.0);
@@ -99,7 +92,7 @@ public class FirstProblemSimulation implements Derivable<Double> {
 		initialValues.addAll(fieldValues);
 		initialValues.addAll(fieldValues);
 
-		InvertedPendulum pendulum = new InvertedPendulum();
+//		InvertedPendulum pendulum = new InvertedPendulum(); -> Cambiar por delta population
 
 		// Populations setup
 		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(layers);
@@ -113,37 +106,36 @@ public class FirstProblemSimulation implements Derivable<Double> {
 		List<KernelFunction> firstRow = new ArrayList<KernelFunction>(layers);
 		List<KernelFunction> secondRow = new ArrayList<KernelFunction>(layers);
 		KernelFunction kernelFunction = new MexicanHatKernel();
-		firstRow.add(null);				//self-connectivity of input field
-		firstRow.add(null);				//connectivity from output to input
-		secondRow.add(kernelFunction);	//connectivity from input to output
-		secondRow.add(kernelFunction);	//self-connectivity of output field
+		firstRow.add(null); // self-connectivity of input field
+		firstRow.add(null); // connectivity from output to input
+		secondRow.add(kernelFunction); // connectivity from input to output
+		secondRow.add(kernelFunction); // self-connectivity of output field
 		kernelMatrix.add(firstRow);
 		kernelMatrix.add(secondRow);
 
 		// Equations setup
 		List<DeltaPopulationEquation<Double>> equations = new ArrayList<DeltaPopulationEquation<Double>>(
 				layers);
-		InputEquation inputEquation = new InputEquation(halfSize,pendulum);
+//		InputEquation inputEquation = new InputEquation(halfSize, pendulum); -> Comentado temporalmente
 		SimpleEquation simpleEquation = new SimpleEquation();
-		equations.add(inputEquation);	//input field equation
-		equations.add(simpleEquation);	//output field equation
-		DerivableNeuralField<Double> field = new DerivableNeuralField<Double>(equations,
-				kernelMatrix, populations);
+//		equations.add(inputEquation); // input field equation	-> Comentado temporalmente
+		equations.add(simpleEquation); // output field equation
+//		DerivableNeuralField<Double> field = new DerivableNeuralField<Double>(equations,
+//				kernelMatrix, populations); --> Cambiar por NeuralField<Double>
 
-		FirstProblemSimulation problemSimulation = new FirstProblemSimulation(field, pendulum,
-				pendulumValues); 
+//		FirstProblemSimulation problemSimulation = new FirstProblemSimulation(field); -> Comentado temporalmente
 		// Solver setup
-		//System.out.println("Initial Values " + initialValues);
+		// System.out.println("Initial Values " + initialValues);
 		RungeKutta4thSolver solver = new RungeKutta4thSolver();
-		Visualizer printer = new PendulumPrinter(pendulumStates,mainSize,mainSize);
+		Visualizer printer = new PendulumPrinter(pendulumStates, mainSize, mainSize);
 		Tracer tracer = new Tracer();
 		solver.addObserver(printer);
 		solver.addObserver(tracer);
-		
+
 		// Run simulation
-		//solver.simulate(tf);
-		
-		//Run animation
+		// solver.simulate(tf);
+
+		// Run animation
 		new AnimationFrameGait(tracer);
 
 	}

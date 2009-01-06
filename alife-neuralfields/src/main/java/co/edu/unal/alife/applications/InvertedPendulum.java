@@ -7,45 +7,73 @@ import static java.lang.Math.PI;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import co.edu.unal.alife.dynamics.DeltaPopulation;
+import co.edu.unal.alife.neuralfield.DeltaPopulationEquation;
+import co.edu.unal.alife.neuralfield.KernelFunction;
 
 /**
- * @author Juan Figueredop
- * 
- *
+ * @author Juan Figueredo
  */
-public class InvertedPendulum {
-	
-	private List<Double> x = Arrays.asList(new Double[]{0.0,0.0,0.0,0.0});
-	private static final double M = 1, m = 1, l = 1, g = 9.81;
-	
-	public static double stdAngle(double angle) {
-		return ((angle+PI)%(2*PI)+2*PI) % (2*PI) - PI;
+public class InvertedPendulum implements DeltaPopulationEquation<Double> {
+
+	private static final double M = 1, m = 1, l = 1, g = 9.81, halfSize = 10;
+	public static final double STATE_X = 1.0, STATE_THETA = 2.0, STATE_V = 3.0, STATE_OMEGA = 4.0;
+	DeltaPopulation<Double> inputPopulation;
+
+	/**
+	 * @param inputPopulation
+	 */
+	public InvertedPendulum(DeltaPopulation<Double> inputPopulation) {
+		super();
+		this.inputPopulation = inputPopulation;
 	}
-	
-	public List<Double> getPendulumDeltas(List<Double> newX, List<Double> inputs, double newT) {	
+
+	/*
+	 * (non-Javadoc)
+	 * @see co.edu.unal.alife.neuralfield.DeltaPopulationEquation#applyInput()
+	 */
+	@Override
+	public void applyInput(DeltaPopulation<Double> deltaPopulation) {
+		// TODO Auto-generated method stub
+		throw new NotImplementedException();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * co.edu.unal.alife.neuralfield.DeltaPopulationEquation#evalEquation(co.edu.unal.alife.dynamics
+	 * .DeltaPopulation, java.util.List, java.util.List)
+	 */
+	@Override
+	public void evalEquation(DeltaPopulation<Double> localPopulation,
+			List<DeltaPopulation<Double>> populations, List<KernelFunction> kernelList) {
 		double u = 0;
-		if (inputs != null) {
+		if (inputPopulation != null) {
+			Set<Double> positions = inputPopulation.getPositions();
 			double maxSoFar = Double.MIN_VALUE;
-			int argMaxSoFar = -1;
-			for (int j = 1; j < inputs.size()-1; j++) {
-				double value = inputs.get(j-1)+2*inputs.get(j)+inputs.get(j+1);
-				if (value>maxSoFar) {
-					argMaxSoFar = j;
+			Double argMaxSoFar = null;
+			for (Double position : positions) {
+				double value = inputPopulation.getElementValue(position);
+				if (value > maxSoFar) {
+					argMaxSoFar = position;
 					maxSoFar = value;
 				}
 			}
 			System.out.println(argMaxSoFar);
-			u = (argMaxSoFar - 10)/10.0;
+			u = (argMaxSoFar - halfSize) / halfSize;
 		}
-		newX.set(1,stdAngle(newX.get(1)));
-		Collections.copy(x, newX);
+		localPopulation
+				.setElementValue(STATE_X, stdAngle(localPopulation.getElementValue(STATE_X)));
 		double tao = 0;
-		List<Double> dx = getDx(u, tao);
-		return dx;
+		getDx(localPopulation, u, tao);
+	}
+
+	public static double stdAngle(double angle) {
+		return ((angle + PI) % (2 * PI) + 2 * PI) % (2 * PI) - PI;
 	}
 
 	/**
@@ -53,17 +81,19 @@ public class InvertedPendulum {
 	 * @param tao
 	 * @return
 	 */
-	private List<Double> getDx(double u, double tao) {
-		List<Double> dx = new ArrayList<Double>(4);
-		dx.add(x.get(2));
-		dx.add(x.get(3));
-		dx.add((m*l*x.get(3)*x.get(3)*sin(x.get(1))-m*g*cos(x.get(1))*sin(x.get(1))+u) / (M+m*sin(x.get(1))*sin(x.get(1))));
-		dx.add(((M+m)*g*sin(x.get(1))-m*l*x.get(3)*x.get(3)*sin(x.get(1))*cos(x.get(1))-u*cos(x.get(1))) / (l*(M+m*sin(x.get(1))*sin(x.get(1)))) - 0.5*x.get(3) + m*l*l*tao);
-		return dx;
+	private void getDx(DeltaPopulation<Double> deltaPopulation, double u, double tao) {
+		double theta = deltaPopulation.getElementValue(STATE_THETA);
+		double v = deltaPopulation.getElementValue(STATE_V);
+		double omega = deltaPopulation.getElementValue(STATE_OMEGA);
+		deltaPopulation.setElementDelta(STATE_X, v);
+		deltaPopulation.setElementDelta(STATE_THETA, omega);
+		double st = sin(theta);
+		double ct = cos(theta);
+		deltaPopulation.setElementDelta(STATE_V, (m * l * omega * omega * st - m * g * ct * st + u)
+				/ (M + m * st * st));
+		deltaPopulation.setElementDelta(STATE_OMEGA, ((M + m) * g * st - m * l * omega * omega * st
+				* ct - u * ct)
+				/ (l * (M + m * st * st)) - 0.5 * omega + m * l * l * tao);
 	}
-	
-	public double sense() {
-		return getDx(0,0).get(3);
-	}
-	
+
 }

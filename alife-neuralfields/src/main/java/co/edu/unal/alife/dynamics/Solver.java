@@ -8,10 +8,7 @@ import co.edu.unal.alife.neuralfield.DeltaField;
  * @param <V>
  */
 public interface Solver<K,V> {
-	
 	//List<V> simulate(double tf);
-	
 	DeltaPopulation<K> step(DeltaField<K> field, int localIndex, double h);
-	
 	//List<V> step();
 }
