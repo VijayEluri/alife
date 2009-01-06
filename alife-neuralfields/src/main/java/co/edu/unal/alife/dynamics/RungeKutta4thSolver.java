@@ -24,8 +24,8 @@ public class RungeKutta4thSolver extends AbstractSolver<Double, Double> {
 	public DeltaPopulation<Double> step(DeltaField<Double> field, int localIndex, double h) throws UnsupportedOperationException {
 		DeltaPopulation<Double> population = field.getPopulations().get(localIndex);
 		int size = population.getSize();
-		DeltaPopulation<Double> workingPopulation = new MapNeuralPopulation(size);
-		Set<Double> positions = workingPopulation.getPositions();
+		Set<Double> positions = population.getPositions();
+		DeltaPopulation<Double> workingPopulation = new MapNeuralPopulation(positions);
 		Map<Double, Double> k1dh = new LinkedHashMap<Double, Double>(size);
 		Map<Double, Double> k2dh = new LinkedHashMap<Double, Double>(size);
 		Map<Double, Double> k3dh = new LinkedHashMap<Double, Double>(size);

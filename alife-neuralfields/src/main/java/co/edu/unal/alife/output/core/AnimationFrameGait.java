@@ -299,6 +299,7 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 			prevFieldValues = fieldValues != null ? fieldValues : prevFieldValues;
 			DeltaPopulation<Double> fieldData = tracer.getData().get(1).get(count - 1);
 			Set<Double> positions = fieldData.getPositions();
+			fieldValues = new ArrayList<Double>();
 			for (Double position : positions) {
 				fieldValues.add(fieldData.getElementValue(position));
 			}
