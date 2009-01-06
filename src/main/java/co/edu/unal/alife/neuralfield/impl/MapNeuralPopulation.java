@@ -186,22 +186,7 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		List<DeltaPopulation<Double>> populations = environment.getPopulations();
 		DeltaPopulationEquation<Double> equation = environment.getEquations().get(localIndex);
 		List<KernelFunction> kernelList = environment.getKernelMatrix().get(localIndex);
-		List<Double> deltas = equation.evalEquation(this, populations, kernelList);
-		Set<Entry<Double, DeltaPopulation.Element>> entrySet = populationMap.entrySet();
-		int i = 0;
-		if (deltas != null) {
-			for (Entry<Double, DeltaPopulation.Element> entry : entrySet) {
-				Double delta = deltas.get(i++);
-				entry.getValue().setDelta(delta);
-			}
-		} else {
-			List<Double> values = equation.applyInput();
-			for (Entry<Double, DeltaPopulation.Element> entry : entrySet) {
-				Double value = values.get(i++);
-				entry.getValue().setValue(value);
-				entry.getValue().setDelta(0.0);
-			}
-		}
+		equation.evalEquation(this, populations, kernelList);
 	}
 	
 	/**

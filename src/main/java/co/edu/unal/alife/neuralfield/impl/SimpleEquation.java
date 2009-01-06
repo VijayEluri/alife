@@ -3,7 +3,6 @@
  */
 package co.edu.unal.alife.neuralfield.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -29,10 +28,9 @@ public class SimpleEquation implements DeltaPopulationEquation<Double> {
 	 * (java.util.List, java.util.List)
 	 */
 	@Override
-	public List<Double> evalEquation(DeltaPopulation<Double> localPopulation,
+	public void evalEquation(DeltaPopulation<Double> localPopulation,
 			List<DeltaPopulation<Double>> populations, List<KernelFunction> kernelList) {
 		Set<Double> localPositions = localPopulation.getPositions();
-		List<Double> deltas = new ArrayList<Double>(localPositions.size());
 		// For each element (or tuple) in the local population do...
 		for (Double localPosition : localPositions) {
 			double localValue = localPopulation.getElementValue(localPosition);
@@ -66,10 +64,9 @@ public class SimpleEquation implements DeltaPopulationEquation<Double> {
 			// localValue and tao
 			double delta = (-localValue + totalSum - restingPotential) / tao;
 			// System.out.println("SimpleEquation - Index: "+localIndex+" Delta: "+delta);
-			// and add it to the list of deltas.
-			deltas.add(delta);
+			// set it as element delta
+			localPopulation.setElementDelta(localPosition, delta);
 		}
-		return deltas;
 	}
 
 	/*
@@ -78,7 +75,7 @@ public class SimpleEquation implements DeltaPopulationEquation<Double> {
 	 * applications.InvertedPendulum, java.util.List, double, double)
 	 */
 	@Override
-	public List<Double> applyInput() {
+	public void applyInput(DeltaPopulation<Double> deltaPopulation) {
 		throw new UnsupportedOperationException();
 	}
 

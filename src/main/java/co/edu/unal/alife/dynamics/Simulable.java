@@ -5,11 +5,8 @@ import java.util.List;
 public interface Simulable<V> {
 
 	/**
-	 * Returns a COPY of each list of deltas of each population after the
-	 * evaluation
-	 * 
-	 * @param newValues
-	 * @return a copy of the deltas
+	 * Evaluates an iteration of the entire field in a population-by-population basis
+	 * @param h the step size.
 	 */
-	public abstract List<List<V>> evaluateStep(List<List<V>> newValues);
+	public abstract void evaluateStep(double h);
 }
