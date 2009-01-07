@@ -16,7 +16,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -41,8 +40,8 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 	 * @author jjfigueredou
 	 */
 
-	final Circles circles = new Circles();
-	final Grafica grafica = new Grafica();
+	final Pendulum circles = new Pendulum();
+//	final Grafica grafica = new Grafica();
 	final Field field = new Field();
 	final JPanel animadoInf = new JPanel();
 	final JPanel animadoSup = new JPanel();
@@ -166,11 +165,11 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 		// grafica.actualizar();
 		// SwingUtilities.invokeLater(grafica);
 		// }
-		if (field.count < tracer.getData().size()) {
+		if (field.count < tracer.getData().get(1).size()) {
 			field.actualizar();
 			SwingUtilities.invokeLater(field);
 		}
-		if (circles.count < tracer.getData().size()) {
+		if (circles.count < tracer.getData().get(0).size()) {
 			circles.actualizar();
 			SwingUtilities.invokeLater(circles);
 		} else {
@@ -178,7 +177,7 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 		}
 	}
 
-	public class Circles implements Runnable {
+	public class Pendulum implements Runnable {
 		int frameNumber = -1;
 		Timer timer;
 		JPanel jP;
@@ -187,7 +186,7 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 		int count, h, tf;
 		float dxr, dx, dx2, dy, dy2, prevX, prevY, prevX2, prevY2, prevXr;
 
-		public Circles() {
+		public Pendulum() {
 			count = 0;
 			this.posicionX = 500;
 			this.posicionY = 100;
@@ -239,8 +238,9 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 			dx = xValue.floatValue() * 50;
 			dy2 = -(float) cos(thetaValue) * 50;
 			dx2 = (float) (xValue + sin(thetaValue)) * 50;
-			// dxr = (float) InvertedPendulum.rFun((count - 1) * 0.040) * 50;
-			dxr = (float) 0.0 * 50;
+// 			dxr = (float) InvertedPendulum.rFun((count - 1) * 0.040) * 50;
+//			dxr = (float) 0.0 * 50;
+//			System.out.println(count+" - "+dy2);
 		}
 	}
 
@@ -306,52 +306,53 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 		}
 	}
 
-	public class Grafica implements Runnable {
-		int frameNumber = -1;
-		Timer timer;
-		JPanel jP;
-		Graphics2D g2d;
-		float posicionX, posicionY, posicionX2, posicionY2;
-		int count, h, tf;
-		float dx, dy, dx2, dy2;
-
-		public Grafica() {
-			count = 0;
-			dx = 0;
-			this.posicionX = 500;
-			this.posicionY = 100;
-			this.posicionX2 = 500;
-			this.posicionY2 = 100;
-		}
-
-		public void animar(int h, int tf) {
-			// g2d = (Graphics2D) animadoSup.getGraphics();
-			g2d.setColor(Color.RED);
-			this.h = h;
-			this.tf = tf;
-			count = 0;
-		}
-
-		public void run() {
-			g2d.setColor(Color.BLUE);
-			g2d.draw(new Rectangle2D.Float(posicionX + dx, posicionY + dy, 1, 1));
-			g2d.setColor(Color.RED);
-			g2d.draw(new Rectangle2D.Float(posicionX2 + dx2, posicionY2 + dy2, 1, 1));
-		}
-
-		public void actualizar() {
-			count++;
-			DeltaPopulation<Double> pendulumData = tracer.getData().get(2).get(count - 1);
-
-			Double xValue = pendulumData.getElementValue(PendulumEquation.STATE_X);
-			Double thetaValue = pendulumData.getElementValue(PendulumEquation.STATE_THETA);
-
-			dy = 0;
-			dx = xValue.floatValue() * 50;
-			dy2 = -(float) cos(thetaValue) * 50;
-			dx2 = (float) (xValue + sin(thetaValue)) * 50;
-		}
-	}
+//	public class Grafica implements Runnable {
+//		int frameNumber = -1;
+//		Timer timer;
+//		JPanel jP;
+//		Graphics2D g2d;
+//		float posicionX, posicionY, posicionX2, posicionY2;
+//		int count, h, tf;
+//		float dx, dy, dx2, dy2;
+//
+//		public Grafica() {
+//			count = 0;
+//			dx = 0;
+//			this.posicionX = 500;
+//			this.posicionY = 100;
+//			this.posicionX2 = 500;
+//			this.posicionY2 = 100;
+//		}
+//
+//		public void animar(int h, int tf) {
+//			// g2d = (Graphics2D) animadoSup.getGraphics();
+//			g2d.setColor(Color.RED);
+//			this.h = h;
+//			this.tf = tf;
+//			count = 0;
+//		}
+//
+//		public void run() {
+//			g2d.setColor(Color.BLUE);
+//			g2d.draw(new Rectangle2D.Float(posicionX + dx, posicionY + dy, 1, 1));
+//			g2d.setColor(Color.RED);
+//			g2d.draw(new Rectangle2D.Float(posicionX2 + dx2, posicionY2 + dy2, 1, 1));
+//		}
+//
+//		public void actualizar() {
+//			count++;
+//			DeltaPopulation<Double> pendulumData = tracer.getData().get(2).get(count - 1);
+//
+//			Double xValue = pendulumData.getElementValue(PendulumEquation.STATE_X);
+//			Double thetaValue = pendulumData.getElementValue(PendulumEquation.STATE_THETA);
+//
+//			dy = 0;
+//			dx = xValue.floatValue() * 50;
+//			dy2 = -(float) cos(thetaValue) * 50;
+//			dx2 = (float) (xValue + sin(thetaValue)) * 50;
+//			System.out.println(count+" - "+dy2);
+//		}
+//	}
 
 	public static void main(String[] args) {
 		// VentanaPrincipal vp = new VentanaPrincipal();

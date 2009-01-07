@@ -13,7 +13,7 @@ import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.DeltaField;
 import co.edu.unal.alife.neuralfield.KernelFunction;
 import co.edu.unal.alife.neuralfield.impl.InputEquation;
-import co.edu.unal.alife.neuralfield.impl.MapNeuralPopulation;
+import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.neuralfield.impl.MexicanHatKernel;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
 import co.edu.unal.alife.neuralfield.impl.SimpleEquation;
@@ -30,14 +30,14 @@ public class FirstProblemSimulation {
 		int halfSize = 10;
 		double initialAngle = 0.1;
 		
-		double hh = 1.0 / 10;
+		double hh = 1.0 / 100;
 		double t0 = 0.0;
 		double tf = 10.0;
 		// Populations setup
 		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(N);
-		MapNeuralPopulation inputPopulation = new MapNeuralPopulation(halfSize);
-		MapNeuralPopulation outputPopulation = new MapNeuralPopulation(halfSize);
-		MapNeuralPopulation pendulumPopulation = new MapNeuralPopulation(4,false);
+		MapDeltaPopulation inputPopulation = new MapDeltaPopulation(halfSize);
+		MapDeltaPopulation outputPopulation = new MapDeltaPopulation(halfSize);
+		MapDeltaPopulation pendulumPopulation = new MapDeltaPopulation(4,false);
 		populations.add(inputPopulation);
 		populations.add(outputPopulation);
 		populations.add(pendulumPopulation);

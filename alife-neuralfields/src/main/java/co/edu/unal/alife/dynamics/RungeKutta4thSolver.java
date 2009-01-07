@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import co.edu.unal.alife.neuralfield.DeltaField;
-import co.edu.unal.alife.neuralfield.impl.MapNeuralPopulation;
+import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 
 /**
  * @author Juan Figueredo
@@ -25,7 +25,7 @@ public class RungeKutta4thSolver extends AbstractSolver<Double, Double> {
 		DeltaPopulation<Double> population = field.getPopulations().get(localIndex);
 		int size = population.getSize();
 		Set<Double> positions = population.getPositions();
-		DeltaPopulation<Double> workingPopulation = new MapNeuralPopulation(positions);
+		DeltaPopulation<Double> workingPopulation = new MapDeltaPopulation(positions);
 		Map<Double, Double> k1dh = new LinkedHashMap<Double, Double>(size);
 		Map<Double, Double> k2dh = new LinkedHashMap<Double, Double>(size);
 		Map<Double, Double> k3dh = new LinkedHashMap<Double, Double>(size);

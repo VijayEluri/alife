@@ -53,8 +53,8 @@ public class PendulumEquation implements DeltaEquation<Double> {
 		double u = 0;
 		if (inputPopulation != null) {
 			Set<Double> positions = inputPopulation.getPositions();
-			double maxSoFar = Double.MIN_VALUE;
-			Double argMaxSoFar = null;
+			double maxSoFar = 0;
+			double argMaxSoFar = 0.0;
 			for (Double position : positions) {
 				double value = inputPopulation.getElementValue(position);
 				if (value > maxSoFar) {
@@ -62,8 +62,9 @@ public class PendulumEquation implements DeltaEquation<Double> {
 					maxSoFar = value;
 				}
 			}
-			System.out.println(argMaxSoFar);
-			u = (argMaxSoFar - halfSize) / halfSize;
+			System.out.println(argMaxSoFar + " : " + maxSoFar);
+			System.out.println(inputPopulation.getElements());
+			u = (argMaxSoFar) / halfSize;
 		}
 		localPopulation
 				.setElementValue(STATE_X, stdAngle(localPopulation.getElementValue(STATE_X)));
@@ -83,7 +84,7 @@ public class PendulumEquation implements DeltaEquation<Double> {
 	private void getDx(DeltaPopulation<Double> deltaPopulation, double u, double tao) {
 		double theta = deltaPopulation.getElementValue(STATE_THETA);
 		double v = deltaPopulation.getElementValue(STATE_V);
-		System.out.println("v: "+v);
+//		System.out.println("v: "+v);
 		double omega = deltaPopulation.getElementValue(STATE_OMEGA);
 		deltaPopulation.setElementDelta(STATE_X, v);
 		deltaPopulation.setElementDelta(STATE_THETA, omega);
