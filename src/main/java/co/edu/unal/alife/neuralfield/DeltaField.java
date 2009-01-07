@@ -62,11 +62,11 @@ public abstract class DeltaField<K> extends Observable implements Simulable<Doub
 			DeltaPopulation<K> deltaPopulation = null;
 			try {
 				deltaPopulation = solver.step(this, i, h);
-				System.out.println("Step - Pop "+i);
+//				System.out.println("Step - Pop "+i);
 			} catch (UnsupportedOperationException e) {
 				deltaPopulation = populations.get(i);
 				equations.get(i).applyInput(deltaPopulation);
-				System.out.println("Apply - Pop "+i);
+//				System.out.println("Apply - Pop "+i);
 			}
 			populations.set(i, deltaPopulation);
 			this.setChanged();

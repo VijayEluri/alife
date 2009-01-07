@@ -27,19 +27,19 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
 /**
  * @author Juan Figueredo
  */
-public class MapNeuralPopulation implements DeltaPopulation<Double> {
+public class MapDeltaPopulation implements DeltaPopulation<Double> {
 
 	private Map<Double, DeltaPopulation.Element> populationMap = new LinkedHashMap<Double, DeltaPopulation.Element>();
 
 	/**
 	 * 
 	 */
-	public MapNeuralPopulation() {
+	public MapDeltaPopulation() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public MapNeuralPopulation(DeltaPopulation<Double> population) {
+	public MapDeltaPopulation(DeltaPopulation<Double> population) {
 		this.populationMap = new LinkedHashMap<Double, DeltaPopulation.Element>(population
 				.getPopulationMap());
 	}
@@ -47,7 +47,7 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 	/**
 	 * 
 	 */
-	public MapNeuralPopulation(int providedSize, boolean isHalfSize) {
+	public MapDeltaPopulation(int providedSize, boolean isHalfSize) {
 		super();
 		if (isHalfSize) {
 			for (int i = -providedSize; i <= providedSize; i++) {
@@ -66,11 +66,11 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		}
 	}
 
-	public MapNeuralPopulation(int halfSize) {
+	public MapDeltaPopulation(int halfSize) {
 		this(halfSize, true);
 	}
 
-	public MapNeuralPopulation(Set<Double> positions) {
+	public MapDeltaPopulation(Set<Double> positions) {
 		for (Double position : positions) {
 			Element element = new Element();
 			element.setValue(0.0);
@@ -265,5 +265,15 @@ public class MapNeuralPopulation implements DeltaPopulation<Double> {
 		public void setDelta(Double delta) {
 			this.delta = delta;
 		}
+
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "E{Value:"+this.getValue()+",Delta:"+this.getDelta()+"}";
+		}
+		
+		
 	};
 }
