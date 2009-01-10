@@ -56,7 +56,7 @@ public class InputEquation implements DeltaEquation<Double> {
 		System.out.println(theta+"+"+omega+"="+value+"->"+boundedValue);
 //		System.out.println("boundedVal\t:"+boundedValue);
 		double eqPosition = Math.round(boundedValue);
-//		System.out.println("eqPosition\t:"+eqPosition);
+		System.out.println("eqPosition\t:"+eqPosition);
 		Set<Double> positions = localPopulation.getPositions();
 		for (Double position : positions) {
 			if(position.equals(eqPosition)) {
