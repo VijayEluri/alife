@@ -19,7 +19,7 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
  */
 public class SimpleEquation implements DeltaEquation<Double> {
 
-	private double tao = 1;
+	private double tao = 0.1;
 	private double restingPotential = -0.2;
 
 	/*

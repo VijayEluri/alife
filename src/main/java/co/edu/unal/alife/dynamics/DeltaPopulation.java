@@ -11,6 +11,11 @@ import co.edu.unal.alife.neuralfield.DeltaField;
  * 
  * @author jjfigueredou
  */
+/**
+ * @author Juan Figueredo
+ *
+ * @param <K>
+ */
 public abstract interface DeltaPopulation<K> {
 
 	/**
@@ -61,26 +66,6 @@ public abstract interface DeltaPopulation<K> {
 	public abstract Collection<? extends Element> getElements();
 	
 	/**
-	 * Gets the values of the elements contained in the neural population.
-	 * 
-	 * @return the values
-	 */
-	// public abstract List<Double> getElementValues();
-	// public abstract void setElementValues(Collection<Double> elementValues);
-	/**
-	 * Gets the deltas of the elements contained in the neural population.
-	 * 
-	 * @return the deltas
-	 */
-	
-	//public abstract List<Double> getElementDeltas();
-	/**
-	 * Get the tuples {Position,Element} contained in the neural population.
-	 * 
-	 * @return set of tuples
-	 */
-	// public abstract Set<Entry<K, Element>> getTuples();
-	/**
 	 * Get the positions from elements contained in the neural population.
 	 * 
 	 * @return set of positions
@@ -97,6 +82,11 @@ public abstract interface DeltaPopulation<K> {
 	 */
 	public abstract void updatePopulationDelta(DeltaField<K> environment, int localIndex) throws UnsupportedOperationException;
 	
+	
+	/**
+	 * Gets the map that back the delta population.
+	 * @return the population map
+	 */
 	public Map<K,Element> getPopulationMap();
 	
 	/**
@@ -105,6 +95,24 @@ public abstract interface DeltaPopulation<K> {
 	 * @return the size
 	 */
 	public int getSize();
+	
+	/**
+	 * Returns true if there is a population registered for the next simulation step
+	 * @return has next delta population
+	 */
+	public boolean hasNextPopulation();
+
+	/**
+	 * Gets the population for the next simulation step
+	 * @return next delta population
+	 */
+	public DeltaPopulation<K> getNextPopulation();
+	
+	/**
+	 * Sets the population for the next simulation step
+	 * @param nextPopulation
+	 */
+	public void setNextPopulation(DeltaPopulation<K> nextPopulation);
 
 	/**
 	 * Interface that represent an element of a neural population, i.e. a point with an associated

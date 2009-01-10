@@ -41,13 +41,19 @@ public class InputEquation implements DeltaEquation<Double> {
 	}
 	
 	public static double bipolarSigmoid(double t) {
-		return (1 - Math.exp(-t)) / (1 + Math.exp(-t));
+		double alpha = 3;
+		return (1 - Math.exp(-alpha*t)) / (1 + Math.exp(-alpha*t));
 	}
 	
 	public void applyInput(DeltaPopulation<Double> localPopulation) {
-		double thetaDot = pendulum.getElementDelta(PendulumEquation.STATE_THETA);
-//		System.out.println("tethaDot\t:"+thetaDot);
-		double boundedValue = bipolarSigmoid(thetaDot) * halfSize;
+		while (pendulum.hasNextPopulation()) {
+			pendulum = pendulum.getNextPopulation();
+		}
+		double theta = pendulum.getElementValue(PendulumEquation.STATE_THETA);
+		double omega = pendulum.getElementValue(PendulumEquation.STATE_OMEGA);
+		double value = theta + omega;
+		double boundedValue = bipolarSigmoid(value) * halfSize;
+		System.out.println(theta+"+"+omega+"="+value+"->"+boundedValue);
 //		System.out.println("boundedVal\t:"+boundedValue);
 		double eqPosition = Math.round(boundedValue);
 //		System.out.println("eqPosition\t:"+eqPosition);

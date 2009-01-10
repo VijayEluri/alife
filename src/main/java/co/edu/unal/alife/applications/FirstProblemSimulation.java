@@ -17,7 +17,7 @@ import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.neuralfield.impl.MexicanHatKernel;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
 import co.edu.unal.alife.neuralfield.impl.SimpleEquation;
-import co.edu.unal.alife.output.core.AnimationFrameGait;
+import co.edu.unal.alife.output.core.PendulumFrame;
 import co.edu.unal.alife.output.core.Tracer;
 
 /**
@@ -28,7 +28,7 @@ public class FirstProblemSimulation {
 	public static void main(String[] args) {
 		int N = 3;
 		int halfSize = 10;
-		double initialAngle = 0.1;
+		double initialAngle = 0.4;
 		
 		double hh = 1.0 / 100;
 		double t0 = 0.0;
@@ -50,12 +50,13 @@ public class FirstProblemSimulation {
 		List<KernelFunction> firstRow = new ArrayList<KernelFunction>(N);
 		List<KernelFunction> secondRow = new ArrayList<KernelFunction>(N);
 		List<KernelFunction> thirdRow = null;
-		KernelFunction kernelFunction = new MexicanHatKernel();
+		KernelFunction inputKernelFunction = new MexicanHatKernel(0.05,4,0.15);
+		KernelFunction selfKernelFunction = new MexicanHatKernel(0.05,4,0.05);
 		firstRow.add(null); // self-connectivity of input field
 		firstRow.add(null); // connectivity from output to input
 		firstRow.add(null); // connectivity from plant to input
-		secondRow.add(kernelFunction); // connectivity from input to output
-		secondRow.add(kernelFunction); // self-connectivity of output field
+		secondRow.add(inputKernelFunction); // connectivity from input to output
+		secondRow.add(selfKernelFunction); // self-connectivity of output field
 		secondRow.add(null); // connectivity from plant to output
 		kernelMatrix.add(firstRow);
 		kernelMatrix.add(secondRow);
@@ -84,7 +85,7 @@ public class FirstProblemSimulation {
 		AbstractSolver.simulate(t0, tf, hh, field);
 
 		// Run animation
-		new AnimationFrameGait(tracer);
+		new PendulumFrame(tracer);
 
 	}
 }

@@ -31,7 +31,7 @@ import javax.swing.Timer;
 import co.edu.unal.alife.applications.PendulumEquation;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 
-public class AnimationFrameGait extends JFrame implements ActionListener {
+public class PendulumFrame extends JFrame implements ActionListener {
 	/**
 	 * 
 	 */
@@ -52,7 +52,7 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 	Tracer tracer;
 
 	// Constructor
-	public AnimationFrameGait(Tracer tracer) {
+	public PendulumFrame(Tracer tracer) {
 
 		super("InvertedPendulum GUI");
 		this.tracer = tracer;
@@ -101,10 +101,11 @@ public class AnimationFrameGait extends JFrame implements ActionListener {
 		buttonAplicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					timer.setDelay(25);
-					circles.animar((int) 40, (int) 20000);
+					int h = 1000/MAX_FPS;
+					timer.setDelay(h);
+					circles.animar((int) h, (int) 1000);
 					// grafica.animar((int) 40, (int) 20000);
-					field.animar((int) 40, (int) 20000);
+					field.animar((int) h, (int) 1000);
 					animadoSup.repaint();
 					iniciarAnimacion();
 				} catch (Exception ex) {
