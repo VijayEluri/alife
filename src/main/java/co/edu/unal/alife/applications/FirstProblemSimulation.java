@@ -28,7 +28,7 @@ public class FirstProblemSimulation {
 	public static void main(String[] args) {
 		int N = 3;
 		int halfSize = 10;
-		double initialAngle = 0.4;
+		double initialAngle = 0.2;
 		
 		double hh = 1.0 / 100;
 		double t0 = 0.0;
