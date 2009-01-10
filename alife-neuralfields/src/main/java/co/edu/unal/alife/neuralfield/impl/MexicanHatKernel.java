@@ -12,9 +12,28 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
 public class MexicanHatKernel extends KernelFunction {
 
 //	public static final double sigma = 1;
-	public static final double H0 = 0.05;
-	public static final double delta = 1;
-	public static final double k = 0.20;
+	private double H0 = 0.05;
+	private double delta = 4;
+	private double k = 0.05;
+	
+	/**
+	 * 
+	 */
+	public MexicanHatKernel() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	/**
+	 * @param h0
+	 * @param delta
+	 * @param k
+	 */
+	public MexicanHatKernel(double h0, double delta, double k) {
+		this();
+		H0 = h0;
+		this.delta = delta;
+		this.k = k;
+	}
 
 	/*
 	 * (non-Javadoc)

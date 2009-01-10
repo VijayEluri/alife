@@ -19,7 +19,7 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
  */
 public class PendulumEquation implements DeltaEquation<Double> {
 
-	private static final double M = 1, m = 1, l = 1, g = 9.81, halfSize = 10;
+	private static final double M = 1, m = 1, l = 1, g = 9.81, halfSize = 10, Amp = 0;
 	public static final double STATE_X = 0.0, STATE_THETA = 1.0, STATE_V = 2.0, STATE_OMEGA = 3.0;
 	DeltaPopulation<Double> inputPopulation;
 
@@ -62,12 +62,14 @@ public class PendulumEquation implements DeltaEquation<Double> {
 					maxSoFar = value;
 				}
 			}
-			System.out.println(argMaxSoFar + " : " + maxSoFar);
-			System.out.println(inputPopulation.getElements());
-			u = (argMaxSoFar) / halfSize;
+//			System.out.println(argMaxSoFar + " : " + maxSoFar);
+//			System.out.println(inputPopulation.getElements());
+			u = (argMaxSoFar) / halfSize * Amp;
 		}
 		localPopulation
 				.setElementValue(STATE_X, stdAngle(localPopulation.getElementValue(STATE_X)));
+		localPopulation
+				.setElementValue(STATE_THETA, stdAngle(localPopulation.getElementValue(STATE_THETA)));
 		double tao = 0;
 		getDx(localPopulation, u, tao);
 	}
@@ -84,7 +86,7 @@ public class PendulumEquation implements DeltaEquation<Double> {
 	private void getDx(DeltaPopulation<Double> deltaPopulation, double u, double tao) {
 		double theta = deltaPopulation.getElementValue(STATE_THETA);
 		double v = deltaPopulation.getElementValue(STATE_V);
-//		System.out.println("v: "+v);
+		// System.out.println("v: "+v);
 		double omega = deltaPopulation.getElementValue(STATE_OMEGA);
 		deltaPopulation.setElementDelta(STATE_X, v);
 		deltaPopulation.setElementDelta(STATE_THETA, omega);
