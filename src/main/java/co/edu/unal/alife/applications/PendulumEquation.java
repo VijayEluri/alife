@@ -51,7 +51,7 @@ public class PendulumEquation implements DeltaEquation<Double> {
 	public void evalEquation(DeltaPopulation<Double> localPopulation,
 			List<DeltaPopulation<Double>> populations, List<KernelFunction> kernelList) {
 		double u = 0;
-		while(hiddenPopulation.hasNextPopulation()) {
+		while (hiddenPopulation.hasNextPopulation()) {
 			hiddenPopulation = hiddenPopulation.getNextPopulation();
 		}
 		if (hiddenPopulation != null) {
@@ -65,13 +65,22 @@ public class PendulumEquation implements DeltaEquation<Double> {
 					maxSoFar = value;
 				}
 			}
-			System.out.println(argMaxSoFar + " : " + maxSoFar);
+			// System.out.println(argMaxSoFar + " : " + maxSoFar);
 			u = (argMaxSoFar) / halfSize * Amp;
 		}
-		localPopulation
-				.setElementValue(STATE_X, stdAngle(localPopulation.getElementValue(STATE_X)));
-		localPopulation
-				.setElementValue(STATE_THETA, stdAngle(localPopulation.getElementValue(STATE_THETA)));
+		// localPopulation
+		// .setElementValue(STATE_X, stdAngle(localPopulation.getElementValue(STATE_X)));
+		int maxPos = 5;
+		if (localPopulation.getElementValue(STATE_X) > maxPos) {
+			localPopulation.setElementValue(STATE_X,
+					(localPopulation.getElementValue(STATE_X) % maxPos) - maxPos);
+		}
+		if (localPopulation.getElementValue(STATE_X) < -maxPos) {
+			localPopulation.setElementValue(STATE_X, maxPos
+					- (localPopulation.getElementValue(STATE_X) % maxPos));
+		}
+		localPopulation.setElementValue(STATE_THETA, stdAngle(localPopulation
+				.getElementValue(STATE_THETA)));
 		double tao = 0;
 		getDx(localPopulation, u, tao);
 	}
