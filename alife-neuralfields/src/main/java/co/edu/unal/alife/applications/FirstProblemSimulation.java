@@ -28,12 +28,12 @@ public class FirstProblemSimulation {
 	public static void main(String[] args) {
 		int N = 3;
 		int halfSize = 10;
-		double initialAngle = 0.5236;
+		double initialAngle = Math.PI/6;
 		double initialPos = -5.0;
 		
 		double hh = 1.0 / 40;
 		double t0 = 0.0;
-		double tf = 7.5;
+		double tf = 20;
 		// Populations setup
 		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(N);
 		MapDeltaPopulation inputPopulation = new MapDeltaPopulation(halfSize);

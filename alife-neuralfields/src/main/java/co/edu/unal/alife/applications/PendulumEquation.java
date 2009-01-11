@@ -7,6 +7,8 @@ import static java.lang.Math.PI;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -54,15 +56,32 @@ public class PendulumEquation implements DeltaEquation<Double> {
 		while (hiddenPopulation.hasNextPopulation()) {
 			hiddenPopulation = hiddenPopulation.getNextPopulation();
 		}
+		int neighbors = 2;
+		int k = 1;
+		double n2 = neighbors*neighbors;
 		if (hiddenPopulation != null) {
 			Set<Double> positions = hiddenPopulation.getPositions();
+			List<Double> positionList = new ArrayList<Double>(positions.size());
+			positionList.addAll(positions);
+//			Collections.sort(positionList);
 			double maxSoFar = 0;
 			double argMaxSoFar = 0.0;
-			for (Double position : positions) {
-				double value = hiddenPopulation.getElementValue(position);
-				if (value > maxSoFar) {
-					argMaxSoFar = position;
-					maxSoFar = value;
+			for (int i = 0; i < positionList.size(); i++) {
+				double sum = 0;
+				double N = 0;
+				for (int j = -neighbors; j <= neighbors; j++) {
+					if (i+j>=0 && i+j<positionList.size()) {
+						double position = positionList.get(i+j);
+						double value = hiddenPopulation.getElementValue(position);
+						double d2 = j*j;
+						double w = k*Math.exp(-d2/n2);
+						N += w;
+						sum += w*value;				
+					}
+				}
+				if (sum/N > maxSoFar) {
+					argMaxSoFar = positionList.get(i);
+					maxSoFar = sum/N;
 				}
 			}
 			// System.out.println(argMaxSoFar + " : " + maxSoFar);
