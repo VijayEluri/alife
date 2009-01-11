@@ -45,26 +45,31 @@ public class InputEquation implements DeltaEquation<Double> {
 		return (1 - Math.exp(-alpha*t)) / (1 + Math.exp(-alpha*t));
 	}
 	
-	public void applyInput(DeltaPopulation<Double> localPopulation) {
+	public DeltaPopulation<Double> applyInput(DeltaPopulation<Double> localPopulation) {
 		while (pendulum.hasNextPopulation()) {
 			pendulum = pendulum.getNextPopulation();
 		}
 		double theta = pendulum.getElementValue(PendulumEquation.STATE_THETA);
-		double omega = pendulum.getElementValue(PendulumEquation.STATE_OMEGA);
-		double value = 2*theta + omega/2;
-		double boundedValue = bipolarSigmoid(value) * halfSize;
-		System.out.println(theta+"+"+omega+"="+value+"->"+boundedValue);
-//		System.out.println("boundedVal\t:"+boundedValue);
+		double boundedValue = bipolarSigmoid(theta) * halfSize;
 		double eqPosition = Math.round(boundedValue);
-		System.out.println("eqPosition\t:"+eqPosition);
+		System.out.println(theta+"->"+boundedValue+":"+eqPosition);
+		
+//		double omega = pendulum.getElementValue(PendulumEquation.STATE_OMEGA);
+//		double boundedValue2 = bipolarSigmoid(omega) * halfSize;
+//		double eqPosition2 = Math.round(boundedValue2);
+//		System.out.println(theta+"->"+boundedValue2+":"+eqPosition2);
+		
 		Set<Double> positions = localPopulation.getPositions();
+		DeltaPopulation<Double> newPopulation = new MapDeltaPopulation(positions);
 		for (Double position : positions) {
 			if(position.equals(eqPosition)) {
-				localPopulation.setElementValue(position, 1.0);
+				newPopulation.setElementValue(position, 1.0);
 			} else {
-				localPopulation.setElementValue(position, 0.0);
+				newPopulation.setElementValue(position, 0.0);
 			}
 		}
+		localPopulation.setNextPopulation(newPopulation);
+		return newPopulation;
 	}
 	
 	public static void main(String[] args) {
