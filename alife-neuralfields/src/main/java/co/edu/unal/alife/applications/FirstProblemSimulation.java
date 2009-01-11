@@ -29,10 +29,11 @@ public class FirstProblemSimulation {
 		int N = 3;
 		int halfSize = 10;
 		double initialAngle = 0.5236;
+		double initialPos = -5.0;
 		
 		double hh = 1.0 / 40;
 		double t0 = 0.0;
-		double tf = 20.0;
+		double tf = 7.5;
 		// Populations setup
 		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(N);
 		MapDeltaPopulation inputPopulation = new MapDeltaPopulation(halfSize);
@@ -44,14 +45,15 @@ public class FirstProblemSimulation {
 
 		// Initial values setup
 		pendulumPopulation.setElementValue(PendulumEquation.STATE_THETA, initialAngle);
+		pendulumPopulation.setElementValue(PendulumEquation.STATE_X, initialPos);
 
 		// Kernel Matrix setup
 		List<List<KernelFunction>> kernelMatrix = new ArrayList<List<KernelFunction>>(N);
 		List<KernelFunction> firstRow = new ArrayList<KernelFunction>(N);
 		List<KernelFunction> secondRow = new ArrayList<KernelFunction>(N);
 		List<KernelFunction> thirdRow = null;
-		KernelFunction inputKernelFunction = new MexicanHatKernel(0.05,2,0.45);
-		KernelFunction selfKernelFunction = new MexicanHatKernel(0.05,2,0.15);
+		KernelFunction inputKernelFunction = new MexicanHatKernel(0.05,2,0.20);
+		KernelFunction selfKernelFunction = new MexicanHatKernel(0.05,2,0.20);
 		firstRow.add(null); // self-connectivity of input field
 		firstRow.add(null); // connectivity from output to input
 		firstRow.add(null); // connectivity from plant to input

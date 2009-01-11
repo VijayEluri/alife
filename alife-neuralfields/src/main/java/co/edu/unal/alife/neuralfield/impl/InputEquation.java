@@ -54,12 +54,12 @@ public class InputEquation implements DeltaEquation<Double> {
 		double theta = pendulum.getElementValue(PendulumEquation.STATE_THETA);
 		double boundedValue = bipolarSigmoid(theta) * halfSize;
 		double eqPosition = Math.round(boundedValue);
-		System.out.println("THETA:" + theta + "->" + boundedValue + ":" + eqPosition);
+//		System.out.println("THETA:" + theta + "->" + boundedValue + ":" + eqPosition);
 
 		double omega = pendulum.getElementValue(PendulumEquation.STATE_OMEGA);
 		double boundedValue2 = bipolarSigmoid(omega) * halfSize;
 		double eqPosition2 = Math.round(boundedValue2);
-		System.out.println("OMEGA:" + omega + "->" + boundedValue2 + ":" + eqPosition2);
+//		System.out.println("OMEGA:" + omega + "->" + boundedValue2 + ":" + eqPosition2);
 
 		Set<Double> positions = localPopulation.getPositions();
 		DeltaPopulation<Double> newPopulation = new MapDeltaPopulation(positions);
@@ -67,7 +67,7 @@ public class InputEquation implements DeltaEquation<Double> {
 			if (position.equals(eqPosition)) {
 				newPopulation.setElementValue(position, 1.0);
 			} else if (position.equals(eqPosition2)) {
-				newPopulation.setElementValue(position, 0.8);
+				newPopulation.setElementValue(position, 0.9);
 			} else {
 				newPopulation.setElementValue(position, 0.0);
 

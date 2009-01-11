@@ -42,7 +42,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 	 */
 
 	final Pendulum pendulum = new Pendulum();
-	// final PendulumTrace pendulumTrace = new PendulumTrace();
+	final PendulumTrace pendulumTrace = new PendulumTrace();
 
 	final JPanel animPendulum = new JPanel();
 	final JPanel animHiddenField = new JPanel();
@@ -96,11 +96,10 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		animInputField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
 		panelMid.add(animInputField);
 
-		// animPendulumTrace.setBackground(Color.white);
-		// animPendulumTrace.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-		// Color.DARK_GRAY));
-		// panelLow.add(animPendulumTrace);
-		//		
+		animPendulumTrace.setBackground(Color.white);
+		animPendulumTrace.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
+		panelLow.add(animPendulumTrace);
+
 		animHiddenField.setBackground(Color.white);
 		animHiddenField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
 		panelMid.add(animHiddenField);
@@ -119,10 +118,9 @@ public class PendulumFrame extends JFrame implements ActionListener {
 					int h = 1000 / MAX_FPS;
 					timer.setDelay(h);
 					pendulum.animar((int) h, (int) 20000);
-					// pendulumTrace.animar((int) h, (int) 20000);
+					pendulumTrace.animar((int) h, (int) 20000);
 					inputField.animar((int) h, (int) 20000);
 					hiddenField.animar((int) h, (int) 20000);
-					// animHiddenField.repaint();
 					iniciarAnimacion();
 				} catch (Exception ex) {
 				}
@@ -193,8 +191,10 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		if (pendulum.count < tracer.getData().get(0).size()) {
 			pendulum.actualizar();
 			SwingUtilities.invokeLater(pendulum);
-		} else {
-			detenerAnimacion();
+		}
+		if (pendulumTrace.count < tracer.getData().get(2).size()) {
+			pendulumTrace.actualizar();
+			SwingUtilities.invokeLater(pendulumTrace);
 		}
 	}
 
@@ -209,9 +209,9 @@ public class PendulumFrame extends JFrame implements ActionListener {
 
 		public Pendulum() {
 			count = 0;
-			this.posicionX = 500;
+			this.posicionX = 250;
 			this.posicionY = 100;
-			this.posicionX2 = 500;
+			this.posicionX2 = 250;
 			this.posicionY2 = 100;
 		}
 
@@ -342,14 +342,14 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		public PendulumTrace() {
 			count = 0;
 			dx = 0;
-			this.posicionX = 500;
+			this.posicionX = 250;
 			this.posicionY = 100;
-			this.posicionX2 = 500;
+			this.posicionX2 = 250;
 			this.posicionY2 = 100;
 		}
 
 		public void animar(int h, int tf) {
-			// g2d = (Graphics2D) animadoSup.getGraphics();
+			g2d = (Graphics2D) animPendulumTrace.getGraphics();
 			g2d.setColor(Color.RED);
 			this.h = h;
 			this.tf = tf;
@@ -374,7 +374,6 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			dx = xValue.floatValue() * 50;
 			dy2 = -(float) cos(thetaValue) * 50;
 			dx2 = (float) (xValue + sin(thetaValue)) * 50;
-			System.out.println(count + " - " + dy2);
 		}
 	}
 
