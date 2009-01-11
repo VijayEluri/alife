@@ -75,7 +75,7 @@ public class SimpleEquation implements DeltaEquation<Double> {
 	 * applications.InvertedPendulum, java.util.List, double, double)
 	 */
 	@Override
-	public void applyInput(DeltaPopulation<Double> deltaPopulation) {
+	public DeltaPopulation<Double> applyInput(DeltaPopulation<Double> deltaPopulation) {
 		throw new UnsupportedOperationException();
 	}
 

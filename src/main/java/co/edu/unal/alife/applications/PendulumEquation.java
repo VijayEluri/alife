@@ -21,14 +21,14 @@ public class PendulumEquation implements DeltaEquation<Double> {
 
 	private static final double M = 1, m = 1, l = 1, g = 9.81, halfSize = 10, Amp = 20;
 	public static final double STATE_X = 0.0, STATE_THETA = 1.0, STATE_V = 2.0, STATE_OMEGA = 3.0;
-	DeltaPopulation<Double> inputPopulation;
+	DeltaPopulation<Double> hiddenPopulation;
 
 	/**
 	 * @param inputPopulation
 	 */
 	public PendulumEquation(DeltaPopulation<Double> inputPopulation) {
 		super();
-		this.inputPopulation = inputPopulation;
+		this.hiddenPopulation = inputPopulation;
 	}
 
 	/*
@@ -36,7 +36,7 @@ public class PendulumEquation implements DeltaEquation<Double> {
 	 * @see co.edu.unal.alife.neuralfield.DeltaPopulationEquation#applyInput()
 	 */
 	@Override
-	public void applyInput(DeltaPopulation<Double> deltaPopulation) {
+	public DeltaPopulation<Double> applyInput(DeltaPopulation<Double> deltaPopulation) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}
@@ -51,19 +51,21 @@ public class PendulumEquation implements DeltaEquation<Double> {
 	public void evalEquation(DeltaPopulation<Double> localPopulation,
 			List<DeltaPopulation<Double>> populations, List<KernelFunction> kernelList) {
 		double u = 0;
-		if (inputPopulation != null) {
-			Set<Double> positions = inputPopulation.getPositions();
+		while(hiddenPopulation.hasNextPopulation()) {
+			hiddenPopulation = hiddenPopulation.getNextPopulation();
+		}
+		if (hiddenPopulation != null) {
+			Set<Double> positions = hiddenPopulation.getPositions();
 			double maxSoFar = 0;
 			double argMaxSoFar = 0.0;
 			for (Double position : positions) {
-				double value = inputPopulation.getElementValue(position);
+				double value = hiddenPopulation.getElementValue(position);
 				if (value > maxSoFar) {
 					argMaxSoFar = position;
 					maxSoFar = value;
 				}
 			}
-//			System.out.println(argMaxSoFar + " : " + maxSoFar);
-//			System.out.println(inputPopulation.getElements());
+			System.out.println(argMaxSoFar + " : " + maxSoFar);
 			u = (argMaxSoFar) / halfSize * Amp;
 		}
 		localPopulation

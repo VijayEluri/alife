@@ -25,8 +25,8 @@ public abstract class DeltaField<K> extends Observable implements Simulable<Doub
 	 * @param kernelMatrix
 	 * @param populations
 	 */
-	public DeltaField(List<DeltaEquation<K>> equations,
-			List<List<KernelFunction>> kernelMatrix, List<DeltaPopulation<K>> populations, Solver<K,Double> solver) {
+	public DeltaField(List<DeltaEquation<K>> equations, List<List<KernelFunction>> kernelMatrix,
+			List<DeltaPopulation<K>> populations, Solver<K, Double> solver) {
 		super();
 		this.equations = equations;
 		this.kernelMatrix = kernelMatrix;
@@ -57,22 +57,20 @@ public abstract class DeltaField<K> extends Observable implements Simulable<Doub
 
 	@Override
 	public void evaluateStep(double h, int nextStepCount) {
-		double t = nextStepCount*h;
+		double t = nextStepCount * h;
 		for (int i = 0; i < populations.size(); i++) {
 			DeltaPopulation<K> deltaPopulation = null;
 			try {
 				deltaPopulation = solver.step(this, i, h);
-//				System.out.println("Step - Pop "+i);
+				// System.out.println("Step - Pop "+i);
 			} catch (UnsupportedOperationException e) {
-				deltaPopulation = populations.get(i);
-				equations.get(i).applyInput(deltaPopulation);
-//				System.out.println("Apply - Pop "+i);
+				deltaPopulation = equations.get(i).applyInput(populations.get(i));
+				// System.out.println("Apply - Pop "+i);
 			}
 			populations.set(i, deltaPopulation);
 			this.setChanged();
-			this.notifyObservers(new Object[]{i, t, deltaPopulation});
+			this.notifyObservers(new Object[] { i, t, deltaPopulation });
 		}
 	}
-
 
 }

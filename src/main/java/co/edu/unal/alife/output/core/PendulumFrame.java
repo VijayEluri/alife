@@ -16,6 +16,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -40,11 +41,16 @@ public class PendulumFrame extends JFrame implements ActionListener {
 	 * @author jjfigueredou
 	 */
 
-	final Pendulum circles = new Pendulum();
-//	final Grafica grafica = new Grafica();
-	final Field field = new Field();
-	final JPanel animadoInf = new JPanel();
-	final JPanel animadoSup = new JPanel();
+	final Pendulum pendulum = new Pendulum();
+	// final PendulumTrace pendulumTrace = new PendulumTrace();
+
+	final JPanel animPendulum = new JPanel();
+	final JPanel animHiddenField = new JPanel();
+	final JPanel animPendulumTrace = new JPanel();
+	final JPanel animInputField = new JPanel();
+	final Field inputField = new Field(0, animInputField);
+	final Field hiddenField = new Field(1, animHiddenField);
+
 	final int MAX_FPS = 40;
 	int tics = -1;
 	boolean congelado = false;
@@ -71,28 +77,37 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new GridLayout(3, 1));
 
-		final JPanel panelIzq = new JPanel();
-		panelIzq.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createCompoundBorder(
+		final JPanel panelSup = new JPanel();
+		panelSup.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createEmptyBorder(5, 25, 5, 25), BorderFactory
 						.createTitledBorder("Controls")), BorderFactory.createEmptyBorder(5, 30,
 				10, 30)));
-		panelIzq.setLayout(new GridLayout(10, 1));
+		panelSup.setLayout(new GridLayout(10, 1));
 
-		final JPanel panelDer = new JPanel();
-		panelDer.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
-		panelDer.setLayout(new GridLayout(1, 1));
+		final JPanel panelMid = new JPanel();
+		panelMid.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
+		panelMid.setLayout(new GridLayout(1, 2));
 
-		final JPanel panelDer1 = new JPanel();
-		panelDer1.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
-		panelDer1.setLayout(new GridLayout(1, 1));
+		final JPanel panelLow = new JPanel();
+		panelLow.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.DARK_GRAY));
+		panelLow.setLayout(new GridLayout(1, 2));
 
-		animadoSup.setBackground(Color.white);
-		animadoSup.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
-		panelDer.add(animadoSup);
+		animInputField.setBackground(Color.white);
+		animInputField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
+		panelMid.add(animInputField);
 
-		animadoInf.setBackground(Color.white);
-		animadoInf.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
-		panelDer1.add(animadoInf);
+		// animPendulumTrace.setBackground(Color.white);
+		// animPendulumTrace.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+		// Color.DARK_GRAY));
+		// panelLow.add(animPendulumTrace);
+		//		
+		animHiddenField.setBackground(Color.white);
+		animHiddenField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
+		panelMid.add(animHiddenField);
+
+		animPendulum.setBackground(Color.white);
+		animPendulum.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
+		panelLow.add(animPendulum);
 
 		final JLabel textJJFULabel = new JLabel("Developed by: Juan J. Figueredo U.");
 
@@ -101,29 +116,30 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		buttonAplicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int h = 1000/MAX_FPS;
+					int h = 1000 / MAX_FPS;
 					timer.setDelay(h);
-					circles.animar((int) h, (int) 1000);
-					// grafica.animar((int) 40, (int) 20000);
-					field.animar((int) h, (int) 1000);
-					animadoSup.repaint();
+					pendulum.animar((int) h, (int) 20000);
+					// pendulumTrace.animar((int) h, (int) 20000);
+					inputField.animar((int) h, (int) 20000);
+					hiddenField.animar((int) h, (int) 20000);
+					// animHiddenField.repaint();
 					iniciarAnimacion();
 				} catch (Exception ex) {
 				}
 			}
 		});
 
-		panelIzq.add(new JLabel());
-		panelIzq.add(buttonAplicar);
-		panelIzq.add(new JLabel());
-		panelIzq.add(new JLabel());
-		panelIzq.add(new JLabel());
-		panelIzq.add(new JLabel());
-		panelIzq.add(textJJFULabel);
+		panelSup.add(new JLabel());
+		panelSup.add(buttonAplicar);
+		panelSup.add(new JLabel());
+		panelSup.add(new JLabel());
+		panelSup.add(new JLabel());
+		panelSup.add(new JLabel());
+		panelSup.add(textJJFULabel);
 
-		contentPane.add(panelIzq, BorderLayout.NORTH);
-		contentPane.add(panelDer, BorderLayout.CENTER);
-		contentPane.add(panelDer1, BorderLayout.SOUTH);
+		contentPane.add(panelSup, BorderLayout.NORTH);
+		contentPane.add(panelMid, BorderLayout.CENTER);
+		contentPane.add(panelLow, BorderLayout.SOUTH);
 
 		addWindowListener(new WindowAdapter() {
 			public void windowIconified(WindowEvent e) {
@@ -166,13 +182,17 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		// grafica.actualizar();
 		// SwingUtilities.invokeLater(grafica);
 		// }
-		if (field.count < tracer.getData().get(1).size()) {
-			field.actualizar();
-			SwingUtilities.invokeLater(field);
+		if (inputField.count < tracer.getData().get(0).size()) {
+			inputField.actualizar();
+			SwingUtilities.invokeLater(inputField);
 		}
-		if (circles.count < tracer.getData().get(0).size()) {
-			circles.actualizar();
-			SwingUtilities.invokeLater(circles);
+		if (hiddenField.count < tracer.getData().get(1).size()) {
+			hiddenField.actualizar();
+			SwingUtilities.invokeLater(hiddenField);
+		}
+		if (pendulum.count < tracer.getData().get(0).size()) {
+			pendulum.actualizar();
+			SwingUtilities.invokeLater(pendulum);
 		} else {
 			detenerAnimacion();
 		}
@@ -196,7 +216,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		}
 
 		public void animar(int h, int tf) {
-			g2d = (Graphics2D) animadoInf.getGraphics();
+			g2d = (Graphics2D) animPendulum.getGraphics();
 			this.h = h;
 			this.tf = tf;
 			count = 0;
@@ -239,14 +259,15 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			dx = xValue.floatValue() * 50;
 			dy2 = -(float) cos(thetaValue) * 50;
 			dx2 = (float) (xValue + sin(thetaValue)) * 50;
-// 			dxr = (float) InvertedPendulum.rFun((count - 1) * 0.040) * 50;
-//			dxr = (float) 0.0 * 50;
-//			System.out.println(count+" - "+dy2);
+			// dxr = (float) InvertedPendulum.rFun((count - 1) * 0.040) * 50;
+			// dxr = (float) 0.0 * 50;
+			// System.out.println(count+" - "+dy2);
 		}
 	}
 
 	public class Field implements Runnable {
 		int frameNumber = -1;
+		int deltaPopNumber;
 		Timer timer;
 		JPanel jP;
 		Graphics2D g2d;
@@ -257,14 +278,16 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		List<Double> fieldValues;
 		List<Double> prevFieldValues = new ArrayList<Double>();
 
-		public Field() {
+		public Field(int deltaPopNumber, JPanel jP) {
 			count = 0;
-			this.posicionX = 500;
+			this.posicionX = 250;
 			this.posicionY = 100;
+			this.deltaPopNumber = deltaPopNumber;
+			this.jP = jP;
 		}
 
 		public void animar(int h, int tf) {
-			g2d = (Graphics2D) animadoSup.getGraphics();
+			g2d = (Graphics2D) jP.getGraphics();
 			this.h = h;
 			this.tf = tf;
 			count = 0;
@@ -275,7 +298,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			int i = 0;
 			for (Double value : prevFieldValues) {
 				int dx = (-10 + i++) * 10;
-				float dy = (float) value.floatValue() * 100;
+				float dy = (float) value.floatValue() * 50;
 				// g2d.draw(new Ellipse2D.Float(posicionX + dx, posicionY + dy, 5, 5));
 				g2d
 						.draw(new Line2D.Float(posicionX + dx, posicionY, posicionX + dx, posicionY
@@ -285,7 +308,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			i = 0;
 			for (Double value : fieldValues) {
 				int dx = (-10 + i++) * 10;
-				float dy = (float) value.floatValue() * 100;
+				float dy = (float) value.floatValue() * 50;
 				// g2d.draw(new Ellipse2D.Float(posicionX + dx, posicionY + dy, 5, 5));
 				g2d
 						.draw(new Line2D.Float(posicionX + dx, posicionY, posicionX + dx, posicionY
@@ -298,7 +321,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		public void actualizar() {
 			count++;
 			prevFieldValues = fieldValues != null ? fieldValues : prevFieldValues;
-			DeltaPopulation<Double> fieldData = tracer.getData().get(1).get(count - 1);
+			DeltaPopulation<Double> fieldData = tracer.getData().get(deltaPopNumber).get(count - 1);
 			Set<Double> positions = fieldData.getPositions();
 			fieldValues = new ArrayList<Double>();
 			for (Double position : positions) {
@@ -307,53 +330,53 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		}
 	}
 
-//	public class Grafica implements Runnable {
-//		int frameNumber = -1;
-//		Timer timer;
-//		JPanel jP;
-//		Graphics2D g2d;
-//		float posicionX, posicionY, posicionX2, posicionY2;
-//		int count, h, tf;
-//		float dx, dy, dx2, dy2;
-//
-//		public Grafica() {
-//			count = 0;
-//			dx = 0;
-//			this.posicionX = 500;
-//			this.posicionY = 100;
-//			this.posicionX2 = 500;
-//			this.posicionY2 = 100;
-//		}
-//
-//		public void animar(int h, int tf) {
-//			// g2d = (Graphics2D) animadoSup.getGraphics();
-//			g2d.setColor(Color.RED);
-//			this.h = h;
-//			this.tf = tf;
-//			count = 0;
-//		}
-//
-//		public void run() {
-//			g2d.setColor(Color.BLUE);
-//			g2d.draw(new Rectangle2D.Float(posicionX + dx, posicionY + dy, 1, 1));
-//			g2d.setColor(Color.RED);
-//			g2d.draw(new Rectangle2D.Float(posicionX2 + dx2, posicionY2 + dy2, 1, 1));
-//		}
-//
-//		public void actualizar() {
-//			count++;
-//			DeltaPopulation<Double> pendulumData = tracer.getData().get(2).get(count - 1);
-//
-//			Double xValue = pendulumData.getElementValue(PendulumEquation.STATE_X);
-//			Double thetaValue = pendulumData.getElementValue(PendulumEquation.STATE_THETA);
-//
-//			dy = 0;
-//			dx = xValue.floatValue() * 50;
-//			dy2 = -(float) cos(thetaValue) * 50;
-//			dx2 = (float) (xValue + sin(thetaValue)) * 50;
-//			System.out.println(count+" - "+dy2);
-//		}
-//	}
+	public class PendulumTrace implements Runnable {
+		int frameNumber = -1;
+		Timer timer;
+		JPanel jP;
+		Graphics2D g2d;
+		float posicionX, posicionY, posicionX2, posicionY2;
+		int count, h, tf;
+		float dx, dy, dx2, dy2;
+
+		public PendulumTrace() {
+			count = 0;
+			dx = 0;
+			this.posicionX = 500;
+			this.posicionY = 100;
+			this.posicionX2 = 500;
+			this.posicionY2 = 100;
+		}
+
+		public void animar(int h, int tf) {
+			// g2d = (Graphics2D) animadoSup.getGraphics();
+			g2d.setColor(Color.RED);
+			this.h = h;
+			this.tf = tf;
+			count = 0;
+		}
+
+		public void run() {
+			g2d.setColor(Color.BLUE);
+			g2d.draw(new Rectangle2D.Float(posicionX + dx, posicionY + dy, 1, 1));
+			g2d.setColor(Color.RED);
+			g2d.draw(new Rectangle2D.Float(posicionX2 + dx2, posicionY2 + dy2, 1, 1));
+		}
+
+		public void actualizar() {
+			count++;
+			DeltaPopulation<Double> pendulumData = tracer.getData().get(2).get(count - 1);
+
+			Double xValue = pendulumData.getElementValue(PendulumEquation.STATE_X);
+			Double thetaValue = pendulumData.getElementValue(PendulumEquation.STATE_THETA);
+
+			dy = 0;
+			dx = xValue.floatValue() * 50;
+			dy2 = -(float) cos(thetaValue) * 50;
+			dx2 = (float) (xValue + sin(thetaValue)) * 50;
+			System.out.println(count + " - " + dy2);
+		}
+	}
 
 	public static void main(String[] args) {
 		// VentanaPrincipal vp = new VentanaPrincipal();
