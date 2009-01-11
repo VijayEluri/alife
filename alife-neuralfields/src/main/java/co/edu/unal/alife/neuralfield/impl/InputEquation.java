@@ -51,7 +51,7 @@ public class InputEquation implements DeltaEquation<Double> {
 		}
 		double theta = pendulum.getElementValue(PendulumEquation.STATE_THETA);
 		double omega = pendulum.getElementValue(PendulumEquation.STATE_OMEGA);
-		double value = theta + omega;
+		double value = 2*theta + omega/2;
 		double boundedValue = bipolarSigmoid(value) * halfSize;
 		System.out.println(theta+"+"+omega+"="+value+"->"+boundedValue);
 //		System.out.println("boundedVal\t:"+boundedValue);

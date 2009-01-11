@@ -19,7 +19,7 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
  */
 public class PendulumEquation implements DeltaEquation<Double> {
 
-	private static final double M = 1, m = 1, l = 1, g = 9.81, halfSize = 10, Amp = 50;
+	private static final double M = 1, m = 1, l = 1, g = 9.81, halfSize = 10, Amp = 20;
 	public static final double STATE_X = 0.0, STATE_THETA = 1.0, STATE_V = 2.0, STATE_OMEGA = 3.0;
 	DeltaPopulation<Double> inputPopulation;
 

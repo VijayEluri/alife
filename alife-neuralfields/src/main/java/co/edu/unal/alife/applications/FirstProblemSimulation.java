@@ -28,7 +28,7 @@ public class FirstProblemSimulation {
 	public static void main(String[] args) {
 		int N = 3;
 		int halfSize = 10;
-		double initialAngle = 0.2;
+		double initialAngle = 0.7;
 		
 		double hh = 1.0 / 100;
 		double t0 = 0.0;
@@ -50,8 +50,8 @@ public class FirstProblemSimulation {
 		List<KernelFunction> firstRow = new ArrayList<KernelFunction>(N);
 		List<KernelFunction> secondRow = new ArrayList<KernelFunction>(N);
 		List<KernelFunction> thirdRow = null;
-		KernelFunction inputKernelFunction = new MexicanHatKernel(0.05,4,0.15);
-		KernelFunction selfKernelFunction = new MexicanHatKernel(0.05,4,0.05);
+		KernelFunction inputKernelFunction = new MexicanHatKernel(0.05,2,0.15);
+		KernelFunction selfKernelFunction = new MexicanHatKernel(0.05,2,0.05);
 		firstRow.add(null); // self-connectivity of input field
 		firstRow.add(null); // connectivity from output to input
 		firstRow.add(null); // connectivity from plant to input
