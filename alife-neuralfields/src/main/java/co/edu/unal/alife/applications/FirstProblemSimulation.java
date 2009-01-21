@@ -33,7 +33,7 @@ public class FirstProblemSimulation {
 		
 		double hh = 1.0 / 40;
 		double t0 = 0.0;
-		double tf = 20;
+		double tf = 3.5+hh;
 		// Populations setup
 		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(N);
 		MapDeltaPopulation inputPopulation = new MapDeltaPopulation(halfSize);
@@ -85,6 +85,9 @@ public class FirstProblemSimulation {
 
 		// Run simulation
 		AbstractSolver.simulate(t0, tf, hh, field);
+		
+		String[] filenames = {"inputPopulation","fieldPopulation","pendulum"};
+		tracer.printToFiles(filenames);
 
 		// Run animation
 		new PendulumFrame(tracer);

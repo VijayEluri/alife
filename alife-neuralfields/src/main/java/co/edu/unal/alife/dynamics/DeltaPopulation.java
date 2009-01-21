@@ -150,6 +150,12 @@ public abstract interface DeltaPopulation<K> {
 		 * @param value
 		 */
 		void setDelta(Double value);
-	};
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 */
+	String toString(String t);
 
 }

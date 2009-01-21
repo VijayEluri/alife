@@ -121,11 +121,13 @@ public class PendulumEquation implements DeltaEquation<Double> {
 		deltaPopulation.setElementDelta(STATE_THETA, omega);
 		double st = sin(theta);
 		double ct = cos(theta);
+//		System.out.println(u);
 		deltaPopulation.setElementDelta(STATE_V, (m * l * omega * omega * st - m * g * ct * st + u)
 				/ (M + m * st * st));
 		deltaPopulation.setElementDelta(STATE_OMEGA, ((M + m) * g * st - m * l * omega * omega * st
 				* ct - u * ct)
 				/ (l * (M + m * st * st)) - 0.5 * omega + m * l * l * tao);
+//				/ (l * (M + m * st * st)) + tao/(m * l * l));
 	}
 
 }
