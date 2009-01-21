@@ -1,5 +1,9 @@
 package co.edu.unal.alife.output.core;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -13,7 +17,6 @@ public class Tracer implements Visualizer {
 
 	/**
 	 * @param N
-	 * 
 	 */
 	public Tracer(int N) {
 		this.labels = new ArrayList<List<String>>(N);
@@ -60,16 +63,49 @@ public class Tracer implements Visualizer {
 		return data;
 	}
 
-//	public String toString() {
-//		StringBuffer sb = new StringBuffer();
-//		for (List<Double> values : data) {
-//			sb.append("\t");
-//			for (Double value : values) {
-//				sb.append(value + " ");
-//			}
-//			sb.append("\n");
-//		}
-//		return sb.toString();
-//	}
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		int i = 0;
+		for (List<DeltaPopulation<Double>> dataSource : data) {
+			sb.append(toString(i++, dataSource));
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * @param sb
+	 * @param i
+	 * @param dataSource
+	 */
+	private String toString(int i, List<DeltaPopulation<Double>> dataSource) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("\n#Printing population "+i+":\n");
+		List<String> times = labels.get(i);
+		int j = 0;
+		for (DeltaPopulation<Double> population : dataSource) {
+			sb.append(population.toString(times.get(j++)));
+			sb.append("\n");
+		}
+		sb.append("\n");
+		return sb.toString();
+	}
+	
+	public void printToFiles(String[] filenames) {
+		try {
+			int i = 0;
+			for (List<DeltaPopulation<Double>> dataSource : data) {
+				File f = new File(filenames[i]);
+				FileWriter fw = new FileWriter(f);
+				BufferedWriter bw = new BufferedWriter(fw);
+				bw.write(toString(i, dataSource));
+				i++;
+				bw.close();
+				fw.close();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

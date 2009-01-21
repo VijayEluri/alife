@@ -257,6 +257,35 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 		return (nextPopulation != null) ? true : false;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		Collection<DeltaPopulation.Element> values = populationMap.values();
+		StringBuffer sb = new StringBuffer();
+		for (DeltaPopulation.Element element : values) {
+			sb.append(element.toString());
+			sb.append("\t");
+		}
+		return sb.toString();
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString(String t) {
+		StringBuffer sb = new StringBuffer();
+		Set<Double> positions = getPositions();
+		for (Double x : positions) {
+			sb.append(x+"\t"+t+"\t"+getElementValue(x).toString());
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+
+
 
 	/**
 	 * @author Juan Figueredo
@@ -296,7 +325,8 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 		 */
 		@Override
 		public String toString() {
-			return "E{Value:"+this.getValue()+",Delta:"+this.getDelta()+"}";
+//			return "E{Value:"+this.getValue()+",Delta:"+this.getDelta()+"}";
+			return this.getValue().toString();
 		}
 		
 		
