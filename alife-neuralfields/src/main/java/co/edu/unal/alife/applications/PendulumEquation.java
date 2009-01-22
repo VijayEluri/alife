@@ -4,6 +4,7 @@
 package co.edu.unal.alife.applications;
 
 import static java.lang.Math.PI;
+import static java.lang.Math.abs;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.output.core.Tracer;
 
 /**
  * @author Juan Figueredo
@@ -129,5 +131,24 @@ public class PendulumEquation implements DeltaEquation<Double> {
 				/ (l * (M + m * st * st)) - 0.5 * omega + m * l * l * tao);
 //				/ (l * (M + m * st * st)) + tao/(m * l * l));
 	}
+	
+	
+	public static double getFitness(Tracer tracer) {
+		DeltaPopulation<Double> pendulumData = tracer.getData().get(2).get(0);
+		
+		double val = 0;
+		while(pendulumData.hasNextPopulation()) {
+			Double xValue = pendulumData.getElementValue(PendulumEquation.STATE_X);
+			Double thetaValue = pendulumData.getElementValue(PendulumEquation.STATE_THETA);
+			
+			double ang = stdAngle(thetaValue);
+			val += ang*ang*ang*ang + abs(xValue)/10;
+			
+			pendulumData = pendulumData.getNextPopulation();
+		}
+		
+		val /= tracer.getData().get(2).size();
 
+		return val;
+	}
 }

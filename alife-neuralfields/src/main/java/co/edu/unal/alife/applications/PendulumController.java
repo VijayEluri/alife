@@ -54,7 +54,6 @@ public class PendulumController {
 		populations.add(pendulumPopulation);
 
 		// Initial values setup
-		//TODO: Must be set in the fitness function
 //		pendulumPopulation.setElementValue(PendulumEquation.STATE_THETA, initialAngle);
 //		pendulumPopulation.setElementValue(PendulumEquation.STATE_X, initialPos);
 
