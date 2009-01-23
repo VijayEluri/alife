@@ -29,8 +29,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import co.edu.unal.alife.applications.PendulumEquation;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
+import co.edu.unal.alife.pendulum.PendulumEquation;
 
 public class PendulumFrame extends JFrame implements ActionListener {
 	/**

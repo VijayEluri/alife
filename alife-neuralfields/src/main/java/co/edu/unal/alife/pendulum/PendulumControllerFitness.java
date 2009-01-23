@@ -1,7 +1,7 @@
 /**
  * 
  */
-package co.edu.unal.alife.applications;
+package co.edu.unal.alife.pendulum;
 
 import jml.evolution.Fitness;
 import jml.evolution.Individual;

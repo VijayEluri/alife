@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import co.edu.unal.alife.applications.PendulumEquation;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.pendulum.PendulumEquation;
 
 /**
  * @author Juan Figueredo

@@ -4,7 +4,7 @@
 package co.edu.unal.alife.evolution;
 
 import jml.evolution.Phenotype;
-import co.edu.unal.alife.applications.PendulumController;
+import co.edu.unal.alife.pendulum.PendulumController;
 
 /**
  * @author Juan Figueredo

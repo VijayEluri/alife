@@ -1,7 +1,7 @@
 /**
  * 
  */
-package co.edu.unal.alife.applications;
+package co.edu.unal.alife.pendulum;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.abs;

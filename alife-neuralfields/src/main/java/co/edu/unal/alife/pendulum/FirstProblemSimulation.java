@@ -1,49 +1,39 @@
 /**
  * 
  */
-package co.edu.unal.alife.applications;
+package co.edu.unal.alife.pendulum;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.unal.alife.dynamics.AbstractSolver;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.dynamics.RungeKutta4thSolver;
-import co.edu.unal.alife.evolution.ParameterizedKernel;
-import co.edu.unal.alife.evolution.PendulumControllerParameters;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.DeltaField;
 import co.edu.unal.alife.neuralfield.KernelFunction;
 import co.edu.unal.alife.neuralfield.impl.InputEquation;
 import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
+import co.edu.unal.alife.neuralfield.impl.MexicanHatKernel;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
 import co.edu.unal.alife.neuralfield.impl.SimpleEquation;
+import co.edu.unal.alife.output.core.PendulumFrame;
+import co.edu.unal.alife.output.core.Tracer;
 
 /**
  * @author Juan Figueredo
  */
-public class PendulumController {
+public class FirstProblemSimulation {
 	
-	private DeltaField<Double> field;
-
-	/**
-	 * @param halfSize
-	 * @param parameters
-	 */
-	public PendulumController(int halfSize, PendulumControllerParameters parameters) {
-		super();
-		assert (halfSize*2)+1 == parameters.getSize();
-		field = buildController(parameters, halfSize);
-	}
-
-	/**
-	 * @param halfSize
-	 * @param initialAngle
-	 * @param initialPos
-	 * @return
-	 */
-	private DeltaField<Double> buildController(PendulumControllerParameters parameters, int halfSize) {
+	public static void main(String[] args) {
 		int N = 3;
+		int halfSize = 10;
+		double initialAngle = Math.PI/6;
+		double initialPos = -5.0;
 		
+		double hh = 1.0 / 40;
+		double t0 = 0.0;
+		double tf = 3.5+hh;
 		// Populations setup
 		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(N);
 		MapDeltaPopulation inputPopulation = new MapDeltaPopulation(halfSize);
@@ -54,16 +44,16 @@ public class PendulumController {
 		populations.add(pendulumPopulation);
 
 		// Initial values setup
-//		pendulumPopulation.setElementValue(PendulumEquation.STATE_THETA, initialAngle);
-//		pendulumPopulation.setElementValue(PendulumEquation.STATE_X, initialPos);
+		pendulumPopulation.setElementValue(PendulumEquation.STATE_THETA, initialAngle);
+		pendulumPopulation.setElementValue(PendulumEquation.STATE_X, initialPos);
 
 		// Kernel Matrix setup
 		List<List<KernelFunction>> kernelMatrix = new ArrayList<List<KernelFunction>>(N);
 		List<KernelFunction> firstRow = new ArrayList<KernelFunction>(N);
 		List<KernelFunction> secondRow = new ArrayList<KernelFunction>(N);
 		List<KernelFunction> thirdRow = null;
-		KernelFunction inputKernelFunction = new ParameterizedKernel(parameters.getInputKernel());
-		KernelFunction selfKernelFunction = new ParameterizedKernel(parameters.getSelfKernel());
+		KernelFunction inputKernelFunction = new MexicanHatKernel(0.05,2,0.20);
+		KernelFunction selfKernelFunction = new MexicanHatKernel(0.05,2,0.20);
 		firstRow.add(null); // self-connectivity of input field
 		firstRow.add(null); // connectivity from output to input
 		firstRow.add(null); // connectivity from plant to input
@@ -82,20 +72,25 @@ public class PendulumController {
 		equations.add(inputEquation); // input field equation
 		equations.add(simpleEquation); // output field equation
 		equations.add(pendulumEquation); // plant equation
-
+		
 		// Solver setup
 		RungeKutta4thSolver solver = new RungeKutta4thSolver();
 		
-		DeltaField<Double> field = new SimpleDeltaField(equations, kernelMatrix, populations, solver);
+		DeltaField<Double> field = new SimpleDeltaField(equations, kernelMatrix, populations, solver); 
 		
-		return field;
-	}
+//		Visualizer printer = new PendulumPrinter(pendulumStates, mainSize, mainSize);
+		Tracer tracer = new Tracer(N);
+		//field.addObserver(printer);
+		field.addObserver(tracer);
 
-	/**
-	 * @return the field
-	 */
-	public DeltaField<Double> getField() {
-		return field;
-	}
+		// Run simulation
+		AbstractSolver.simulate(t0, tf, hh, field);
+		
+		String[] filenames = {"inputPopulation","fieldPopulation","pendulum"};
+		tracer.printToFiles(filenames);
 
+		// Run animation
+		new PendulumFrame(tracer);
+
+	}
 }
