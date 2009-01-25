@@ -15,7 +15,7 @@ import java.util.Set;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
-import co.edu.unal.alife.output.core.Tracer;
+import co.edu.unal.alife.output.Tracer;
 
 /**
  * @author Juan Figueredo

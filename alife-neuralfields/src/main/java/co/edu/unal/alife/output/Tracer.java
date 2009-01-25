@@ -1,4 +1,4 @@
-package co.edu.unal.alife.output.core;
+package co.edu.unal.alife.output;
 
 import java.io.BufferedWriter;
 import java.io.File;

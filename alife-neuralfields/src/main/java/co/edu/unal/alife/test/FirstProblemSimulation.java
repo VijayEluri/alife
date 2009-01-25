@@ -1,7 +1,7 @@
 /**
  * 
  */
-package co.edu.unal.alife.pendulum;
+package co.edu.unal.alife.test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,9 @@ import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.neuralfield.impl.MexicanHatKernel;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
 import co.edu.unal.alife.neuralfield.impl.SimpleEquation;
-import co.edu.unal.alife.output.core.PendulumFrame;
-import co.edu.unal.alife.output.core.Tracer;
+import co.edu.unal.alife.output.PendulumFrame;
+import co.edu.unal.alife.output.Tracer;
+import co.edu.unal.alife.pendulum.PendulumEquation;
 
 /**
  * @author Juan Figueredo
@@ -33,7 +34,7 @@ public class FirstProblemSimulation {
 		
 		double hh = 1.0 / 40;
 		double t0 = 0.0;
-		double tf = 3.5+hh;
+		double tf = 30+hh;
 		// Populations setup
 		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(N);
 		MapDeltaPopulation inputPopulation = new MapDeltaPopulation(halfSize);

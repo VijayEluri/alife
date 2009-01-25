@@ -8,7 +8,7 @@ import jml.evolution.Individual;
 import co.edu.unal.alife.dynamics.AbstractSolver;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.DeltaField;
-import co.edu.unal.alife.output.core.Tracer;
+import co.edu.unal.alife.output.Tracer;
 
 /**
  * @author Juan Figueredo
