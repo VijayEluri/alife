@@ -23,7 +23,7 @@ import co.edu.unal.alife.neuralfield.impl.SimpleEquation;
  */
 public class PendulumController {
 	
-	private DeltaField<Double> field;
+	private DeltaField<Double> field = null;
 
 	/**
 	 * @param halfSize
@@ -31,7 +31,7 @@ public class PendulumController {
 	 */
 	public PendulumController(int halfSize, PendulumControllerParameters parameters) {
 		super();
-		assert (halfSize*2)+1 == parameters.getSize();
+		assert (halfSize*2+1) == parameters.getSize();
 		field = buildController(parameters, halfSize);
 	}
 

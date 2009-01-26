@@ -10,20 +10,28 @@ import jml.evolution.Genotype;
  */
 public class PendulumControllerGenotype extends Genotype {
 
-	private int size;
-	private int minValue;
-	private int maxValue;
+	private int halfSize;
+	private double minValue = -0.2;
+	private double maxValue = 1.0;
+	
+	/**
+	 * @param size
+	 */
+	public PendulumControllerGenotype(int size) {
+		super();
+		this.halfSize = size;
+	}
 
 	/**
 	 * @param maxValue
 	 * @param minValue
-	 * @param size
+	 * @param halfSize
 	 */
-	public PendulumControllerGenotype(int size, int maxValue, int minValue) {
+	public PendulumControllerGenotype(int halfSize, double maxValue, double minValue) {
 		super();
 		this.maxValue = maxValue;
 		this.minValue = minValue;
-		this.size = size;
+		this.halfSize = halfSize;
 	}
 
 	/*
@@ -32,7 +40,7 @@ public class PendulumControllerGenotype extends Genotype {
 	 */
 	@Override
 	public Object newInstance() {
-		PendulumControllerParameters parameters = new PendulumControllerParameters(size, minValue, maxValue);
+		PendulumControllerParameters parameters = new PendulumControllerParameters(2*halfSize+1, minValue, maxValue);
 		return parameters;
 	}
 
@@ -49,7 +57,7 @@ public class PendulumControllerGenotype extends Genotype {
 	 * @return the size
 	 */
 	public int getSize() {
-		return size;
+		return halfSize;
 	}
 
 }

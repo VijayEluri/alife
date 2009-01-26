@@ -308,7 +308,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			i = 0;
 			for (Double value : fieldValues) {
 				int dx = (-10 + i++) * 10;
-				float dy = (float) value.floatValue() * 50;
+				float dy = (float) value.floatValue() * 1;
 				// g2d.draw(new Ellipse2D.Float(posicionX + dx, posicionY + dy, 5, 5));
 				g2d
 						.draw(new Line2D.Float(posicionX + dx, posicionY, posicionX + dx, posicionY

@@ -24,17 +24,6 @@ public class PendulumControllerInputMutation extends PendulumControllerMutation 
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @param _environment
-	 * @param _limits
-	 * @param _sigma
-	 */
-	public PendulumControllerInputMutation(Environment _environment, RealVectorLimits _limits,
-			double[] _sigma) {
-		super(_environment, _limits, _sigma);
-		// TODO Auto-generated constructor stub
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * @see jml.evolution.real.operators.GaussianMutation#apply(java.lang.Object)

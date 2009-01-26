@@ -57,7 +57,7 @@ public class PendulumEquation implements DeltaEquation<Double> {
 		while (hiddenPopulation.hasNextPopulation()) {
 			hiddenPopulation = hiddenPopulation.getNextPopulation();
 		}
-		int neighbors = 2;
+		int neighbors = 3;
 		int k = 1;
 		double n2 = neighbors*neighbors;
 		if (hiddenPopulation != null) {

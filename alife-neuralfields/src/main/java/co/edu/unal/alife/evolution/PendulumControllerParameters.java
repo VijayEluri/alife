@@ -18,8 +18,7 @@ public class PendulumControllerParameters {
 	 * @param selfKernel
 	 * @param size
 	 */
-	public PendulumControllerParameters(List<Double> inputKernel, List<Double> selfKernel,
-			int size) {
+	public PendulumControllerParameters(List<Double> inputKernel, List<Double> selfKernel, int size) {
 		this.size = size;
 		this.selfKernel = selfKernel;
 		this.inputKernel = inputKernel;
@@ -79,12 +78,23 @@ public class PendulumControllerParameters {
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
 		List<Double> listInput = new ArrayList<Double>(size);
 		List<Double> listSelf = new ArrayList<Double>(size);
 		listInput.addAll(inputKernel);
 		listSelf.addAll(selfKernel);
 		return new PendulumControllerParameters(listInput, listSelf, size);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		String string = "Size: " + size + "\nInputKernel: " + inputKernel + "\nProcessingKernel: "
+				+ selfKernel;
+		return string;
 	}
 
 }

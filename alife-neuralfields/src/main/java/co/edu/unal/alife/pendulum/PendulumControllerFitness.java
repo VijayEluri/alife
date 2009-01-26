@@ -22,7 +22,7 @@ public class PendulumControllerFitness extends Fitness {
 	private double initialPos = -5.0;
 	private double hh = 1.0 / 40;
 	private double t0 = 0.0;
-	private double tf = 3.5+hh;
+	private double tf = 10+hh;
 	
 	/**
 	 * 
