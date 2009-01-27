@@ -67,7 +67,7 @@ public class InputEquation implements DeltaEquation<Double> {
 			if (position.equals(eqPosition)) {
 				newPopulation.setElementValue(position, 1.0);
 			} else if (position.equals(eqPosition2)) {
-				newPopulation.setElementValue(position, 0.8);
+				newPopulation.setElementValue(position, 0.5);
 			} else {
 				newPopulation.setElementValue(position, 0.0);
 

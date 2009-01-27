@@ -53,8 +53,8 @@ public class FirstProblemSimulation {
 		List<KernelFunction> firstRow = new ArrayList<KernelFunction>(N);
 		List<KernelFunction> secondRow = new ArrayList<KernelFunction>(N);
 		List<KernelFunction> thirdRow = null;
-		KernelFunction inputKernelFunction = new MexicanHatKernel(0.05,2,0.20);
-		KernelFunction selfKernelFunction = new MexicanHatKernel(0.05,2,0.20);
+		KernelFunction inputKernelFunction = new MexicanHatKernel(0.10,5,1.00);
+		KernelFunction selfKernelFunction = new MexicanHatKernel(0.10,2,0.15);
 		firstRow.add(null); // self-connectivity of input field
 		firstRow.add(null); // connectivity from output to input
 		firstRow.add(null); // connectivity from plant to input
@@ -69,7 +69,7 @@ public class FirstProblemSimulation {
 		List<DeltaEquation<Double>> equations = new ArrayList<DeltaEquation<Double>>(N);
 		InputEquation inputEquation = new InputEquation(halfSize, pendulumPopulation);
 		SimpleEquation simpleEquation = new SimpleEquation();
-		PendulumEquation pendulumEquation = new PendulumEquation(inputPopulation);
+		PendulumEquation pendulumEquation = new PendulumEquation(outputPopulation);
 		equations.add(inputEquation); // input field equation
 		equations.add(simpleEquation); // output field equation
 		equations.add(pendulumEquation); // plant equation

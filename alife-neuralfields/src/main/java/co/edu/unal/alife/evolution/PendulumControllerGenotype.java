@@ -11,8 +11,8 @@ import jml.evolution.Genotype;
 public class PendulumControllerGenotype extends Genotype {
 
 	private int halfSize;
-	private double minValue = -0.2;
-	private double maxValue = 1.0;
+	private double minValue = -0.4;
+	private double maxValue = 0.8;
 	
 	/**
 	 * @param size

@@ -26,6 +26,7 @@ import co.edu.unal.alife.dynamics.AbstractSolver;
 import co.edu.unal.alife.evolution.PendulumControllerGenotype;
 import co.edu.unal.alife.evolution.PendulumControllerInputMutation;
 import co.edu.unal.alife.evolution.PendulumControllerMutation;
+import co.edu.unal.alife.evolution.PendulumControllerParameters;
 import co.edu.unal.alife.evolution.PendulumControllerPhenotype;
 import co.edu.unal.alife.evolution.PendulumControllerProcessingMutation;
 import co.edu.unal.alife.neuralfield.DeltaField;
@@ -46,7 +47,7 @@ public class FirstProblemEvolution {
 
 	public static Operator[] getOperators(Environment env) {
 		Operator[] opers;
-		RealVectorLimits rvl = new RealVectorLimits(new double[] { -0.5 }, new double[] { 1 }, 1, 1);
+		RealVectorLimits rvl = new RealVectorLimits(new double[] { -0.4 }, new double[] { 0.8 }, 1, 1);
 		PendulumControllerMutation mutationI = new PendulumControllerInputMutation(env, rvl, 0.3);
 		PendulumControllerMutation mutationP = new PendulumControllerProcessingMutation(env, rvl, 0.3);
 		// XOver xover = new XOver(env, new Tournament(env, 2, true, 4));
@@ -89,7 +90,7 @@ public class FirstProblemEvolution {
 		int size = 10;
 		Environment env = getEnvironment(size);
 		Operator[] opers = getOperators(env);
-		Population p = evolve(1, env, 1, opers, new SimpleConsoleTracer());
+		Population p = evolve(3, env, 1, opers, new SimpleConsoleTracer());
 		Vector<Individual> individuals = p.individuals;
 		PendulumControllerFitness fitness = (PendulumControllerFitness)env.getFitness();
 		double maxFit = -100;
@@ -113,7 +114,8 @@ public class FirstProblemEvolution {
 			}
 		}
 		System.out.println("best fit: " + bestInd.getFitness());
-		PendulumController controller = (PendulumController) bestInd.getThing();
+		PendulumControllerParameters params = (PendulumControllerParameters)bestInd.getGenome();
+		PendulumController controller = (PendulumController)env.getPhenotype().get(params);
 //		System.out.println("I:\n" );
 //		System.out.println("P:\n" );
 		// double fit = fitness.evaluate(bestInd);
@@ -125,7 +127,7 @@ public class FirstProblemEvolution {
 
 		// Run simulation
 		double t0 = 0;
-		double tf = 30;
+		double tf = 10;
 		double h = 0.04;
 		AbstractSolver.simulate(t0, tf, h, field);
 		System.out.println(bestInd.getGenome());

@@ -47,10 +47,10 @@ public class PendulumController {
 		// Populations setup
 		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(N);
 		MapDeltaPopulation inputPopulation = new MapDeltaPopulation(halfSize);
-		MapDeltaPopulation outputPopulation = new MapDeltaPopulation(halfSize);
+		MapDeltaPopulation processingPopulation = new MapDeltaPopulation(halfSize);
 		MapDeltaPopulation pendulumPopulation = new MapDeltaPopulation(4,false);
 		populations.add(inputPopulation);
-		populations.add(outputPopulation);
+		populations.add(processingPopulation);
 		populations.add(pendulumPopulation);
 
 		// Initial values setup
@@ -78,7 +78,7 @@ public class PendulumController {
 		List<DeltaEquation<Double>> equations = new ArrayList<DeltaEquation<Double>>(N);
 		InputEquation inputEquation = new InputEquation(halfSize, pendulumPopulation);
 		SimpleEquation simpleEquation = new SimpleEquation();
-		PendulumEquation pendulumEquation = new PendulumEquation(inputPopulation);
+		PendulumEquation pendulumEquation = new PendulumEquation(processingPopulation);
 		equations.add(inputEquation); // input field equation
 		equations.add(simpleEquation); // output field equation
 		equations.add(pendulumEquation); // plant equation

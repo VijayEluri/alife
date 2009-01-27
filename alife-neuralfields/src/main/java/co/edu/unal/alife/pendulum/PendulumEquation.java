@@ -27,11 +27,11 @@ public class PendulumEquation implements DeltaEquation<Double> {
 	DeltaPopulation<Double> hiddenPopulation;
 
 	/**
-	 * @param inputPopulation
+	 * @param hiddenPopulation
 	 */
-	public PendulumEquation(DeltaPopulation<Double> inputPopulation) {
+	public PendulumEquation(DeltaPopulation<Double> hiddenPopulation) {
 		super();
-		this.hiddenPopulation = inputPopulation;
+		this.hiddenPopulation = hiddenPopulation;
 	}
 
 	/*
@@ -57,7 +57,7 @@ public class PendulumEquation implements DeltaEquation<Double> {
 		while (hiddenPopulation.hasNextPopulation()) {
 			hiddenPopulation = hiddenPopulation.getNextPopulation();
 		}
-		int neighbors = 3;
+		int neighbors = 2;
 		int k = 1;
 		double n2 = neighbors*neighbors;
 		if (hiddenPopulation != null) {
