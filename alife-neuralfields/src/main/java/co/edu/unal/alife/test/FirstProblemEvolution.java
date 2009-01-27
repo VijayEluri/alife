@@ -23,6 +23,7 @@ import jml.util.ForLoopCondition;
 import jml.util.Predicate;
 import jml.util.SimpleConsoleTracer;
 import co.edu.unal.alife.dynamics.AbstractSolver;
+import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.evolution.PendulumControllerGenotype;
 import co.edu.unal.alife.evolution.PendulumControllerInputMutation;
 import co.edu.unal.alife.evolution.PendulumControllerMutation;
@@ -33,6 +34,7 @@ import co.edu.unal.alife.neuralfield.DeltaField;
 import co.edu.unal.alife.output.PendulumFrame;
 import co.edu.unal.alife.pendulum.PendulumController;
 import co.edu.unal.alife.pendulum.PendulumControllerFitness;
+import co.edu.unal.alife.pendulum.PendulumEquation;
 
 /**
  * @author Juan Figueredo
@@ -90,7 +92,7 @@ public class FirstProblemEvolution {
 		int size = 10;
 		Environment env = getEnvironment(size);
 		Operator[] opers = getOperators(env);
-		Population p = evolve(3, env, 1, opers, new SimpleConsoleTracer());
+		Population p = evolve(1, env, 100, opers, new SimpleConsoleTracer());
 		Vector<Individual> individuals = p.individuals;
 		PendulumControllerFitness fitness = (PendulumControllerFitness)env.getFitness();
 		double maxFit = -100;
@@ -115,11 +117,17 @@ public class FirstProblemEvolution {
 		}
 		System.out.println("best fit: " + bestInd.getFitness());
 		PendulumControllerParameters params = (PendulumControllerParameters)bestInd.getGenome();
-		PendulumController controller = (PendulumController)env.getPhenotype().get(params);
+		PendulumController controller = new PendulumController(size,params);
 //		System.out.println("I:\n" );
 //		System.out.println("P:\n" );
 		// double fit = fitness.evaluate(bestInd);
+		
+		double initialAngle = Math.PI/6;
+		double initialPos = -5.0;
 		DeltaField<Double> field = controller.getField();
+		DeltaPopulation<Double> pendulumPopulation = field.getPopulations().get(2);
+		pendulumPopulation.setElementValue(PendulumEquation.STATE_THETA, initialAngle);
+		pendulumPopulation.setElementValue(PendulumEquation.STATE_X, initialPos);
 		
 		co.edu.unal.alife.output.Tracer tracer = new co.edu.unal.alife.output.Tracer(4);
 		//field.addObserver(printer);

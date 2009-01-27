@@ -148,7 +148,9 @@ public class PendulumEquation implements DeltaEquation<Double> {
 		}
 		
 		val /= tracer.getData().get(2).size();
+		
+		double fitness = 100 - val * 100 / (PI*PI*PI*PI+2);
 
-		return val;
+		return fitness;
 	}
 }
