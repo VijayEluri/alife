@@ -32,12 +32,12 @@ public class FirstProblemSimulation {
 	public static void main(String[] args) {
 		int N = 3;
 		int halfSize = 10;
-		double initialAngle = Math.PI/6;
-		double initialPos = -5.0;
+		double initialAngle = Math.PI;
+		double initialPos = 0.0;
 
 		double hh = 1.0 / 40;
 		double t0 = 0.0;
-		double tf = 10 + hh;
+		double tf = 4 + hh;
 		// Populations setup
 		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(N);
 		MapDeltaPopulation inputPopulation = new MapDeltaPopulation(halfSize);
@@ -58,8 +58,7 @@ public class FirstProblemSimulation {
 		List<KernelFunction> thirdRow = null;
 //		KernelFunction inputKernelFunction = new MexicanHatKernel(0.05,2,0.20);
 //		KernelFunction selfKernelFunction = new MexicanHatKernel(0.05,2,0.20);
-//		KernelFunction inputKernelFunction = new MexicanHatKernel(0.10,2,2.00);
-//		KernelFunction selfKernelFunction = new MexicanHatKernel(0.10,2,0.30);
+//		
 
 		Double[] inputArray = new Double[] { 0.8, -0.4, 0.3821521867217581, 0.8,
 				0.6627201010260433, 0.8, 0.5996071258752236, 0.4310174353169244, 0.8, 0.8,
