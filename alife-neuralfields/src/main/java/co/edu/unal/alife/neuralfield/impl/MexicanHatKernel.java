@@ -53,5 +53,11 @@ public class MexicanHatKernel extends KernelFunction {
 		double w = k*Math.exp(-d2/delta2)-H0;
 		return w;
 	}
+	
+	public static void main(String[] args) {
+		MexicanHatKernel kernel = new MexicanHatKernel(0.05,2,2.00);
+		Double double1 = kernel.evaluateKernel(0d, 1d);
+		System.out.println(double1);
+	}
 
 }
