@@ -286,6 +286,28 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see co.edu.unal.alife.dynamics.DeltaPopulation#toString(java.util.List, java.util.List)
+	 */
+	@Override
+	public String toString(List<String> times, List<DeltaPopulation<Double>> dataSource) {
+		StringBuffer sb = new StringBuffer();
+		Set<Double> positions = getPositions();
+		for (Double x : positions) {
+			int j = 0;
+			for (DeltaPopulation<Double> pop : dataSource) {
+				String t = times.get(j++);
+				sb.append(t+"\t"+pop.getElementValue(x).toString());
+				sb.append("\n");
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+
+
+
+
 
 	/**
 	 * @author Juan Figueredo

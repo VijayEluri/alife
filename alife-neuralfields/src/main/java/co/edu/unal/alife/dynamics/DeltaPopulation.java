@@ -1,6 +1,7 @@
 package co.edu.unal.alife.dynamics;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -153,9 +154,18 @@ public abstract interface DeltaPopulation<K> {
 	}
 
 	/**
+	 * To string useful for 3d printing
 	 * @param t
 	 * @return
 	 */
 	String toString(String t);
+	
+	/**
+	 * To string useful for 2d with datasources printing
+	 * @param times
+	 * @param dataSource
+	 * @return
+	 */
+	String toString(List<String> times, List<DeltaPopulation<Double>> dataSource);
 
 }

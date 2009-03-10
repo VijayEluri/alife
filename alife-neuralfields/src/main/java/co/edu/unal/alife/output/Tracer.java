@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import jml.evolution.Population;
+
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 
 public class Tracer implements Visualizer {
@@ -79,7 +81,7 @@ public class Tracer implements Visualizer {
 	 */
 	private String toString(int i, List<DeltaPopulation<Double>> dataSource) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("\n#Printing population "+i+":\n");
+		sb.append("\n#Printing population " + i + ":\n");
 		List<String> times = labels.get(i);
 		int j = 0;
 		for (DeltaPopulation<Double> population : dataSource) {
@@ -89,18 +91,35 @@ public class Tracer implements Visualizer {
 		sb.append("\n");
 		return sb.toString();
 	}
-	
+
+	/**
+	 * @param sb
+	 * @param i
+	 * @param dataSource
+	 */
+	private String toString2D(int i, List<DeltaPopulation<Double>> dataSource) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("\n#Printing population " + i + ":\n");
+		List<String> times = labels.get(i);
+		DeltaPopulation<Double> pop = dataSource.get(0);
+		sb.append(pop.toString(times, dataSource));
+		return sb.toString();
+	}
+
 	public void printToFiles(String[] filenames) {
 		try {
 			int i = 0;
 			for (List<DeltaPopulation<Double>> dataSource : data) {
-				File f = new File(filenames[i]);
-				FileWriter fw = new FileWriter(f);
-				BufferedWriter bw = new BufferedWriter(fw);
-				bw.write(toString(i, dataSource));
+				if (filenames[i] != null) {
+					File f = new File(filenames[i]);
+					FileWriter fw = new FileWriter(f);
+					BufferedWriter bw = new BufferedWriter(fw);
+					bw.write(toString(i, dataSource));
+//					bw.write(toString2D(i, dataSource));
+					bw.close();
+					fw.close();
+				}
 				i++;
-				bw.close();
-				fw.close();
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
