@@ -36,7 +36,7 @@ public class AnimationFrame extends JFrame implements ActionListener
 	 */
 	private static final long serialVersionUID = 2281876608242374438L;
 	/**
-	 * @author  Juan Jos� Figueredo Uribe
+	 * @author  Juan José Figueredo Uribe
 	 * @version 1.0, 22/11/15
 	 */
 
@@ -109,8 +109,8 @@ public class AnimationFrame extends JFrame implements ActionListener
 			public void actionPerformed(ActionEvent e) {
 				try{
 					timer.setDelay(25);
-					circles.animar((int)40,(int)10000);
-					grafica.animar((int)40,(int)10000);
+					circles.animar((int)25,(int)10000);
+					grafica.animar((int)25,(int)10000);
 					animadoSup.repaint();
 					iniciarAnimacion();
 				} catch (Exception ex) {}

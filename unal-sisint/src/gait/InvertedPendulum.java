@@ -30,7 +30,7 @@ public class InvertedPendulum implements Derivable{
 		double ex = rFun(t)-x[0];
 		x[1]=stdAngle(x[1]);
 		double[] output = rnnController.eval(ex, x[1], t);
-		double u = 10*output[0];
+		double u = 20*output[0];
 //		double u = 0;
 //		System.out.println(u);
 		double tao = 0;
@@ -73,6 +73,7 @@ public class InvertedPendulum implements Derivable{
 		double fitness = 100 - val * 100 / (PI*PI*PI*PI+2);
 	    if (plot) {
 			new AnimationFrame(tracer);
+			tracer.printToFile("rnnPendulum");
 		}
 		return fitness;
 	}
@@ -85,20 +86,32 @@ public class InvertedPendulum implements Derivable{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		double inX = -0.5;
-		double inTh = 0.15;
+		double inX = 0;
+		double inTh = Math.PI/6;
 		double[] x0 = {inX, inTh, 0, 0};
 		double tf = 10;
-		double h = 0.025;
+		double h = 1.0 / 40;
 		double t = 0;
 		boolean plot = true;
 		
 		int inputs = 3;
 		int states = 4;
-		double[][] Wa = MatrixOperator.random(states, states, 4/Math.sqrt(states), -2/Math.sqrt(states));
-		System.out.println(MatrixOperator.toString(Wa));
-		double[][] Wb = MatrixOperator.random(states, inputs+1, 4, -2);
-		System.out.println(MatrixOperator.toString(Wb));
+//		double[][] Wa = MatrixOperator.random(states, states, 4/Math.sqrt(states), -2/Math.sqrt(states));
+//		System.out.println(MatrixOperator.toString(Wa));
+//		double[][] Wb = MatrixOperator.random(states, inputs+1, 4, -2);
+		double[][] Wa= { 
+			 {0.17993353817580982, 1.4130997349445487, -1.9435505077560689, 1.6312705543544266},
+			 {0.40926669953590755, 0.19885670858324245, -1.1383987601905887, 1.0149197702992137},
+			 {-1.1708561820279613, 0.47114859978784374, -1.0956059366431403, -0.8976035013127555},
+			 {1.3752597082847537, -1.5740825037159785, 1.9997617503972815, 1.6792545734410194}
+		};
+		double[][] Wb = {
+			 {-1.417122488485966, 0.05059659250117754, 1.3188796274177417, 0.11979732022748113},
+			 {0.5242583922387385, 0.6384127780672371, 0.6381543305619606, -0.8197718690221629},
+			 {-0.6458599472218354, -1.8187941642663854, 1.8490410642002968, 0.675624268325258},
+			 {-1.7901882015170116, 1.7265691497604791, -1.815313744540032, -0.07867380148358949}
+		};
+//		System.out.println(MatrixOperator.toString(Wb));
 		int[][] Aa = MatrixOperator.ones(states, states);
 		int[][] Ab = MatrixOperator.ones(states, inputs+1);
 		int[] An = MatrixOperator.ones(states);

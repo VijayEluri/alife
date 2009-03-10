@@ -50,6 +50,12 @@ public class Tracer {
 	public void setLabels(String[] labels) {
 		this.labels = labels;
 	}
-	
+
+	/**
+	 * @return the length
+	 */
+	public int getLength() {
+		return length;
+	}
 	
 }

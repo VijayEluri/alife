@@ -99,7 +99,7 @@ public class InvertedPendulumOrientationTest {
 
 	public static void main(String[] args){
 		int states = 4;
-		double initialAngle = 0.2;
+		double initialAngle = Math.PI/6;
 		Environment env = getEnvironment(states,initialAngle);
 		Operator[] opers = getOperators(env);
 		Population p = evolve( 100, env, 500, opers, new SimpleConsoleTracer() );
