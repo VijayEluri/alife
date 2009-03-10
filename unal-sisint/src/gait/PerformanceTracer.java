@@ -26,16 +26,18 @@ public class PerformanceTracer extends Tracer {
 	}
 
 	public String toString() {
+		//For 2d-with-datasets printing
 		StringBuffer sb = new StringBuffer();
 		double t = 0;
-		for (int j = 0; j < data.size(); j++) {
-			t += h;
-			double[] dataJ = data.get(j);
-			for (int k = 0; k < dataJ.length; k++) {
-				sb.append(k + "\t" + t + "\t" + dataJ[k]);
+		double[][] transData = new double[getLength()][data.size()];
+		for (int i = 0; i < transData.length; i++) {
+			for (int j = 0; j < transData[0].length; j++) {
+				transData[i][j] = data.get(j)[i];
+				t = h*j;
+				sb.append(t + "\t" + transData[i][j]);
 				sb.append("\n");
 			}
-			sb.append("\n");
+			sb.append("\n");	
 		}
 		return sb.toString();
 	}
