@@ -114,8 +114,8 @@ public class Tracer implements Visualizer {
 					File f = new File(filenames[i]);
 					FileWriter fw = new FileWriter(f);
 					BufferedWriter bw = new BufferedWriter(fw);
-//					bw.write(toString(i, dataSource));
-					bw.write(toString2D(i, dataSource));
+//					bw.write(toString(i, dataSource)); //3d
+					bw.write(toString2D(i, dataSource)); //2d
 					bw.close();
 					fw.close();
 				}

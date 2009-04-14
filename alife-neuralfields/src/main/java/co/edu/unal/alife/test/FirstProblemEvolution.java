@@ -92,7 +92,7 @@ public class FirstProblemEvolution {
 		int size = 10;
 		Environment env = getEnvironment(size);
 		Operator[] opers = getOperators(env);
-		Population p = evolve(50, env, 200, opers, new SimpleConsoleTracer());
+		Population p = evolve(100, env, 200, opers, new SimpleConsoleTracer());
 		Vector<Individual> individuals = p.individuals;
 		PendulumControllerFitness fitness = (PendulumControllerFitness)env.getFitness();
 		double maxFit = -100;
@@ -135,12 +135,13 @@ public class FirstProblemEvolution {
 
 		// Run simulation
 		double t0 = 0;
-		double tf = 20;
+		double tf = 10;
 		double h = 0.04;
 		AbstractSolver.simulate(t0, tf, h, field);
 		System.out.println(bestInd.getGenome());
 		
-		String[] filenames = {"inputPopulation_evo","fieldPopulation_evo","pendulum_evo"};
+//		String[] filenames = {"inputPopulation_evo","fieldPopulation_evo","pendulum_evo"}; /3d
+		String[] filenames = { null, null, "pendulum_evo_gecco" }; //2d
 		tracer.printToFiles(filenames);
 		// Run animation
 		new PendulumFrame(tracer);

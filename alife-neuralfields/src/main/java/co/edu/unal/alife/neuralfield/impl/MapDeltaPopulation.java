@@ -300,7 +300,7 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 				sb.append(t+"\t"+pop.getElementValue(x).toString());
 				sb.append("\n");
 			}
-			sb.append("\n");
+			sb.append("\n\n");
 		}
 		return sb.toString();
 	}
