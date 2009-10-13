@@ -54,7 +54,6 @@ public class PendulumControllerFitness extends Fitness {
 	 */
 	@Override
 	public double evaluate(Individual obj) {
-		//TODO:Verify line
 		PendulumController controller = (PendulumController)obj.getThing();
 		DeltaField<Double> field = controller.getField();
 		

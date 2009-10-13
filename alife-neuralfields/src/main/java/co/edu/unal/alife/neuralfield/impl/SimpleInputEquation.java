@@ -8,43 +8,25 @@ import java.util.List;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.DeltaEquation;
-import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.InputEquation;
 import co.edu.unal.alife.pendulum.PendulumEquation;
 
 /**
  * @author Juan Figueredo
  */
-public class InputEquation implements DeltaEquation<Double> {
+public class SimpleInputEquation extends InputEquation {
 
-	private DeltaPopulation<Double> pendulum;
-	private double halfSize;
+	DeltaPopulation<Double> pendulum;
+	double halfSize;
 
 	/**
 	 * @param halfSize
 	 * @param pendulum
 	 */
-	public InputEquation(double halfSize, DeltaPopulation<Double> pendulum) {
+	public SimpleInputEquation(double halfSize, DeltaPopulation<Double> pendulum) {
 		super();
 		this.halfSize = halfSize;
 		this.pendulum = pendulum;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * co.edu.unal.alife.neuralfield.DeltaPopulationEquation#evalEquation(co.edu.unal.alife.neuralfield
-	 * .DeltaPopulation, java.util.List, java.util.List)
-	 */
-	@Override
-	public void evalEquation(DeltaPopulation<Double> localPopulation,
-			List<DeltaPopulation<Double>> populations, List<KernelFunction> kernelList) {
-		throw new UnsupportedOperationException();
-	}
-
-	public static double bipolarSigmoid(double t) {
-		double alpha = 3;
-		return (1 - Math.exp(-alpha * t)) / (1 + Math.exp(-alpha * t));
 	}
 
 	public DeltaPopulation<Double> applyInput(DeltaPopulation<Double> localPopulation) {

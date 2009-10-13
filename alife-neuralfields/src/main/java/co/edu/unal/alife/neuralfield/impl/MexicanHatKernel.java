@@ -44,7 +44,7 @@ public class MexicanHatKernel extends KernelFunction {
 	 */
 	@Override
 	public Double evaluateKernel(Double x, Double y) {
-		double d2 = (x - y) * (x - y);
+		double d2 = squareDistance(x, y);
 //		double s2 = sigma * sigma;
 //		double psi = 1 / (Math.sqrt(2 * Math.PI) * s2 * sigma)
 //				* (1 - d2 / s2) * Math.exp(-s2 / (2 * s2));
@@ -52,6 +52,10 @@ public class MexicanHatKernel extends KernelFunction {
 		double delta2 = delta * delta;
 		double w = k*Math.exp(-d2/delta2)-H0;
 		return w;
+	}
+
+	public double squareDistance(Double x, Double y) {
+		return (x - y) * (x - y);
 	}
 	
 	public static void main(String[] args) {

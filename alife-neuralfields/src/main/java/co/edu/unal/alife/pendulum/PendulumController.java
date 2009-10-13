@@ -12,11 +12,12 @@ import co.edu.unal.alife.evolution.ParameterizedKernel;
 import co.edu.unal.alife.evolution.PendulumControllerParameters;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.DeltaField;
+import co.edu.unal.alife.neuralfield.InputEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
-import co.edu.unal.alife.neuralfield.impl.InputEquation;
+import co.edu.unal.alife.neuralfield.impl.SimpleInputEquation;
 import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
-import co.edu.unal.alife.neuralfield.impl.SimpleEquation;
+import co.edu.unal.alife.neuralfield.impl.SimpleDiffentialEquation;
 
 /**
  * @author Juan Figueredo
@@ -76,8 +77,8 @@ public class PendulumController {
 
 		// Equations setup
 		List<DeltaEquation<Double>> equations = new ArrayList<DeltaEquation<Double>>(N);
-		InputEquation inputEquation = new InputEquation(halfSize, pendulumPopulation);
-		SimpleEquation simpleEquation = new SimpleEquation();
+		InputEquation inputEquation = new SimpleInputEquation(halfSize, pendulumPopulation);
+		SimpleDiffentialEquation simpleEquation = new SimpleDiffentialEquation();
 		PendulumEquation pendulumEquation = new PendulumEquation(processingPopulation);
 		equations.add(inputEquation); // input field equation
 		equations.add(simpleEquation); // output field equation

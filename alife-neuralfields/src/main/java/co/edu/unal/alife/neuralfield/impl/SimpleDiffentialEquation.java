@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.DeltaEquation;
+import co.edu.unal.alife.neuralfield.DifferentialEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
 
 /**
@@ -17,15 +17,14 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
 /**
  * @author Juan Figueredo
  */
-public class SimpleEquation implements DeltaEquation<Double> {
+public class SimpleDiffentialEquation extends DifferentialEquation  {
 
 	private double tao = 0.1;
 	private double restingPotential = -0.2;
 
-	/*
-	 * (non-Javadoc)
-	 * @see co.edu.unal.alife.neuralfield.core.NeuralPopulationEquation#evalEquation
-	 * (java.util.List, java.util.List)
+
+	/* (non-Javadoc)
+	 * @see co.edu.unal.alife.neuralfield.impl.DifferentialEquation#evalEquation(co.edu.unal.alife.dynamics.DeltaPopulation, java.util.List, java.util.List)
 	 */
 	@Override
 	public void evalEquation(DeltaPopulation<Double> localPopulation,
@@ -49,7 +48,7 @@ public class SimpleEquation implements DeltaEquation<Double> {
 					for (Double position : positions) {
 						double value = population.getElementValue(position);
 						// Evaluate the Sum
-						double firingRate = firingRateFunction(value);
+						double firingRate = heavisideFunction(value);
 						if (firingRate > 0.0) {
 							double kernelValue = kernelFunction.evaluateKernel(localPosition, position);
 							kernelSum += kernelValue * firingRate;
@@ -67,25 +66,5 @@ public class SimpleEquation implements DeltaEquation<Double> {
 			// set it as element delta
 			localPopulation.setElementDelta(localPosition, delta);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @seeco.edu.unal.alife.neuralfield.NeuralPopulationEquation#inputFunction(co.edu.unal.alife.
-	 * applications.InvertedPendulum, java.util.List, double, double)
-	 */
-	@Override
-	public DeltaPopulation<Double> applyInput(DeltaPopulation<Double> deltaPopulation) {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Heaviside firing rate function
-	 * 
-	 * @param value
-	 * @return the firing rate for the given value
-	 */
-	public static Double firingRateFunction(Double value) {
-		return value > 0 ? 1.0 : 0.0;
 	}
 }

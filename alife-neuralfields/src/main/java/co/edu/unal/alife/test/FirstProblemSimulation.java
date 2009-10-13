@@ -13,11 +13,12 @@ import co.edu.unal.alife.dynamics.RungeKutta4thSolver;
 import co.edu.unal.alife.evolution.ParameterizedKernel;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.DeltaField;
+import co.edu.unal.alife.neuralfield.InputEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
-import co.edu.unal.alife.neuralfield.impl.InputEquation;
+import co.edu.unal.alife.neuralfield.impl.SimpleInputEquation;
 import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
-import co.edu.unal.alife.neuralfield.impl.SimpleEquation;
+import co.edu.unal.alife.neuralfield.impl.SimpleDiffentialEquation;
 import co.edu.unal.alife.output.PendulumFrame;
 import co.edu.unal.alife.output.PendulumPrinter;
 import co.edu.unal.alife.output.Tracer;
@@ -101,8 +102,8 @@ public class FirstProblemSimulation {
 
 		// Equations setup
 		List<DeltaEquation<Double>> equations = new ArrayList<DeltaEquation<Double>>(N);
-		InputEquation inputEquation = new InputEquation(halfSize, pendulumPopulation);
-		SimpleEquation simpleEquation = new SimpleEquation();
+		InputEquation inputEquation = new SimpleInputEquation(halfSize, pendulumPopulation);
+		SimpleDiffentialEquation simpleEquation = new SimpleDiffentialEquation();
 		PendulumEquation pendulumEquation = new PendulumEquation(outputPopulation);
 		// PendulumEquation pendulumEquation = new PendulumEquation(inputPopulation);
 		equations.add(inputEquation); // input field equation
