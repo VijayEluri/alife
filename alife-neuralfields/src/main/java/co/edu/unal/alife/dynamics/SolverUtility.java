@@ -8,12 +8,12 @@ import co.edu.unal.alife.neuralfield.DeltaField;
  * @author Juan Figueredo
  * 
  */
-public abstract class AbstractSolver<K,V> extends Observable implements Solver<K,V> {
+public abstract class SolverUtility<K,V> extends Observable implements Solver<K,V> {
 	
 	/**
 	 * 
 	 */
-	public AbstractSolver() {
+	public SolverUtility() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

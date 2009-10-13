@@ -10,4 +10,8 @@ public interface DeltaEquation<K> {
 			List<DeltaPopulation<K>> populations, List<KernelFunction> kernelList) throws UnsupportedOperationException;
 
 	public abstract DeltaPopulation<K> applyInput(DeltaPopulation<K> localPopulation) throws UnsupportedOperationException;
+	
+	public abstract boolean isDifferential();
+	
+	public abstract boolean requiresApplyInput();
 }

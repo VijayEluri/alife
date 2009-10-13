@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import co.edu.unal.alife.dynamics.AbstractSolver;
+import co.edu.unal.alife.dynamics.SolverUtility;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.dynamics.RungeKutta4thSolver;
 import co.edu.unal.alife.evolution.ParameterizedKernel;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.DeltaField;
-import co.edu.unal.alife.neuralfield.InputEquation;
+import co.edu.unal.alife.neuralfield.NonDifferentialEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
-import co.edu.unal.alife.neuralfield.impl.SimpleInputEquation;
+import co.edu.unal.alife.neuralfield.impl.InputEquationForPendulum;
 import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
-import co.edu.unal.alife.neuralfield.impl.SimpleDiffentialEquation;
+import co.edu.unal.alife.neuralfield.impl.SimpleDifferentialEquation;
 import co.edu.unal.alife.output.PendulumFrame;
 import co.edu.unal.alife.output.PendulumPrinter;
 import co.edu.unal.alife.output.Tracer;
@@ -102,8 +102,8 @@ public class FirstProblemSimulation {
 
 		// Equations setup
 		List<DeltaEquation<Double>> equations = new ArrayList<DeltaEquation<Double>>(N);
-		InputEquation inputEquation = new SimpleInputEquation(halfSize, pendulumPopulation);
-		SimpleDiffentialEquation simpleEquation = new SimpleDiffentialEquation();
+		NonDifferentialEquation inputEquation = new InputEquationForPendulum(halfSize, pendulumPopulation);
+		SimpleDifferentialEquation simpleEquation = new SimpleDifferentialEquation();
 		PendulumEquation pendulumEquation = new PendulumEquation(outputPopulation);
 		// PendulumEquation pendulumEquation = new PendulumEquation(inputPopulation);
 		equations.add(inputEquation); // input field equation
@@ -122,7 +122,7 @@ public class FirstProblemSimulation {
 		field.addObserver(tracer);
 
 		// Run simulation
-		AbstractSolver.simulate(t0, tf, hh, field);
+		SolverUtility.simulate(t0, tf, hh, field);
 
 		// String[] filenames = {"inputPopulation","fieldPopulation","pendulum"};
 		// String[] filenames = { "inputPopulation_old", "fieldPopulation_old", "pendulum_old" };

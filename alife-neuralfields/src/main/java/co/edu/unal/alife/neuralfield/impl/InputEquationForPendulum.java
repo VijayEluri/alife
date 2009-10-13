@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.InputEquation;
+import co.edu.unal.alife.neuralfield.NonDifferentialEquation;
 import co.edu.unal.alife.pendulum.PendulumEquation;
 
 /**
  * @author Juan Figueredo
  */
-public class SimpleInputEquation extends InputEquation {
+public class InputEquationForPendulum extends NonDifferentialEquation {
 
 	DeltaPopulation<Double> pendulum;
 	double halfSize;
@@ -23,7 +23,7 @@ public class SimpleInputEquation extends InputEquation {
 	 * @param halfSize
 	 * @param pendulum
 	 */
-	public SimpleInputEquation(double halfSize, DeltaPopulation<Double> pendulum) {
+	public InputEquationForPendulum(double halfSize, DeltaPopulation<Double> pendulum) {
 		super();
 		this.halfSize = halfSize;
 		this.pendulum = pendulum;

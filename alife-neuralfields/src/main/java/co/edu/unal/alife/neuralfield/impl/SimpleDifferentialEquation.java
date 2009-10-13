@@ -17,7 +17,7 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
 /**
  * @author Juan Figueredo
  */
-public class SimpleDiffentialEquation extends DifferentialEquation  {
+public class SimpleDifferentialEquation extends DifferentialEquation  {
 
 	private double tao = 0.1;
 	private double restingPotential = -0.2;

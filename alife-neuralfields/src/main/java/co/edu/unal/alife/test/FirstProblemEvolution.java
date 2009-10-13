@@ -22,7 +22,7 @@ import jml.evolution.selections.Elitism;
 import jml.util.ForLoopCondition;
 import jml.util.Predicate;
 import jml.util.SimpleConsoleTracer;
-import co.edu.unal.alife.dynamics.AbstractSolver;
+import co.edu.unal.alife.dynamics.SolverUtility;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.evolution.PendulumControllerGenotype;
 import co.edu.unal.alife.evolution.PendulumControllerInputMutation;
@@ -137,7 +137,7 @@ public class FirstProblemEvolution {
 		double t0 = 0;
 		double tf = 10;
 		double h = 0.04;
-		AbstractSolver.simulate(t0, tf, h, field);
+		SolverUtility.simulate(t0, tf, h, field);
 		System.out.println(bestInd.getGenome());
 		
 //		String[] filenames = {"inputPopulation_evo","fieldPopulation_evo","pendulum_evo"}; /3d

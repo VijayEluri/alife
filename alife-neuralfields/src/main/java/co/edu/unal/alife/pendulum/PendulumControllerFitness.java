@@ -5,7 +5,7 @@ package co.edu.unal.alife.pendulum;
 
 import jml.evolution.Fitness;
 import jml.evolution.Individual;
-import co.edu.unal.alife.dynamics.AbstractSolver;
+import co.edu.unal.alife.dynamics.SolverUtility;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.DeltaField;
 import co.edu.unal.alife.output.Tracer;
@@ -67,7 +67,7 @@ public class PendulumControllerFitness extends Fitness {
 		field.addObserver(tracer);
 
 		// Run simulation
-		AbstractSolver.simulate(t0, tf, hh, field);
+		SolverUtility.simulate(t0, tf, hh, field);
 		
 		return PendulumEquation.getFitness(tracer);
 	}

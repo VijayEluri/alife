@@ -10,7 +10,7 @@ import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 /**
  * @author Juan Figueredo
  */
-public class RungeKutta4thSolver extends AbstractSolver<Double, Double> {
+public class RungeKutta4thSolver extends SolverUtility<Double, Double> {
 
 	public RungeKutta4thSolver() {
 		super();
