@@ -27,8 +27,8 @@ public class MexicanHatS1MetricKernel extends MexicanHatKernel {
 		this.points = _points;
 		double[][] L = parameterObject.getCholeskyDecomposition();
 		//g=LL*
-		g = new double[][] { { L[1][1] * L[1][1], L[1][1] * L[2][1] },
-				{ L[1][1] * L[2][1], L[2][1] * L[2][1] + L[2][2] * L[2][2] } };
+		g = new double[][] { { L[0][0] * L[0][0], L[0][0] * L[1][0] },
+				{ L[0][0] * L[1][0], L[1][0] * L[1][0] + L[1][1] * L[1][1] } };
 		double dphi = 2 * Math.PI / points;
 		distance = new double[points][points];
 		int i = 0;
@@ -64,14 +64,14 @@ public class MexicanHatS1MetricKernel extends MexicanHatKernel {
 	private double ds(double phi) {
 		double c2phi = Math.cos(2 * phi);
 		double s2phi = Math.sin(2 * phi);
-		double a = (g[1][1] + g[1][2]) / 2;
-		double b = (g[2][2] - g[1][1]) / 2;
-		double c = (g[1][2] + g[2][1]) / 2;
+		double a = (g[0][0] + g[0][1]) / 2;
+		double b = (g[1][1] - g[0][0]) / 2;
+		double c = (g[0][1] + g[1][0]) / 2;
 		return a + b * c2phi - c * s2phi;
 	}
 
 	/**
-	 * Evaluates the distance of the vectors parameterized by x, y in [0,1). The
+	 * Evaluates the distance of the vectors parameterized by x, y in [0,points). The
 	 * vectors have the form p(x)=[cos(2*pi*x); sin(2*pi*x)] and the metric
 	 * tensor (in this case a constant tensor along the field) is the attribute
 	 * g.
@@ -81,8 +81,8 @@ public class MexicanHatS1MetricKernel extends MexicanHatKernel {
 	 **/
 	@Override
 	public double squareDistance(Double x, Double y) {
-		int xIndex = (int) (x * points);
-		int yIndex = (int) (y * points);
+		int xIndex = (int)x.doubleValue();
+		int yIndex = (int)y.doubleValue();
 		if (xIndex > yIndex) {
 			int temp = xIndex;
 			xIndex = yIndex;

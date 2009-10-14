@@ -9,6 +9,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,19 +57,38 @@ public class PendulumFrame extends JFrame implements ActionListener {
 	boolean congelado = false;
 	Timer timer;
 	Tracer tracer;
+	
+	int pendulumPopIndex = 2;
+	int repPopIndex = 1;
+	int inputPopIndex = 0;
+
+	
+	
+	public PendulumFrame(int inputPopIndex, int pendulumPopIndex, int repPopIndex, Tracer tracer)
+			throws HeadlessException {
+		super("InvertedPendulum GUI");
+		this.tracer = tracer;
+		this.inputPopIndex = inputPopIndex;
+		this.pendulumPopIndex = pendulumPopIndex;
+		this.repPopIndex = repPopIndex;
+		createFrame();
+	}
 
 	// Constructor
 	public PendulumFrame(Tracer tracer) {
-
 		super("InvertedPendulum GUI");
 		this.tracer = tracer;
+		createFrame();
+	}
+
+	private void createFrame() {
 		setSize(1000, 700);
 		setResizable(false);
 
 		timer = new Timer(1000 / MAX_FPS, this);
 		timer.setInitialDelay(0);
 		timer.setCoalesce(true);
-
+		
 		Dimension tamañoDelFrame = getSize();
 		Dimension tamañoPantalla = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((tamañoPantalla.width - tamañoDelFrame.width) / 2,
@@ -180,19 +200,19 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		// grafica.actualizar();
 		// SwingUtilities.invokeLater(grafica);
 		// }
-		if (inputField.count < tracer.getData().get(0).size()) {
+		if (inputField.count < tracer.getData().get(inputPopIndex).size()) {
 			inputField.actualizar();
 			SwingUtilities.invokeLater(inputField);
 		}
-		if (hiddenField.count < tracer.getData().get(1).size()) {
+		if (hiddenField.count < tracer.getData().get(repPopIndex).size()) {
 			hiddenField.actualizar();
 			SwingUtilities.invokeLater(hiddenField);
 		}
-		if (pendulum.count < tracer.getData().get(0).size()) {
+		if (pendulum.count < tracer.getData().get(inputPopIndex).size()) {
 			pendulum.actualizar();
 			SwingUtilities.invokeLater(pendulum);
 		}
-		if (pendulumTrace.count < tracer.getData().get(2).size()) {
+		if (pendulumTrace.count < tracer.getData().get(pendulumPopIndex).size()) {
 			pendulumTrace.actualizar();
 			SwingUtilities.invokeLater(pendulumTrace);
 		}
@@ -250,7 +270,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			prevY = dy;
 			prevY2 = dy2;
 			prevXr = dxr;
-			DeltaPopulation<Double> pendulumData = tracer.getData().get(2).get(count - 1);
+			DeltaPopulation<Double> pendulumData = tracer.getData().get(pendulumPopIndex).get(count - 1);
 
 			Double xValue = pendulumData.getElementValue(PendulumEquation.STATE_X);
 			Double thetaValue = pendulumData.getElementValue(PendulumEquation.STATE_THETA);
@@ -365,7 +385,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 
 		public void actualizar() {
 			count++;
-			DeltaPopulation<Double> pendulumData = tracer.getData().get(2).get(count - 1);
+			DeltaPopulation<Double> pendulumData = tracer.getData().get(pendulumPopIndex).get(count - 1);
 
 			Double xValue = pendulumData.getElementValue(PendulumEquation.STATE_X);
 			Double thetaValue = pendulumData.getElementValue(PendulumEquation.STATE_THETA);

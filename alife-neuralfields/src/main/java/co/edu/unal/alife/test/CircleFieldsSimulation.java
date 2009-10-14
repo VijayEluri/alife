@@ -129,7 +129,7 @@ public class CircleFieldsSimulation {
 		// tracer.printToFiles(filenames);
 		String[] filenames = { null, null, "pendulum_gecco_new" }; // 2d
 		// String[] filenames = { "inputPopulation_ijcnn","fieldPopulation_ijcnn",null}; //3d
-		tracer.printToFiles(filenames);
+		tracer.printToFiles(filenames,true);
 
 		// Run animation
 		new PendulumFrame(tracer);

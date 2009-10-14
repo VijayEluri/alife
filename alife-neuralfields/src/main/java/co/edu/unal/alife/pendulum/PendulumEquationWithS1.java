@@ -21,6 +21,13 @@ public class PendulumEquationWithS1 extends SystemEquation {
 	private static final double M = 1, m = 1, l = 1, g = 9.81;
 	public static final double STATE_X = 0.0, STATE_THETA = 1.0, STATE_V = 2.0, STATE_OMEGA = 3.0;
 	DeltaPopulation<Double> actionPopulation;
+	
+	
+	
+	public PendulumEquationWithS1() {
+		super();
+		this.actionPopulation = null;
+	}
 
 	/**
 	 * @param actionPopulation
@@ -45,7 +52,7 @@ public class PendulumEquationWithS1 extends SystemEquation {
 		while (actionPopulation.hasNextPopulation()) {
 			actionPopulation = actionPopulation.getNextPopulation();
 		}
-		u = actionPopulation.getElementValue(S1ActionEquation.actionPos);
+		u = actionPopulation.getElementValue(S1ActionEquation.FIRST_ACTION);
 		// localPopulation
 		// .setElementValue(STATE_X,
 		// stdAngle(localPopulation.getElementValue(STATE_X)));

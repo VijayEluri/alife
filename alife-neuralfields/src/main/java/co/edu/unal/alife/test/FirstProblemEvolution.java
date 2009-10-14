@@ -142,7 +142,7 @@ public class FirstProblemEvolution {
 		
 //		String[] filenames = {"inputPopulation_evo","fieldPopulation_evo","pendulum_evo"}; /3d
 		String[] filenames = { null, null, "pendulum_evo_gecco" }; //2d
-		tracer.printToFiles(filenames);
+		tracer.printToFiles(filenames,true);
 		// Run animation
 		new PendulumFrame(tracer);
 	}

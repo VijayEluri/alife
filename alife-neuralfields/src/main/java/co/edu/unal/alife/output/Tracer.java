@@ -106,7 +106,7 @@ public class Tracer implements Visualizer {
 		return sb.toString();
 	}
 
-	public void printToFiles(String[] filenames) {
+	public void printToFiles(String[] filenames, boolean is2d) {
 		try {
 			int i = 0;
 			for (List<DeltaPopulation<Double>> dataSource : data) {
@@ -114,8 +114,11 @@ public class Tracer implements Visualizer {
 					File f = new File(filenames[i]);
 					FileWriter fw = new FileWriter(f);
 					BufferedWriter bw = new BufferedWriter(fw);
-//					bw.write(toString(i, dataSource)); //3d
-					bw.write(toString2D(i, dataSource)); //2d
+					if(is2d) {
+						bw.write(toString2D(i, dataSource)); //2d
+					} else {
+						bw.write(toString(i, dataSource)); //3d
+					}
 					bw.close();
 					fw.close();
 				}

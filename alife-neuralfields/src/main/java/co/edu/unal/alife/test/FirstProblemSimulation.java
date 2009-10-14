@@ -5,24 +5,23 @@ package co.edu.unal.alife.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
-import co.edu.unal.alife.dynamics.SolverUtility;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.dynamics.RungeKutta4thSolver;
+import co.edu.unal.alife.dynamics.SolverUtility;
 import co.edu.unal.alife.evolution.ParameterizedKernel;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.DeltaField;
-import co.edu.unal.alife.neuralfield.NonDifferentialEquation;
 import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.NonDifferentialEquation;
 import co.edu.unal.alife.neuralfield.impl.InputEquationForPendulum;
 import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
 import co.edu.unal.alife.neuralfield.impl.SimpleDifferentialEquation;
 import co.edu.unal.alife.output.PendulumFrame;
-import co.edu.unal.alife.output.PendulumPrinter;
 import co.edu.unal.alife.output.Tracer;
-import co.edu.unal.alife.output.Visualizer;
 import co.edu.unal.alife.pendulum.PendulumEquation;
 
 /**
@@ -127,9 +126,9 @@ public class FirstProblemSimulation {
 		// String[] filenames = {"inputPopulation","fieldPopulation","pendulum"};
 		// String[] filenames = { "inputPopulation_old", "fieldPopulation_old", "pendulum_old" };
 		// tracer.printToFiles(filenames);
-		String[] filenames = { null, null, "pendulum_gecco_new" }; // 2d
+		String[] filenames = { null, null, "pendulum_gecco_new_"+new Date() }; // 2d
 		// String[] filenames = { "inputPopulation_ijcnn","fieldPopulation_ijcnn",null}; //3d
-		tracer.printToFiles(filenames);
+		tracer.printToFiles(filenames,true);
 
 		// Run animation
 		new PendulumFrame(tracer);

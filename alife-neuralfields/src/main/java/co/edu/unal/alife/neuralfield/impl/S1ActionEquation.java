@@ -9,9 +9,9 @@ import co.edu.unal.alife.neuralfield.S1TopologyUtility;
 
 public class S1ActionEquation extends NonDifferentialEquation {
 
-	public static final double actionPos = 0.0;
 	DeltaPopulation<Double> representationPopulation;
 	KernelFunction kernel;
+	public static final double FIRST_ACTION = 0d;
 
 	public S1ActionEquation(DeltaPopulation<Double> representationPopulation, KernelFunction kernel) {
 		super();
@@ -21,25 +21,29 @@ public class S1ActionEquation extends NonDifferentialEquation {
 
 	@Override
 	public DeltaPopulation<Double> applyInput(DeltaPopulation<Double> localPopulation) {
-		while (representationPopulation.hasNextPopulation()){
+		while (representationPopulation.hasNextPopulation()) {
 			representationPopulation = representationPopulation.getNextPopulation();
 		}
 		Set<Double> repPositions = representationPopulation.getPositions();
+		int points = repPositions.size();
 		DeltaPopulation<Double> newPopulation = new MapDeltaPopulation(localPopulation.getPositions());
 		localPopulation.setNextPopulation(newPopulation);
-		double numSum = 0d;
-		double divSum = 0d;
-		for (Double pos : repPositions) {
-			Double value = representationPopulation.getElementValue(pos);
-			numSum += pos * value;
-			divSum += pos;
+		Set<Double> localPositions = localPopulation.getPositions();
+		for (Double locPos : localPositions) {
+			double numSum = 0d;
+			double divSum = 0d;
+			for (Double repPos : repPositions) {
+				Double value = representationPopulation.getElementValue(repPos);
+				numSum += repPos * value;
+				divSum += repPos;
+			}
+			// Calculates theta as the centroid
+			double theta = S1TopologyUtility.positionToAngle(numSum /= divSum, points);
+			// Calculates gamma as the transformation of the centroid;
+			double gamma = kernel.evaluateKernel(locPos, theta);
+			double x = S1TopologyUtility.stereoProjection(gamma);
+			newPopulation.setElementValue(locPos, x);
 		}
-		//Calculates theta as the centroid
-		double theta = S1TopologyUtility.positionToAngle(numSum /= divSum);
-		//Calculates gamma as the transformation of the centroid;
-		double gamma = kernel.evaluateKernel(actionPos, theta); 
-		double x = S1TopologyUtility.stereoProjection(gamma);
-		newPopulation.setElementValue(actionPos, x);
 		return newPopulation;
 	}
 }

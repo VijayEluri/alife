@@ -18,29 +18,28 @@ import co.edu.unal.alife.pendulum.PendulumEquation;
 public class S1InputEquationForPendulum extends NonDifferentialEquation {
 
 	DeltaPopulation<Double> pendulum;
-	int points;
 	/**
-	 * @param halfSize
 	 * @param pendulum
+	 * @param halfSize
 	 */
-	public S1InputEquationForPendulum(int points, DeltaPopulation<Double> pendulum) {
+	public S1InputEquationForPendulum(DeltaPopulation<Double> pendulum) {
 		super();
-		this.points = points;
 		this.pendulum = pendulum;
 	}
 
 	public DeltaPopulation<Double> applyInput(DeltaPopulation<Double> localPopulation) {
+		int points = localPopulation.getSize();
 		while (pendulum.hasNextPopulation()) {
 			pendulum = pendulum.getNextPopulation();
 		}
 		double theta = pendulum.getElementValue(PendulumEquation.STATE_THETA);
-		double boundedValue = S1TopologyUtility.angleToPosition(theta)*points;
-		double eqPosition = Math.round(boundedValue)/points;
+		double boundedValue = S1TopologyUtility.angleToPosition(theta,points);
+		double eqPosition = Math.round(boundedValue);
 //		System.out.println("THETA:" + theta + "->" + boundedValue + ":" + eqPosition);
 
 		double omega = pendulum.getElementValue(PendulumEquation.STATE_OMEGA);
-		double boundedValue2 = S1TopologyUtility.angleToPosition(bipolarSigmoid(omega) * Math.PI)*points;
-		double eqPosition2 = Math.round(boundedValue2)/points;
+		double boundedValue2 = S1TopologyUtility.angleToPosition(bipolarSigmoid(omega) * Math.PI, points);
+		double eqPosition2 = Math.round(boundedValue2);
 //		System.out.println("OMEGA:" + omega + "->" + boundedValue2 + ":" + eqPosition2);
 
 		Set<Double> positions = localPopulation.getPositions();

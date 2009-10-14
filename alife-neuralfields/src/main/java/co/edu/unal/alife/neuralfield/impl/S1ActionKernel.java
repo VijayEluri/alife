@@ -11,8 +11,8 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
  */
 public class S1ActionKernel extends KernelFunction {
 
-	private double a;
-	private double b;
+	private double[] a;
+	private double[] b;
 
 	/**
 	 * 
@@ -21,11 +21,16 @@ public class S1ActionKernel extends KernelFunction {
 		// TODO Auto-generated constructor stub
 	}
 
-	public S1ActionKernel(double a, double b) {
+	public S1ActionKernel(double[] a, double[] b) {
 		this();
 		this.a = a;
 		this.b = b;
 	}
+	
+	public S1ActionKernel(double a, double b) {
+		this(new double[]{a},new double[]{b});
+	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -36,10 +41,8 @@ public class S1ActionKernel extends KernelFunction {
 	 */
 	@Override
 	public Double evaluateKernel(Double x, Double y) {
-		double w = 0;
-		if (x == 0d) {
-			w = a * y + b;
-		}
+		int xIndex = x.intValue();
+		double w = a[xIndex] * y + b[xIndex];
 		return w;
 	}
 
