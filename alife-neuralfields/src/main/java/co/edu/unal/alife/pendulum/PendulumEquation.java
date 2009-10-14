@@ -126,24 +126,26 @@ public class PendulumEquation extends SystemEquation {
 		this.actionPopulation = actionPopulation;
 	}
 
-	public static double getFitness(Tracer tracer) {
-		DeltaPopulation<Double> pendulumData = tracer.getData().get(2).get(0);
-
-		double val = 0;
-		while (pendulumData.hasNextPopulation()) {
-			Double xValue = pendulumData.getElementValue(PendulumEquation.STATE_X);
-			Double thetaValue = pendulumData.getElementValue(PendulumEquation.STATE_THETA);
-
-			double ang = stdAngle(thetaValue);
-			val += ang * ang * ang * ang + abs(xValue) / 10;
-
-			pendulumData = pendulumData.getNextPopulation();
-		}
-
-		val /= tracer.getData().get(2).size();
-
-		double fitness = 100 - val * 100 / (PI * PI * PI * PI + 2);
-
-		return fitness;
-	}
+	 public static double getFitness(Tracer tracer) {
+	 DeltaPopulation<Double> pendulumData = tracer.getData().get(2).get(0);
+	
+	 double val = 0;
+	 while (pendulumData.hasNextPopulation()) {
+	 Double xValue =
+	 pendulumData.getElementValue(PendulumEquationWithS1.STATE_X);
+	 Double thetaValue =
+	 pendulumData.getElementValue(PendulumEquationWithS1.STATE_THETA);
+	
+	 double ang = stdAngle(thetaValue);
+	 val += ang * ang * ang * ang + abs(xValue) / 10;
+	
+	 pendulumData = pendulumData.getNextPopulation();
+	 }
+	
+	 val /= tracer.getData().get(2).size();
+	
+	 double fitness = 100 - val * 100 / (PI * PI * PI * PI + 2);
+	
+	 return fitness;
+	 }
 }
