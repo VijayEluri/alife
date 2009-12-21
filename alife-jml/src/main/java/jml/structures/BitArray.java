@@ -109,8 +109,8 @@ public class BitArray implements Cloneable {
   
   /**
    * Utilizada para retornar un BitArray
-   * @param limit Utilizado para asignarle el tamaño al BitArray con el numero de bit requeridos para represnetar su valor
-   * @return BitArray de tamaño igual al numero de bit para representar limit y contiene 0 y 1 aleatorios
+   * @param limit Utilizado para asignarle el tamano al BitArray con el numero de bit requeridos para represnetar su valor
+   * @return BitArray de tamano igual al numero de bit para representar limit y contiene 0 y 1 aleatorios
    */
   public static BitArray random(int limit) {
     int size = IntUtil.getBitsNumber(limit);

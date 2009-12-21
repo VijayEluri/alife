@@ -31,7 +31,7 @@ public class FrameTracer extends JFrame {
 	static public ChartPanel chartpanel;
 	ChartPanel chartpanel1;
 	ChartPanel chartpanel2;
-	String [] str1;					//Los datos que se van a printar en el gráfico
+	String [] str1;					//Los datos que se van a printar en el grafico
 	String [][] dat_rec; 			//Recibe los datos
 	String [] nomColumna;			//El Nombre de la columna
 	String [] nomCliente;			//El nombre del cliente
