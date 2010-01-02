@@ -1,5 +1,6 @@
 package co.edu.unal.alife.neuralfield;
 
+
 public class S1TopologyUtility {
 
 	public static double positionToAngle(double pos, int points) {
@@ -18,6 +19,14 @@ public class S1TopologyUtility {
 	public static double reverseStereoProjection(double x) {
 		double ang = 2*Math.atan(x);
 		return ang;
+	}
+	
+	public static double stdAngle(double angle) {
+		double outAngle = angle % (2*Math.PI);
+		if (outAngle<0) {
+			outAngle += 2*Math.PI;
+		}
+		return outAngle;
 	}
 
 }

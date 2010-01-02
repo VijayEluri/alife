@@ -27,7 +27,7 @@ public class ParameterizedKernel extends KernelFunction {
 	 * @see co.edu.unal.alife.neuralfield.KernelFunction#evaluateKernel(java.lang.Double, java.lang.Double)
 	 */
 	@Override
-	public Double evaluateKernel(Double x, Double y) {
+	public Double evaluateTransformation(Double x, Double y) {
 		int pos = (int) Math.abs(x - y);
 		return kernel.get(pos);
 	}

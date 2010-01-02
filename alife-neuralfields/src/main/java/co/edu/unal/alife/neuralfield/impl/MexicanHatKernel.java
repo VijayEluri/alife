@@ -43,7 +43,7 @@ public class MexicanHatKernel extends KernelFunction {
 	 * .lang.Double, java.lang.Double)
 	 */
 	@Override
-	public Double evaluateKernel(Double x, Double y) {
+	public Double evaluateTransformation(Double x, Double y) {
 		double d2 = squareDistance(x, y);
 //		double s2 = sigma * sigma;
 //		double psi = 1 / (Math.sqrt(2 * Math.PI) * s2 * sigma)
@@ -60,7 +60,7 @@ public class MexicanHatKernel extends KernelFunction {
 	
 	public static void main(String[] args) {
 		MexicanHatKernel kernel = new MexicanHatKernel(0.05,2,2.00);
-		Double double1 = kernel.evaluateKernel(0d, 1d);
+		Double double1 = kernel.evaluateTransformation(0d, 1d);
 		System.out.println(double1);
 	}
 

@@ -9,5 +9,5 @@ public abstract class KernelFunction  {
 	 * @param y
 	 * @return the kernel value
 	 */
-	public abstract Double evaluateKernel(Double x, Double y);
+	public abstract Double evaluateTransformation(Double x, Double y);
 }

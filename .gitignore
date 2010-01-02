@@ -1,0 +1,9 @@
+.metadata/
+alife-jml/.classpath
+alife-jml/.project
+alife-jml/.settings/
+alife-jml/target/
+alife-neuralfields/.classpath
+alife-neuralfields/.project
+alife-neuralfields/.settings/
+alife-neuralfields/target/

@@ -132,9 +132,9 @@ public class PendulumEquation extends SystemEquation {
 	 double val = 0;
 	 while (pendulumData.hasNextPopulation()) {
 	 Double xValue =
-	 pendulumData.getElementValue(PendulumEquationWithS1.STATE_X);
+	 pendulumData.getElementValue(S1PendulumEquation.STATE_X);
 	 Double thetaValue =
-	 pendulumData.getElementValue(PendulumEquationWithS1.STATE_THETA);
+	 pendulumData.getElementValue(S1PendulumEquation.STATE_THETA);
 	
 	 double ang = stdAngle(thetaValue);
 	 val += ang * ang * ang * ang + abs(xValue) / 10;

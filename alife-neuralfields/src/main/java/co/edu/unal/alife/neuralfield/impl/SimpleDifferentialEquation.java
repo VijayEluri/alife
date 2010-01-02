@@ -50,7 +50,7 @@ public class SimpleDifferentialEquation extends DifferentialEquation  {
 						// Evaluate the Sum
 						double firingRate = heavisideFunction(value);
 						if (firingRate > 0.0) {
-							double kernelValue = kernelFunction.evaluateKernel(localPosition, position);
+							double kernelValue = kernelFunction.evaluateTransformation(localPosition, position);
 							kernelSum += kernelValue * firingRate;
 						}
 					}
