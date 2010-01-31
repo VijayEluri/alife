@@ -19,8 +19,8 @@ import co.edu.unal.alife.output.Tracer;
  */
 public class S1PendulumEquation extends SystemEquation {
 	private static final double PENALTY = 0.5;
-	private static final double K_A = (0.5) / (5 * 5);
-	private static final double K_X = (0.5) / (Math.PI/2 * Math.PI/2);
+	private static final double K_X = (0.0) / (5 * 5);
+	private static final double K_A = (1.0) / (Math.PI);
 	private static final double MAX_VAL = K_X*5*5+K_A*Math.PI+0.5;
 	// TODO:Revisar Clase
 	private static final double M = 1, m = 1, l = 1, g = 9.81;
@@ -117,6 +117,7 @@ public class S1PendulumEquation extends SystemEquation {
 		DeltaPopulation<Double> pendulumData = tracer.getData().get(N - 1).get(
 				0);
 		double val = 0;
+		boolean penalty = false;
 		while (pendulumData.hasNextPopulation()) {
 			double localValue = 0;
 			Double xValue = pendulumData
@@ -124,20 +125,24 @@ public class S1PendulumEquation extends SystemEquation {
 			Double thetaValue = pendulumData
 					.getElementValue(S1PendulumEquation.STATE_THETA);
 			double ang = stdAngle(thetaValue);
-			if (Math.abs(ang) >= Math.PI / 3) {
-				localValue = K_X * (xValue * xValue) + K_A * Math.abs(ang) + PENALTY;
+			if (Math.abs(ang) >= 1) {
+				penalty = true;
+//				localValue = K_X * (xValue * xValue) + K_A * Math.abs(ang) + PENALTY;
 			} else {
-				localValue = K_X * (xValue * xValue) + K_A * (ang * ang);
+//				localValue = K_X * (xValue * xValue) + K_A * Math.abs(ang);
 			}
+			localValue = K_X * (xValue * xValue) + K_A * Math.abs(ang);
 			val += localValue / MAX_VAL;
-
 			pendulumData = pendulumData.getNextPopulation();
 		}
 
 		val /= tracer.getData().get(2).size();
 
 		double fitness = (1 - val)*100;
-
+		
+		if(penalty) {
+			fitness -= 50;
+		}
 		return fitness;
 	}
 }

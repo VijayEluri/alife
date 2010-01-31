@@ -12,6 +12,13 @@ import co.edu.unal.alife.pendulum.SystemEquation;
 public class S1ControllerPhenotypeForPendulum extends Phenotype {
 
 	private int points;
+	
+	public S1ControllerPhenotypeForPendulum(int points) {
+		super();
+		this.points = points;
+	}
+
+
 
 	@Override
 	public Object get(Object genome) {

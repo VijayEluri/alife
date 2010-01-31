@@ -46,11 +46,11 @@ public class S1InputEquationForPendulum extends NonDifferentialEquation {
 		DeltaPopulation<Double> newPopulation = new MapDeltaPopulation(positions);
 		for (Double position : positions) {
 			if (position.equals(eqPosition)) {
-				newPopulation.setElementValue(position, 1.0);
+				newPopulation.setElementValue(position, 2.0);
 			} else if (position.equals(eqPosition2)) {
 				newPopulation.setElementValue(position, 0.5);
 			} else {
-				newPopulation.setElementValue(position, 0.0);
+				newPopulation.setElementValue(position, 0.2);
 
 			}
 		}

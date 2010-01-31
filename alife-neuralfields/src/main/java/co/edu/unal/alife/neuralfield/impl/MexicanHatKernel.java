@@ -12,9 +12,9 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
 public class MexicanHatKernel extends KernelFunction {
 
 //	public static final double sigma = 1;
-	private double H0 = 0.05;
-	private double delta = 4;
-	private double k = 0.05;
+	protected double H0 = 0.05;
+	protected double delta = 4;
+	protected double k = 0.05;
 	
 	/**
 	 * 

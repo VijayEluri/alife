@@ -30,8 +30,8 @@ public class S1RepresentationCholeskyMutation extends GaussianMutation {
 		List<Double> cholesky2s = genome.getRepParams().getCholesky2s();
 		assert (cholesky1s.size() == cholesky2s.size());
 		int size = cholesky1s.size();
-		double min = limits.min[0];
-		double max = limits.max[0];
+		double min = genome.getRepParams().getMinChoVal();
+		double max = genome.getRepParams().getMaxChoVal();
 		int pos = -1;
 		try {
 			UniformNumberGenerator s = new UniformNumberGenerator(size);

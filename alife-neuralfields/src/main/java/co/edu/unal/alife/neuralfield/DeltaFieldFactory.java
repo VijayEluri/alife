@@ -1,18 +1,26 @@
 package co.edu.unal.alife.neuralfield;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.dynamics.RungeKutta4thSolver;
+import co.edu.unal.alife.dynamics.SolverUtility;
 import co.edu.unal.alife.evolution.params.S1ControllerParameters;
-import co.edu.unal.alife.neuralfield.impl.S1KernelParameter;
+import co.edu.unal.alife.evolution.params.S1InputParameters;
+import co.edu.unal.alife.evolution.params.S1OutputParameters;
+import co.edu.unal.alife.evolution.params.S1RepresentationParameters;
 import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
-import co.edu.unal.alife.neuralfield.impl.S1MexicanHatMetricKernel;
 import co.edu.unal.alife.neuralfield.impl.S1ActionEquation;
 import co.edu.unal.alife.neuralfield.impl.S1InputEquationForPendulum;
+import co.edu.unal.alife.neuralfield.impl.S1KernelParameter;
+import co.edu.unal.alife.neuralfield.impl.S1MexicanHatMetricKernel;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
 import co.edu.unal.alife.neuralfield.impl.SimpleDifferentialEquation;
+import co.edu.unal.alife.output.PendulumFrame;
+import co.edu.unal.alife.output.Tracer;
+import co.edu.unal.alife.pendulum.S1PendulumEquation;
 import co.edu.unal.alife.pendulum.SystemEquation;
 
 public class DeltaFieldFactory {
@@ -38,9 +46,9 @@ public class DeltaFieldFactory {
 	/**
 	 * Builds a field composed of populations embedded in S1 with a metric
 	 * provided. It has a non-differential Input Population that performs vector
-	 * coding of inputs, a group of differential Representation Populations receiving the
-	 * inputs with differential dynamics, and a non-differential Action
-	 * Population which evaluates the output as a centroid vector
+	 * coding of inputs, a group of differential Representation Populations
+	 * receiving the inputs with differential dynamics, and a non-differential
+	 * Action Population which evaluates the output as a centroid vector
 	 * decodification. It includes as fourth population the System Population
 	 * provided as parameter, and connects it to the input and action
 	 * populations.
@@ -130,7 +138,7 @@ public class DeltaFieldFactory {
 		List<Double> hs = controllerParams.getRepParams().getHs();
 		List<Double> ks = controllerParams.getRepParams().getKs();
 		// And for input2rep (alphas are Ks in input kernels)
-		List<Double> alphas = controllerParams.getInParams().getKs();
+		List<Double> inputKs = controllerParams.getInParams().getKs();
 		// Addition and creation of in2rep and rep2rep kernel lists
 		S1KernelParameter kernelParameter;
 		for (int i = 0; i < noGoals; i++) {
@@ -141,13 +149,13 @@ public class DeltaFieldFactory {
 			// Input2rep kernels
 			for (int j = 0; j < noInputs; j++) {
 				kernelParameter = new S1KernelParameter(L, hs.get(i), deltas
-						.get(i), alphas.get(i * noInputs + j));
+						.get(i), inputKs.get(i * noInputs + j));
 				goalKernelRow.add(new S1MexicanHatMetricKernel(kernelParameter,
 						points));
 			}
 			// Rep2rep kernel
-			kernelParameter = new S1KernelParameter(L, hs.get(i), deltas
-					.get(i), ks.get(i));
+			kernelParameter = new S1KernelParameter(L, hs.get(i),
+					deltas.get(i), ks.get(i));
 			goalKernelRow.add(new S1MexicanHatMetricKernel(kernelParameter,
 					points));
 			kernelMatrix.add(goalKernelRow);
@@ -166,77 +174,74 @@ public class DeltaFieldFactory {
 	}
 
 	public static void main(String[] args) {
-		//
-		// // Discrete points in fields
-		// int points = 20;
-		// // Number of actions performed
-		// int actions = 1;
-		//
-		// // Simulation parameters
-		// double hh = 1.0 / 40;
-		// double t0 = 0.0;
-		// double tf = 10 + hh;
-		// double initialAngle = Math.PI / 6;
-		// double initialPos = -5.0;
-		//
-		// DeltaFieldFactory factory = DeltaFieldFactory.getInstance();
-		//
-		// // KernelMatrix Parameters
-		// double[][] choleskyIn = { { 1, 0 }, { 0, 1 } };
-		// double[][] choleskyRep = { { 1, 0 }, { 0, 1 } };
-		// double h0 = 0.05;
-		// double delta = 4;
-		// double k = 0.05;
-		// double[][] abActParams = { { -1 }, { 0 } };
-		// // KernelParameter Construction
-		// MS1MKernelParameter in2repParams = new
-		// MS1MKernelParameter(choleskyIn, h0, delta, k);
-		// MS1MKernelParameter rep2repParams = new
-		// MS1MKernelParameter(choleskyRep, h0, delta, k);
-		// // KernelMatrix construction
-		// List<List<KernelFunction>> kernelMatrix =
-		// factory.buildSimpleS1KernelMatrix(in2repParams, rep2repParams,
-		// abActParams, points);
-		//
-		// // System (pendulum) population construction
-		// DeltaPopulation<Double> systemPopulation = new MapDeltaPopulation(4,
-		// false);
-		// systemPopulation.setElementValue(PendulumEquationWithS1.STATE_THETA,
-		// initialAngle);
-		// systemPopulation.setElementValue(PendulumEquationWithS1.STATE_X,
-		// initialPos);
-		// // PendulumEquation Construction
-		// SystemEquation systemEquation = new PendulumEquationWithS1();
-		//
-		// // Field construction
-		// DeltaField<Double> field = factory.buildSimpleS1Field(points,
-		// kernelMatrix, systemPopulation, systemEquation,
-		// actions);
-		//
-		// // Monitoring
-		// Tracer tracer = new Tracer(N);
-		// // field.addObserver(printer);
-		// field.addObserver(tracer);
-		//
-		// // Run simulation
-		// SolverUtility.simulate(t0, tf, hh, field);
-		//
-		// // String[] filenames =
-		// // {"inputPopulation","fieldPopulation","pendulum"};
-		// // String[] filenames = { "inputPopulation_old",
-		// "fieldPopulation_old",
-		// // "pendulum_old" };
-		// // tracer.printToFiles(filenames);
-		// Date dt = new Date();
-		// String[] filenames = { "inpPopulation_S1_" + dt, "repPopulation_S1_"
-		// + dt, "actPopulation_S1_" + dt,
-		// "pendPopulation_S1_" + dt }; // 2d
-		// // String[] filenames = {
-		// // "inputPopulation_ijcnn","fieldPopulation_ijcnn",null}; //3d
-		// tracer.printToFiles(filenames,true);
-		//
-		// // Run animation
-		// new PendulumFrame(0,3,1,tracer);
-	}
+		int inCard = 4;
+		int repCard = 2;
+		int outCard = 1;
+		// Discrete points in fields
+		int points = 20;
 
+		double[] inKs = { 0.0d, 1.0d, 0.0d, 0.0d, 
+						  0.0d, 0.0d, 0.0d, 0.0d };
+		S1InputParameters inputParameters = new S1InputParameters(inCard,
+				repCard, inKs);
+
+		double[] ks = { 0.0, 0.0 };
+		double[] deltas = { 1.0, 1.0 };
+		double[] hs = { 0.05, 0.05 };
+		double[] cholesky1s = { 1.0, 1.0 };
+		double[] cholesky2s = { 0.0, 0.0 };
+		S1RepresentationParameters representationParameters = new S1RepresentationParameters(
+				repCard, cholesky1s, cholesky2s, ks, hs, deltas);
+
+		double[] alphas = { 0.0, 0.0 };
+		S1OutputParameters outputParameters = new S1OutputParameters(repCard,
+				outCard, alphas);
+
+		S1ControllerParameters parameters = new S1ControllerParameters(
+				inputParameters, representationParameters, outputParameters);
+
+		DeltaFieldFactory factory = DeltaFieldFactory.getInstance();
+
+		// System (pendulum) population construction
+		DeltaPopulation<Double> systemPopulation = new MapDeltaPopulation(4,
+				false);
+
+		// PendulumEquation Construction
+		SystemEquation systemEquation = new S1PendulumEquation();
+
+		S1InputEquationForPendulum inputEquation = new S1InputEquationForPendulum(
+				systemPopulation);
+
+		// Field construction
+		DeltaField<Double> field = factory.buildLayeredS1Field(parameters,
+				points, systemPopulation, systemEquation, inputEquation);
+
+		// Monitoring
+		Tracer tracer = new Tracer(5);
+		field.addObserver(tracer);
+
+		// Run simulation
+		double t0 = 0;
+		double tf = 10;
+		double h = 0.004;
+		double initialAngle = 1.0 * Math.PI;
+		double initialPos = 1.0;
+
+		DeltaPopulation<Double> pendulum = field.getPopulations().get(4);
+		pendulum.setElementValue(S1PendulumEquation.STATE_THETA, initialAngle);
+		pendulum.setElementValue(S1PendulumEquation.STATE_X, initialPos);
+		SolverUtility.simulate(t0, tf, h, field);
+		
+		double fitness = S1PendulumEquation.getFitness(tracer);
+		System.out.println(fitness);
+		// String[] filenames =
+		// {"inputPopulation_evo","fieldPopulation_evo","pendulum_evo"}; /3d
+		// String[] filenames = { null, null, null, null, "pendulum_ijcnn20102"
+		// }; // 2d
+		// tracer.printToFiles(filenames, true);
+		// System.out.println("-- "+new Date());
+		// Run animation
+		new PendulumFrame(0, 4, 1, tracer);
+
+	}
 }

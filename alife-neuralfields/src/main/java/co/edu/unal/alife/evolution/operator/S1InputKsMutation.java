@@ -28,8 +28,8 @@ public class S1InputKsMutation extends GaussianMutation {
 		S1ControllerParameters genome = (S1ControllerParameters) gen;
 		List<Double> ks = genome.getInParams().getKs();
 		int size = ks.size();
-		double min = limits.min[0];
-		double max = limits.max[0];
+		double min = genome.getInParams().getMinValue();
+		double max = genome.getInParams().getMaxValue();
 		int pos = -1;
 		try {
 			UniformNumberGenerator s = new UniformNumberGenerator(size);

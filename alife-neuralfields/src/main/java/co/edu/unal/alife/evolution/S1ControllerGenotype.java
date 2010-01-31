@@ -1,7 +1,7 @@
 package co.edu.unal.alife.evolution;
 
-import co.edu.unal.alife.evolution.params.S1ControllerParameters;
 import jml.evolution.Genotype;
+import co.edu.unal.alife.evolution.params.S1ControllerParameters;
 
 public class S1ControllerGenotype extends Genotype {
 
@@ -9,8 +9,8 @@ public class S1ControllerGenotype extends Genotype {
 	public static double _maxCholeskyVal = 10.0;
 	public static double _minKVal = 0.1;
 	public static double _maxKVal = 3.0;
-	public static double _minTVal = 0.0;
-	public static double _maxTVal = 2 * Math.PI;
+	// public static double _minTVal = 0.0;
+	// public static double _maxTVal = 2 * Math.PI;
 	public static double _minAlphaVal = 0.0;
 	public static double _maxAlphaVal = 1.0;
 
@@ -18,26 +18,52 @@ public class S1ControllerGenotype extends Genotype {
 	private int noInputs;
 	private int noGoals;
 	private int noOutputs;
+
 	private double minCholeskyVal;
 	private double maxCholeskyVal;
 	private double minKVal;
 	private double maxKVal;
-	private double minTVal;
-	private double maxTVal;
 	private double minAlphaVal;
 	private double maxAlphaVal;
+
+	private double[] Chol1;
+	private double[] Chol2;
+	private double[] ks;
+	private double[] alphas;
+	private double minKernelK;
+	private double maxKernelK;
+	private double minKernelDelta;
+	private double maxKernelDelta;
 
 	public S1ControllerGenotype(int points, int noInputs, int noGoals,
 			int noOutputs) {
 		this(points, noInputs, noGoals, noOutputs, _minCholeskyVal,
-				_maxCholeskyVal, _minKVal, _maxKVal, _minTVal, _maxTVal,
-				_minAlphaVal, _maxAlphaVal);
+				_maxCholeskyVal, _minKVal, _maxKVal, _minAlphaVal, _maxAlphaVal);
+	}
+
+	public S1ControllerGenotype(int points, int noInputs, int noGoals,
+			int noOutputs, double[] Chol1, double[] Chol2, double[] ks,
+			double[] alphas, double minKernelK,
+			double maxKernelK, double minKernelDelta, double maxKernelDelta) {
+		super();
+		this.points = points;
+		this.noInputs = noInputs;
+		this.noGoals = noGoals;
+		this.noOutputs = noOutputs;
+		this.Chol1 = Chol1;
+		this.Chol2 = Chol2;
+		this.ks = ks;
+		this.alphas = alphas;
+		this.minKernelK = minKernelK;
+		this.maxKernelK = maxKernelK;
+		this.minKernelDelta = minKernelDelta;
+		this.maxKernelDelta = maxKernelDelta;
 	}
 
 	public S1ControllerGenotype(int points, int noInputs, int noGoals,
 			int noOutputs, double minCholeskyVal, double maxCholeskyVal,
-			double minKVal, double maxKVal, double minTVal, double maxTVal,
-			double minAlphaVal, double maxAlphaVal) {
+			double minKVal, double maxKVal, double minAlphaVal,
+			double maxAlphaVal) {
 		super();
 		this.points = points;
 		this.noInputs = noInputs;
@@ -47,17 +73,18 @@ public class S1ControllerGenotype extends Genotype {
 		this.maxCholeskyVal = maxCholeskyVal;
 		this.minKVal = minKVal;
 		this.maxKVal = maxKVal;
-		this.minTVal = minTVal;
-		this.maxTVal = maxTVal;
 		this.minAlphaVal = minAlphaVal;
 		this.maxAlphaVal = maxAlphaVal;
 	}
 
 	@Override
 	public Object newInstance() {
-		S1ControllerParameters parameters = new S1ControllerParameters(noInputs, noGoals, noOutputs, minKVal,
-				maxKVal, minCholeskyVal, maxCholeskyVal, minTVal, maxTVal,
-				minAlphaVal, maxAlphaVal);
+		S1ControllerParameters parameters = new S1ControllerParameters(
+				noInputs, noGoals, noOutputs, Chol1, Chol2, ks, alphas,
+				minKernelK, maxKernelK, minKernelDelta, maxKernelDelta);
+		// S1ControllerParameters parameters = new S1ControllerParameters(
+		// noInputs, noGoals, noOutputs, minKVal, maxKVal, minCholeskyVal,
+		// maxCholeskyVal, minAlphaVal, maxAlphaVal);
 		return parameters;
 	}
 
