@@ -43,6 +43,7 @@ public class CircleFieldsEvolution {
 	static final int _noInputs = 4;
 	static final int _noGoals = 2;
 	static final int _noOutputs = 1;
+	static final int _N = _noGoals+_noGoals+1+1;
 
 	static final double _minCholeskyVal = 0.2;
 	static final double _maxCholeskyVal = 5.0;
@@ -65,7 +66,7 @@ public class CircleFieldsEvolution {
 	static Integer _affectedRecurrentPop = 0;
 
 	public static Environment getEnvironment(S1ControllerGenotype g, int points) {
-		Fitness f = new S1PendulumControllerFitness();
+		Fitness f = new S1PendulumControllerFitness(_N);
 		Phenotype p = new S1ControllerPhenotypeForPendulum(points);
 		return new Environment(g, p, f);
 	}

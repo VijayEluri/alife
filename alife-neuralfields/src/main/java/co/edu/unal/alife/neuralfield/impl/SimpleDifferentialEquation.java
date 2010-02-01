@@ -17,18 +17,25 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
 /**
  * @author Juan Figueredo
  */
-public class SimpleDifferentialEquation extends DifferentialEquation  {
+public class SimpleDifferentialEquation extends DifferentialEquation {
 
 	private double tao = 0.1;
 	private double restingPotential = -0.2;
+	private double minValue = -3.0;
+	private double maxValue = 3.0;
 
-
-	/* (non-Javadoc)
-	 * @see co.edu.unal.alife.neuralfield.impl.DifferentialEquation#evalEquation(co.edu.unal.alife.dynamics.DeltaPopulation, java.util.List, java.util.List)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * co.edu.unal.alife.neuralfield.impl.DifferentialEquation#evalEquation(
+	 * co.edu.unal.alife.dynamics.DeltaPopulation, java.util.List,
+	 * java.util.List)
 	 */
 	@Override
 	public void evalEquation(DeltaPopulation<Double> localPopulation,
-			List<DeltaPopulation<Double>> populations, List<KernelFunction> kernelList) {
+			List<DeltaPopulation<Double>> populations,
+			List<KernelFunction> kernelList) {
 		Set<Double> localPositions = localPopulation.getPositions();
 		// For each element (or tuple) in the local population do...
 		for (Double localPosition : localPositions) {
@@ -36,12 +43,14 @@ public class SimpleDifferentialEquation extends DifferentialEquation  {
 			double totalSum = 0;
 			// For each population in the field do...
 			for (int i = 0; i < populations.size(); i++) {
-				DeltaPopulation<Double> population = populations.get(i); 
+				DeltaPopulation<Double> population = populations.get(i);
 				Set<Double> positions = population.getPositions();
+				// System.out.println("In population:"+i);
 				KernelFunction kernelFunction = kernelList.get(i);
 				// System.out.println(i + " | " + kernelFunction);
 				// Do nothing on null kernel
 				if (kernelFunction != null) {
+					// System.out.println("SimpleDifferentialEquation.evalEquation: i:"+i);
 					double kernelSum = 0;
 					// For each element from a given population do...
 					// System.out.println("SimpleEquation - Begin Sum");
@@ -50,7 +59,9 @@ public class SimpleDifferentialEquation extends DifferentialEquation  {
 						// Evaluate the Sum
 						double firingRate = heavisideFunction(value);
 						if (firingRate > 0.0) {
-							double kernelValue = kernelFunction.evaluateTransformation(localPosition, position);
+							double kernelValue = kernelFunction
+									.evaluateTransformation(localPosition,
+											position);
 							kernelSum += kernelValue * firingRate;
 						}
 					}
@@ -61,8 +72,14 @@ public class SimpleDifferentialEquation extends DifferentialEquation  {
 			}
 			// Evaluate the delta of the element using the totalSum, the
 			// localValue and tao
-			double delta = (-localValue + totalSum - restingPotential) / tao;
-			// System.out.println("SimpleEquation - Index: "+localIndex+" Delta: "+delta);
+			double delta = (-localValue + totalSum + restingPotential) / tao;
+			if (delta > 0 && localValue > maxValue) {
+				delta = 0;
+			} else if (delta < 0 && localValue < minValue) {
+				delta = 0;
+			}
+			// System.out.println("SimpleEquation - Index: "+localPosition+" Delta: "+delta);
+			// System.out.println("localValue:"+localValue+" totalSum:"+totalSum);
 			// set it as element delta
 			localPopulation.setElementDelta(localPosition, delta);
 		}

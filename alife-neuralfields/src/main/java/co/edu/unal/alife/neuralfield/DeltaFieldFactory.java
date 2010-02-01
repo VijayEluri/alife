@@ -80,22 +80,26 @@ public class DeltaFieldFactory {
 	public DeltaField<Double> buildLayeredS1Field(
 			S1ControllerParameters controllerParams, int points,
 			DeltaPopulation<Double> systemPopulation,
-			SystemEquation systemEquation,
-			S1InputEquationForPendulum inputEquation) {
-		// Number of populations per layer
+			SystemEquation systemEquation) {
+		// Number of varibles fedback by the system
 		int noInputs = controllerParams.getInSize();
+		// Number of goal to pursue. Also the number of input and rep
+		// populations (one input per rep)
 		int noGoals = controllerParams.getHiSize();
+		// Number of outputs (or actions/forces applied to the system)
 		int noOutputs = controllerParams.getOutSize();
 		// Number of populations
-		final int N = 1 + noGoals + 1 + 1; // Input+Representation[]+Action+System
+		final int N = noGoals + noGoals + 1 + 1; // Input[]+Representation[]+Action+System
 
 		// Population construction
 		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(
 				N);
-		MapDeltaPopulation inputPopulation = new MapDeltaPopulation(points,
-				false);
-		populations.add(inputPopulation);
-		// Creation and addition of representation populations
+		// Creation and addition of input and representation populations
+		for (int i = 0; i < noGoals; i++) {
+			MapDeltaPopulation inPopulation = new MapDeltaPopulation(points,
+					false);
+			populations.add(inPopulation);
+		}
 		for (int i = 0; i < noGoals; i++) {
 			MapDeltaPopulation repPopulation = new MapDeltaPopulation(points,
 					false);
@@ -113,22 +117,31 @@ public class DeltaFieldFactory {
 		// Equation creation
 		List<DeltaEquation<Double>> equations = new ArrayList<DeltaEquation<Double>>(
 				N);
-		equations.add(inputEquation);
+		// Creation and addition of input equations
+		for (int i = 0; i < noGoals; i++) {
+			List<Double> subKs = controllerParams.getInParams().getSubKs(i);
+			equations.add(new S1InputEquationForPendulum(systemPopulation,
+					subKs));
+		}
 		// Creation and addition of representation equations
 		for (int i = 0; i < noGoals; i++) {
 			equations.add(new SimpleDifferentialEquation());
 		}
+		// We configure the action equation inputs only from repPopulations
 		NonDifferentialEquation actionEquation = new S1ActionEquation(
-				populations.subList(1, 1 + noGoals), controllerParams
-						.getOutParams().getTransformations());
+				populations.subList(noGoals, noGoals + noGoals),
+				controllerParams.getOutParams().getTransformations());
 		equations.add(actionEquation);
 		equations.add(systemEquation);
 
 		// Kernel matrix creation
 		List<List<KernelFunction>> kernelMatrix = new ArrayList<List<KernelFunction>>(
 				N);
-		List<KernelFunction> inputRow = null;
-		kernelMatrix.add(inputRow);
+		// Kernel construction for sys2in. i.e. null (nonDifferential eq) for each inputPop
+		for (int i = 0; i < noGoals; i++) {
+			List<KernelFunction> inputRow = null;
+			kernelMatrix.add(inputRow);	
+		}
 		// We get the lists of parameters for kernel contruction: rep2rep
 		List<Double> cholesky1s = controllerParams.getRepParams()
 				.getCholesky1s();
@@ -137,8 +150,8 @@ public class DeltaFieldFactory {
 		List<Double> deltas = controllerParams.getRepParams().getDeltas();
 		List<Double> hs = controllerParams.getRepParams().getHs();
 		List<Double> ks = controllerParams.getRepParams().getKs();
-		// And for input2rep (alphas are Ks in input kernels)
-		List<Double> inputKs = controllerParams.getInParams().getKs();
+		// And for input2rep (alphas are Ks in input kernels) --> Falso
+		// List<Double> inputKs = controllerParams.getInParams().getKs();
 		// Addition and creation of in2rep and rep2rep kernel lists
 		S1KernelParameter kernelParameter;
 		for (int i = 0; i < noGoals; i++) {
@@ -147,24 +160,38 @@ public class DeltaFieldFactory {
 			double[][] L = { { cholesky1s.get(i), 0 },
 					{ cholesky2s.get(i), 1 / cholesky1s.get(i) } };
 			// Input2rep kernels
-			for (int j = 0; j < noInputs; j++) {
-				kernelParameter = new S1KernelParameter(L, hs.get(i), deltas
-						.get(i), inputKs.get(i * noInputs + j));
-				goalKernelRow.add(new S1MexicanHatMetricKernel(kernelParameter,
-						points));
-			}
-			// Rep2rep kernel
 			kernelParameter = new S1KernelParameter(L, hs.get(i),
 					deltas.get(i), ks.get(i));
-			goalKernelRow.add(new S1MexicanHatMetricKernel(kernelParameter,
-					points));
+			for (int j = 0; j < noGoals; j++) {
+				// the i-th repPop only recieves input from the i-th inputPop
+				if (i == j) {
+					goalKernelRow.add(new S1MexicanHatMetricKernel(
+							kernelParameter, points));
+				} else {
+					goalKernelRow.add(null);
+				}
+			}
+			// Rep2rep kernel
+			for (int j = 0; j < noGoals; j++) {
+				// the i-th repPop only connects with itself (and inputs, see
+				// above)
+				if (i == j) {
+					goalKernelRow.add(new S1MexicanHatMetricKernel(
+							kernelParameter, points));
+				} else {
+					goalKernelRow.add(null);
+				}
+			}
+			//We add a null for the kernel with the actionPopulation
+			goalKernelRow.add(null);
+			//and another for the kernel with the systemPopulation
+			goalKernelRow.add(null);
 			kernelMatrix.add(goalKernelRow);
 		}
 		List<KernelFunction> actionRow = null;
 		kernelMatrix.add(actionRow);
 		List<KernelFunction> systemRow = null;
 		kernelMatrix.add(systemRow);
-
 		// Solver and field creation
 		RungeKutta4thSolver solver = new RungeKutta4thSolver();
 		DeltaField<Double> field = new SimpleDeltaField(equations,
@@ -177,23 +204,23 @@ public class DeltaFieldFactory {
 		int inCard = 4;
 		int repCard = 2;
 		int outCard = 1;
+		int N = 2*repCard + 1 +1;
 		// Discrete points in fields
-		int points = 20;
+		int points = 40;
 
-		double[] inKs = { 0.0d, 1.0d, 0.0d, 0.0d, 
-						  0.0d, 0.0d, 0.0d, 0.0d };
+		double[] inMaps = { 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d };
 		S1InputParameters inputParameters = new S1InputParameters(inCard,
-				repCard, inKs);
+				repCard, inMaps);
 
-		double[] ks = { 0.0, 0.0 };
-		double[] deltas = { 1.0, 1.0 };
-		double[] hs = { 0.05, 0.05 };
+		double[] ks = { 0.5, 0.0 };
+		double[] deltas = { 1.0, 0.1 };
+		double[] hs = { 0.2, 0.1 };
 		double[] cholesky1s = { 1.0, 1.0 };
 		double[] cholesky2s = { 0.0, 0.0 };
 		S1RepresentationParameters representationParameters = new S1RepresentationParameters(
 				repCard, cholesky1s, cholesky2s, ks, hs, deltas);
 
-		double[] alphas = { 0.0, 0.0 };
+		double[] alphas = { 0.1, 0.0 };
 		S1OutputParameters outputParameters = new S1OutputParameters(repCard,
 				outCard, alphas);
 
@@ -209,29 +236,28 @@ public class DeltaFieldFactory {
 		// PendulumEquation Construction
 		SystemEquation systemEquation = new S1PendulumEquation();
 
-		S1InputEquationForPendulum inputEquation = new S1InputEquationForPendulum(
-				systemPopulation);
-
 		// Field construction
 		DeltaField<Double> field = factory.buildLayeredS1Field(parameters,
-				points, systemPopulation, systemEquation, inputEquation);
+				points, systemPopulation, systemEquation);
 
+		DeltaPopulation<Double> rep1 = field.getPopulations().get(2);
+		rep1.setElementValue(1.0*points/2, 1.0);
 		// Monitoring
-		Tracer tracer = new Tracer(5);
+		Tracer tracer = new Tracer(N);
 		field.addObserver(tracer);
 
 		// Run simulation
 		double t0 = 0;
-		double tf = 10;
-		double h = 0.004;
-		double initialAngle = 1.0 * Math.PI;
-		double initialPos = 1.0;
+		double tf = 10.0;
+		double h = 0.01;
+		double initialAngle = 0.0 * Math.PI;
+		double initialPos = 0.0;
 
-		DeltaPopulation<Double> pendulum = field.getPopulations().get(4);
+		DeltaPopulation<Double> pendulum = field.getPopulations().get(N-1);
 		pendulum.setElementValue(S1PendulumEquation.STATE_THETA, initialAngle);
 		pendulum.setElementValue(S1PendulumEquation.STATE_X, initialPos);
 		SolverUtility.simulate(t0, tf, h, field);
-		
+
 		double fitness = S1PendulumEquation.getFitness(tracer);
 		System.out.println(fitness);
 		// String[] filenames =
@@ -241,7 +267,7 @@ public class DeltaFieldFactory {
 		// tracer.printToFiles(filenames, true);
 		// System.out.println("-- "+new Date());
 		// Run animation
-		new PendulumFrame(0, 4, 1, tracer);
+		new PendulumFrame(0, 5, 2, tracer);
 
 	}
 }

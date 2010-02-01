@@ -11,7 +11,7 @@ import jml.evolution.Individual;
 
 public class S1PendulumControllerFitness extends Fitness {
 	
-	private static final int N = 1 + 2 + 1 + 1;
+	private int N;
 	
 	private double initialAngle = Math.PI/6;
 	private double initialPos = -5.0;
@@ -19,8 +19,9 @@ public class S1PendulumControllerFitness extends Fitness {
 	private double t0 = 0.0;
 	private double tf = 10+hh;
 	
-	public S1PendulumControllerFitness() {
+	public S1PendulumControllerFitness(int N) {
 		super();
+		this.N = N;
 	}
 
 	@SuppressWarnings("unchecked")

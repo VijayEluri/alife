@@ -64,6 +64,10 @@ public class S1InputParameters {
 	public List<Double> getKs() {
 		return ks;
 	}
+	
+	public List<Double> getSubKs(int inputPopIndex) {
+		return ks.subList(inputPopIndex*inCardinality, (inputPopIndex+1)*inCardinality);
+	}
 
 	public int getInCardinality() {
 		return inCardinality;

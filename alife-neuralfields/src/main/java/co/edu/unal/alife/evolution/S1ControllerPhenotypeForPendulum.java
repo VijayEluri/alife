@@ -27,9 +27,7 @@ public class S1ControllerPhenotypeForPendulum extends Phenotype {
 				false);
 		SystemEquation systemEquation = new S1PendulumEquation();
 
-		S1InputEquationForPendulum inputEquation = new S1InputEquationForPendulum(
-				systemPopulation);
 		return factory.buildLayeredS1Field((S1ControllerParameters) genome,
-				points, systemPopulation, systemEquation, inputEquation);
+				points, systemPopulation, systemEquation);
 	}
 }

@@ -15,12 +15,14 @@ import co.edu.unal.alife.dynamics.DeltaPopulation;
 public class Tracer implements Visualizer {
 
 	private List<List<String>> labels;
+	private int N;
 	protected List<List<DeltaPopulation<Double>>> data;
 
 	/**
 	 * @param N
 	 */
 	public Tracer(int N) {
+		this.N = N;
 		this.labels = new ArrayList<List<String>>(N);
 		this.data = new ArrayList<List<DeltaPopulation<Double>>>(N);
 		for (int i = 0; i < N; i++) {
@@ -128,6 +130,10 @@ public class Tracer implements Visualizer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public int getN() {
+		return N;
 	}
 
 }

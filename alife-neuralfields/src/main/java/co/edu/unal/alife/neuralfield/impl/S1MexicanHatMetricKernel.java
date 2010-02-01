@@ -88,8 +88,8 @@ public class S1MexicanHatMetricKernel extends MexicanHatKernel {
 	 **/
 	@Override
 	public double squareDistance(Double x, Double y) {
-		int xIndex = (int) x.doubleValue();
-		int yIndex = (int) y.doubleValue();
+		int xIndex = (int) Math.round(x.doubleValue());
+		int yIndex = (int) Math.round(y.doubleValue());
 		if (xIndex > yIndex) {
 			int temp = xIndex;
 			xIndex = yIndex;
@@ -103,6 +103,7 @@ public class S1MexicanHatMetricKernel extends MexicanHatKernel {
 		return d * d;
 	}
 
+
 	public static void main(String[] args) {
 		double[][] L = { { 1, 0}, { 0, 1 } };
 		S1KernelParameter kernelParameter = new S1KernelParameter(L, 0.1, 2, 2);
@@ -112,12 +113,23 @@ public class S1MexicanHatMetricKernel extends MexicanHatKernel {
 		double hh = 2 * Math.PI / points2;
 		for (int i = 0; i < points2; i++) {
 			for (int j = 0; j < points2; j++) {
-//				if (i == 0) {
+				if (i == 0) {
 					double ds = kernel.squareDistance(i * 1.0, j * 1.0);
 					ds = Math.sqrt(ds);
 				 	System.out.println("Distancia entre " + (i * hh) + " y "
 							+ (j * hh) + " es: " + ds);
-//				}
+				}
+			}
+		}
+		System.out.println();
+		for (int i = 0; i < points2; i++) {
+			for (int j = 0; j < points2; j++) {
+				if (i == 0) {
+					double ds = kernel.evaluateTransformation(i*1.0, j*1.0);
+					ds = Math.sqrt(ds);
+				 	System.out.println("Kernel entre " + (i * hh) + " y "
+							+ (j * hh) + " es: " + ds);
+				}
 			}
 		}
 	}

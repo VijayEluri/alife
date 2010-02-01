@@ -24,7 +24,6 @@ public class S1PendulumEquation extends SystemEquation {
 	private static final double MAX_VAL = K_X*5*5+K_A*Math.PI+0.5;
 	// TODO:Revisar Clase
 	private static final double M = 1, m = 1, l = 1, g = 9.81;
-	private static final int N = 1 + 2 + 1 + 1;
 	public static final double STATE_X = 0.0, STATE_THETA = 1.0, STATE_V = 2.0,
 			STATE_OMEGA = 3.0;
 	DeltaPopulation<Double> actionPopulation;
@@ -114,16 +113,21 @@ public class S1PendulumEquation extends SystemEquation {
 	}
 
 	public static double getFitness(Tracer tracer) {
+		int N = tracer.getN();
 		DeltaPopulation<Double> pendulumData = tracer.getData().get(N - 1).get(
 				0);
 		double val = 0;
 		boolean penalty = false;
+//		int popIndex = 0;
 		while (pendulumData.hasNextPopulation()) {
+//			System.out.print("S1PendulumEquation.getFitness: popIndex="+popIndex++);
 			double localValue = 0;
 			Double xValue = pendulumData
 					.getElementValue(S1PendulumEquation.STATE_X);
+//			System.out.print(" X:"+xValue);
 			Double thetaValue = pendulumData
 					.getElementValue(S1PendulumEquation.STATE_THETA);
+//			System.out.println(" Theta:"+thetaValue);
 			double ang = stdAngle(thetaValue);
 			if (Math.abs(ang) >= 1) {
 				penalty = true;
@@ -136,7 +140,7 @@ public class S1PendulumEquation extends SystemEquation {
 			pendulumData = pendulumData.getNextPopulation();
 		}
 
-		val /= tracer.getData().get(2).size();
+		val /= tracer.getData().get(N-1).size();
 
 		double fitness = (1 - val)*100;
 		

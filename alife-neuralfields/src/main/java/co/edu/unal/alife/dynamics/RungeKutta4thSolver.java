@@ -69,6 +69,7 @@ public class RungeKutta4thSolver extends SolverUtility<Double, Double> {
 			Double newValue = originalValue
 					+ (h / 6)
 					* (k1dh.get(position) + 2 * k2dh.get(position) + 2 * k3dh.get(position) + workingDelta);
+//			System.out.println("RK4Solver: localIndex="+localIndex+" position="+position+" originalValue="+originalValue+" delta="+(newValue-originalValue));
 			workingPopulation.setElementValue(position, newValue);
 		}
 		population.setNextPopulation(workingPopulation);

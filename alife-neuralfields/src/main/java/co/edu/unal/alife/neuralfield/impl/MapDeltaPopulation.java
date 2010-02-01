@@ -201,6 +201,7 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 		DeltaEquation<Double> equation = environment.getEquations().get(localIndex);
 		List<KernelFunction> kernelList = environment.getKernelMatrix().get(localIndex);
 		try {
+//			System.out.println("MapDeltaPopulattion: localIndex="+localIndex);
 			equation.evalEquation(this, populations, kernelList);
 		} catch (UnsupportedOperationException e) {
 			// TODO Auto-generated catch block

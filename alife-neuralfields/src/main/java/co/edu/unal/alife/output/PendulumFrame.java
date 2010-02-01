@@ -53,8 +53,9 @@ public class PendulumFrame extends JFrame implements ActionListener {
 	final JPanel animHiddenField = new JPanel();
 	final JPanel animPendulumTrace = new JPanel();
 	final JPanel animInputField = new JPanel();
-	final Field inputField = new Field(0,animInputField);
-	final Field hiddenField = new Field(1,animHiddenField);
+	//TODO:Customize to plot the fields you want
+	final Field inputField = new Field(0,animInputField,5.0);
+	final Field hiddenField = new Field(2,animHiddenField,5.0);
 
 	final int MAX_FPS = 40;
 	int tics = -1;
@@ -316,17 +317,19 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		int toIndex = fromIndex + 21;
 		List<Double> fieldValues;
 		List<Double> prevFieldValues = new ArrayList<Double>();
+		private double scale;
 		
-		public Field(int deltaPopNumber, JPanel jP) {
+		public Field(int deltaPopNumber, JPanel jP, double scale) {
 			count = 0;
 			this.posicionX = 250;
 			this.posicionY = 100;
 			this.deltaPopNumber = deltaPopNumber;
 			this.jP = jP;
+			this.scale =scale;
 		}
 		
 		public Field(JPanel jP) {
-			this(repPopIndex, jP);
+			this(repPopIndex, jP,1.0);
 		}
 
 		public void animar(int h, int tf) {
@@ -342,7 +345,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			int fieldSize = prevFieldValues.size();
 			for (Double value : prevFieldValues) {
 				int dx = (int)((-fieldSize/2d + i++ )/fieldSize * 200);
-				float dy = (float) value.floatValue() * 5;
+				float dy = (float) (value.floatValue() * 5 * scale);
 				// g2d.draw(new Ellipse2D.Float(posicionX + dx, posicionY + dy,
 				// 5, 5));
 				g2d.draw(new Line2D.Float(posicionX + dx, posicionY, posicionX
@@ -353,7 +356,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			fieldSize=fieldValues.size();
 			for (Double value : fieldValues) {
 				int dx = (int)((-fieldSize/2d + i++)/fieldSize * 200);
-				float dy = (float) value.floatValue() * 5;
+				float dy = (float) (value.floatValue() * 5 * scale);
 				// g2d.draw(new Ellipse2D.Float(posicionX + dx, posicionY + dy,
 				// 5, 5));
 				g2d.draw(new Line2D.Float(posicionX + dx, posicionY, posicionX
