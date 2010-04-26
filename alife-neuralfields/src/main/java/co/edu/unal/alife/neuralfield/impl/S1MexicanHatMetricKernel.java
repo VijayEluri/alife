@@ -88,8 +88,8 @@ public class S1MexicanHatMetricKernel extends MexicanHatKernel {
 	 **/
 	@Override
 	public double squareDistance(Double x, Double y) {
-		int xIndex = (int) Math.round(x.doubleValue());
-		int yIndex = (int) Math.round(y.doubleValue());
+		int xIndex = (int) (x.doubleValue());
+		int yIndex = (int) (y.doubleValue());
 		if (xIndex > yIndex) {
 			int temp = xIndex;
 			xIndex = yIndex;

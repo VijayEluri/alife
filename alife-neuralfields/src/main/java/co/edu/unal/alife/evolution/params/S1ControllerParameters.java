@@ -24,15 +24,15 @@ public class S1ControllerParameters {
 	}
 
 	public S1ControllerParameters(int noInputs, int noGoals, int noOutputs,
-			double[] Chol1, double[] Chol2, double[] ks, double[] alphas,
-			double minKernelK, double maxKernelK, double minKernelDelta,
-			double maxKernelDelta) {
+			double[] Chol1, double[] Chol2, double[] maps, double[] alphas,
+			double minKernelRepK, double maxKernelRepK, double minKernelDelta,
+			double maxKernelDelta, double minKernelInK, double maxKernelInk) {
 		this.inSize = noInputs;
 		this.hiSize = noGoals;
 		this.outSize = noOutputs;
-		this.inParams = new S1InputParameters(this.inSize, this.hiSize, ks);
+		this.inParams = new S1InputParameters(this.inSize, this.hiSize, maps);
 		this.repParams = new S1RepresentationParameters(hiSize, Chol1, Chol2,
-				minKernelK, maxKernelK, minKernelDelta, maxKernelDelta);
+				minKernelRepK, maxKernelRepK, minKernelDelta, maxKernelDelta, minKernelInK, maxKernelInk);
 		this.outParam = new S1OutputParameters(hiSize, outSize, alphas);
 	}
 
@@ -93,5 +93,6 @@ public class S1ControllerParameters {
 	public S1OutputParameters getOutParams() {
 		return outParam;
 	}
+	
 
 }

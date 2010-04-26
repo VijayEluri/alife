@@ -26,7 +26,7 @@ public class S1InputKsMutation extends GaussianMutation {
 	@Override
 	public Object apply(Object gen) {
 		S1ControllerParameters genome = (S1ControllerParameters) gen;
-		List<Double> ks = genome.getInParams().getKs();
+		List<Double> ks = genome.getInParams().getMaps();
 		int size = ks.size();
 		double min = genome.getInParams().getMinValue();
 		double max = genome.getInParams().getMaxValue();

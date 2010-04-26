@@ -73,11 +73,11 @@ public class SimpleDifferentialEquation extends DifferentialEquation {
 			// Evaluate the delta of the element using the totalSum, the
 			// localValue and tao
 			double delta = (-localValue + totalSum + restingPotential) / tao;
-			if (delta > 0 && localValue > maxValue) {
-				delta = 0;
-			} else if (delta < 0 && localValue < minValue) {
-				delta = 0;
-			}
+//			if (delta > 0 && localValue > maxValue) {
+//				delta = 0;
+//			} else if (delta < 0 && localValue < minValue) {
+//				delta = 0;
+//			}
 			// System.out.println("SimpleEquation - Index: "+localPosition+" Delta: "+delta);
 			// System.out.println("localValue:"+localValue+" totalSum:"+totalSum);
 			// set it as element delta

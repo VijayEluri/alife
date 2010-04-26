@@ -6,7 +6,7 @@ import java.util.List;
 import co.edu.unal.alife.evolution.CloneUtil;
 
 public class S1InputParameters {
-	private List<Double> ks;
+	private List<Double> maps;
 	private int inCardinality;
 	private int prCardinality;
 	private double minValue = 0;
@@ -18,9 +18,9 @@ public class S1InputParameters {
 	public S1InputParameters(int inCardinality, int prCardinality, double[] ks) {
 		this.inCardinality = inCardinality;
 		this.prCardinality = prCardinality;
-		this.ks = new ArrayList<Double>();
+		this.maps = new ArrayList<Double>();
 		for (double d : ks) {
-			this.ks.add(d);
+			this.maps.add(d);
 		}
 	}
 
@@ -30,10 +30,10 @@ public class S1InputParameters {
 		this.inCardinality = inCardinality;
 		this.prCardinality = prCardinality;
 		int size = inCardinality * prCardinality;
-		this.ks = new ArrayList<Double>(size);
+		this.maps = new ArrayList<Double>(size);
 		for (int i = 0; i < size; i++) {
 			double val = Math.random() * (maxValue - minValue) + minValue;
-			ks.add(val);
+			maps.add(val);
 		}
 	}
 
@@ -44,7 +44,7 @@ public class S1InputParameters {
 		out.prCardinality = this.prCardinality;
 		out.minValue = this.minValue;
 		out.maxValue = this.maxValue;
-		out.ks = CloneUtil.cloneAsArrayList(this.ks);
+		out.maps = CloneUtil.cloneAsArrayList(this.maps);
 		return out;
 	}
 
@@ -52,21 +52,21 @@ public class S1InputParameters {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		int i = 0;
-		for (double k : ks) {
+		for (double k : maps) {
 			sb.append(k);
-			if (i++ < ks.size() - 1) {
+			if (i++ < maps.size() - 1) {
 				sb.append(",");
 			}
 		}
 		return sb.toString();
 	}
 
-	public List<Double> getKs() {
-		return ks;
+	public List<Double> getMaps() {
+		return maps;
 	}
 	
-	public List<Double> getSubKs(int inputPopIndex) {
-		return ks.subList(inputPopIndex*inCardinality, (inputPopIndex+1)*inCardinality);
+	public List<Double> getSubMaps(int inputPopIndex) {
+		return maps.subList(inputPopIndex*inCardinality, (inputPopIndex+1)*inCardinality);
 	}
 
 	public int getInCardinality() {

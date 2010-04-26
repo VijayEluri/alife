@@ -99,7 +99,7 @@ public class S1PendulumEquation extends SystemEquation {
 		double ct = cos(theta);
 		// System.out.println(u);
 		deltaPopulation.setElementDelta(STATE_V, (m * l * omega * omega * st
-				- m * g * ct * st + u)
+				- m * g * ct * st + u - 0.0*v)
 				/ (M + m * st * st));
 		deltaPopulation.setElementDelta(STATE_OMEGA, ((M + m) * g * st - m * l
 				* omega * omega * st * ct - u * ct)
