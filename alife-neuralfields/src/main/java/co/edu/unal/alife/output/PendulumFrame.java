@@ -41,7 +41,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 	/**
 	 * @author jjfigueredou
 	 */
-	
+
 	int pendulumPopIndex = 2;
 	int repPopIndex = 1;
 	int inputPopIndex = 0;
@@ -53,9 +53,9 @@ public class PendulumFrame extends JFrame implements ActionListener {
 	final JPanel animHiddenField = new JPanel();
 	final JPanel animPendulumTrace = new JPanel();
 	final JPanel animInputField = new JPanel();
-	//TODO:Customize to plot the fields you want
-	final Field inputField = new Field(0,animInputField,5.0);
-	final Field hiddenField = new Field(2,animHiddenField,5.0);
+	// TODO:Customize to plot the fields you want
+	final Field inputField;
+	final Field hiddenField;
 
 	final int MAX_FPS = 40;
 	int tics = -1;
@@ -63,13 +63,16 @@ public class PendulumFrame extends JFrame implements ActionListener {
 	Timer timer;
 	Tracer tracer;
 
-	public PendulumFrame(int inputPopIndex, int pendulumPopIndex,
-			int repPopIndex, Tracer tracer) throws HeadlessException {
+	public PendulumFrame(int inputPopIndex, double scaleIn, int repPopIndex,
+			double scaleRep, int pendulumPopIndex, Tracer tracer)
+			throws HeadlessException {
 		super("InvertedPendulum GUI");
 		this.tracer = tracer;
 		this.inputPopIndex = inputPopIndex;
 		this.pendulumPopIndex = pendulumPopIndex;
 		this.repPopIndex = repPopIndex;
+		inputField = new Field(inputPopIndex, animInputField, scaleIn);
+		hiddenField = new Field(repPopIndex, animHiddenField, scaleRep);
 		createFrame();
 	}
 
@@ -77,6 +80,8 @@ public class PendulumFrame extends JFrame implements ActionListener {
 	public PendulumFrame(Tracer tracer) {
 		super("InvertedPendulum GUI");
 		this.tracer = tracer;
+		inputField = new Field(0, animInputField, 5.0);
+		hiddenField = new Field(1, animHiddenField, 2.0);
 		createFrame();
 	}
 
@@ -318,18 +323,18 @@ public class PendulumFrame extends JFrame implements ActionListener {
 		List<Double> fieldValues;
 		List<Double> prevFieldValues = new ArrayList<Double>();
 		private double scale;
-		
+
 		public Field(int deltaPopNumber, JPanel jP, double scale) {
 			count = 0;
 			this.posicionX = 250;
 			this.posicionY = 100;
 			this.deltaPopNumber = deltaPopNumber;
 			this.jP = jP;
-			this.scale =scale;
+			this.scale = scale;
 		}
-		
+
 		public Field(JPanel jP) {
-			this(repPopIndex, jP,1.0);
+			this(repPopIndex, jP, 1.0);
 		}
 
 		public void animar(int h, int tf) {
@@ -344,7 +349,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			int i = 0;
 			int fieldSize = prevFieldValues.size();
 			for (Double value : prevFieldValues) {
-				int dx = (int)((-fieldSize/2d + i++ )/fieldSize * 200);
+				int dx = (int) ((-fieldSize / 2d + i++) / fieldSize * 200);
 				float dy = (float) (value.floatValue() * 5 * scale);
 				// g2d.draw(new Ellipse2D.Float(posicionX + dx, posicionY + dy,
 				// 5, 5));
@@ -353,9 +358,9 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			}
 			g2d.setColor(Color.BLUE);
 			i = 0;
-			fieldSize=fieldValues.size();
+			fieldSize = fieldValues.size();
 			for (Double value : fieldValues) {
-				int dx = (int)((-fieldSize/2d + i++)/fieldSize * 200);
+				int dx = (int) ((-fieldSize / 2d + i++) / fieldSize * 200);
 				float dy = (float) (value.floatValue() * 5 * scale);
 				// g2d.draw(new Ellipse2D.Float(posicionX + dx, posicionY + dy,
 				// 5, 5));
@@ -365,6 +370,9 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			g2d.setColor(Color.RED);
 			g2d.draw(new Line2D.Float(posicionX - 270, posicionY,
 					posicionX + 270, posicionY));
+			g2d.draw(new Ellipse2D.Float(posicionX - 2, posicionY - 2, 4, 4));
+			g2d.draw(new Ellipse2D.Float(posicionX - 102, posicionY - 2, 4, 4));
+			g2d.draw(new Ellipse2D.Float(posicionX + 98, posicionY - 2, 4, 4));
 		}
 
 		public void actualizar() {

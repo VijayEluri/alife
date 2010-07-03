@@ -30,10 +30,12 @@ public class S1ControllerGenotype extends Genotype {
 	private double[] Chol2;
 	private double[] ks;
 	private double[] alphas;
-	private double minKernelK;
-	private double maxKernelK;
+	private double minKernelRepK;
+	private double maxKernelRepK;
 	private double minKernelDelta;
 	private double maxKernelDelta;
+	private double minKernelInK;
+	private double maxKernelInK;
 
 	public S1ControllerGenotype(int points, int noInputs, int noGoals,
 			int noOutputs) {
@@ -43,8 +45,8 @@ public class S1ControllerGenotype extends Genotype {
 
 	public S1ControllerGenotype(int points, int noInputs, int noGoals,
 			int noOutputs, double[] Chol1, double[] Chol2, double[] ks,
-			double[] alphas, double minKernelK,
-			double maxKernelK, double minKernelDelta, double maxKernelDelta) {
+			double[] alphas, double minKernelRepK,
+			double maxKernelRepK, double minKernelDelta, double maxKernelDelta, double minKernelInK, double maxKernelInK) {
 		super();
 		this.points = points;
 		this.noInputs = noInputs;
@@ -54,10 +56,12 @@ public class S1ControllerGenotype extends Genotype {
 		this.Chol2 = Chol2;
 		this.ks = ks;
 		this.alphas = alphas;
-		this.minKernelK = minKernelK;
-		this.maxKernelK = maxKernelK;
+		this.minKernelRepK = minKernelRepK;
+		this.maxKernelRepK = maxKernelRepK;
 		this.minKernelDelta = minKernelDelta;
 		this.maxKernelDelta = maxKernelDelta;
+		this.minKernelInK = minKernelInK;
+		this.maxKernelInK = maxKernelInK;
 	}
 
 	public S1ControllerGenotype(int points, int noInputs, int noGoals,
@@ -81,7 +85,7 @@ public class S1ControllerGenotype extends Genotype {
 	public Object newInstance() {
 		S1ControllerParameters parameters = new S1ControllerParameters(
 				noInputs, noGoals, noOutputs, Chol1, Chol2, ks, alphas,
-				minKernelK, maxKernelK, minKernelDelta, maxKernelDelta);
+				minKernelRepK, maxKernelRepK, minKernelDelta, maxKernelDelta, minKernelInK, maxKernelInK);
 		// S1ControllerParameters parameters = new S1ControllerParameters(
 		// noInputs, noGoals, noOutputs, minKVal, maxKVal, minCholeskyVal,
 		// maxCholeskyVal, minAlphaVal, maxAlphaVal);

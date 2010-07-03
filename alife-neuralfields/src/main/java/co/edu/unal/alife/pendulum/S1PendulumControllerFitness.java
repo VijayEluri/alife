@@ -13,11 +13,11 @@ public class S1PendulumControllerFitness extends Fitness {
 	
 	private int N;
 	
-	private double initialAngle = Math.PI/6;
+	private double initialAngle = Math.PI/10;
 	private double initialPos = -5.0;
 	private double hh = 1.0 / 40;
 	private double t0 = 0.0;
-	private double tf = 10+hh;
+	private double tf = 5+hh;
 	
 	public S1PendulumControllerFitness(int N) {
 		super();

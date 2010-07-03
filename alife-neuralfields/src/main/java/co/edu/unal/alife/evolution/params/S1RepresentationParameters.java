@@ -12,7 +12,8 @@ public class S1RepresentationParameters {
 	private static final double _H = 0.1;
 	private List<Double> Cholesky1s;
 	private List<Double> Cholesky2s;
-	private List<Double> ks;
+	private List<Double> repKs;
+	private List<Double> inKs;
 	private List<Double> Hs;
 	private List<Double> deltas;
 	private int prCardinality;
@@ -20,16 +21,18 @@ public class S1RepresentationParameters {
 	private double minChoVal;
 	private double maxChoVal;
 
-	private double minKernelK;
-	private double maxKernelK;
+	private double minKernelRepK;
+	private double maxKernelRepK;
 	private double minKernelDelta;
 	private double maxKernelDelta;
+	private double minKernelInK;
+	private double maxKernelInK;
 
 	public S1RepresentationParameters() {
 	};
 
 	public S1RepresentationParameters(int prCardinality,double[] cholesky1s, double[] cholesky2s,
-			double[] ks, double[] hs, double[] deltas) {
+			double[] repks, double[] hs, double[] deltas, double[] inKs) {
 		super();
 		this.Cholesky1s = new ArrayList<Double>();
 		for (double d : cholesky1s) {
@@ -39,9 +42,9 @@ public class S1RepresentationParameters {
 		for (double d : cholesky2s) {
 			this.Cholesky2s.add(d);
 		}
-		this.ks = new ArrayList<Double>();
-		for (double d : ks) {
-			this.ks.add(d);
+		this.repKs = new ArrayList<Double>();
+		for (double d : repks) {
+			this.repKs.add(d);
 		}
 		this.Hs = new ArrayList<Double>();
 		for (double d : hs) {
@@ -51,32 +54,41 @@ public class S1RepresentationParameters {
 		for (double d : deltas) {
 			this.deltas.add(d);
 		}
+		this.inKs = new ArrayList<Double>();
+		for (double d : inKs) {
+			this.inKs.add(d);
+		}
 		this.prCardinality = prCardinality;
 	}
 
 	public S1RepresentationParameters(int prCardinality, double[] Chol1,
-			double[] Chol2, double minKernelK, double maxKernelK,
-			double minKernelDelta, double maxKernelDelta) {
+			double[] Chol2, double minKernelRepK, double maxKernelRepK,
+			double minKernelDelta, double maxKernelDelta, double minKernelInK, double maxKernelInK) {
 		this.prCardinality = prCardinality;
 		this.Cholesky1s = new ArrayList<Double>(prCardinality);
 		this.Cholesky2s = new ArrayList<Double>(prCardinality);
 		this.Hs = new ArrayList<Double>(prCardinality);
-		this.ks = new ArrayList<Double>(prCardinality);
+		this.repKs = new ArrayList<Double>(prCardinality);
 		this.deltas = new ArrayList<Double>(prCardinality);
+		this.inKs = new ArrayList<Double>(prCardinality);
 		this.minKernelDelta = minKernelDelta;
 		this.maxKernelDelta = maxKernelDelta;
-		this.minKernelK = minKernelK;
-		this.maxKernelK = maxKernelK;
+		this.minKernelRepK = minKernelRepK;
+		this.maxKernelRepK = maxKernelRepK;
+		this.minKernelInK = minKernelInK;
+		this.maxKernelInK = maxKernelInK;
 		for (int i = 0; i < prCardinality; i++) {
 			this.Cholesky1s.add(Chol1[i]);
 			this.Cholesky2s.add(Chol2[i]);
 			this.Hs.add(_H);
 
-			double val = Math.random() * (maxKernelK - minKernelK) + minKernelK;
-			this.ks.add(val);
+			double val = Math.random() * (maxKernelRepK - minKernelRepK) + minKernelRepK;
+			this.repKs.add(val);
 			val = Math.random() * (maxKernelDelta - minKernelDelta)
 					+ minKernelDelta;
 			this.deltas.add(val);
+			val = Math.random() * (maxKernelInK - minKernelInK) + minKernelInK;
+			this.inKs.add(val);
 		}
 
 	}
@@ -88,7 +100,7 @@ public class S1RepresentationParameters {
 		this.Cholesky1s = new ArrayList<Double>(prCardinality);
 		this.Cholesky2s = new ArrayList<Double>(prCardinality);
 		this.Hs = new ArrayList<Double>(prCardinality);
-		this.ks = new ArrayList<Double>(prCardinality);
+		this.repKs = new ArrayList<Double>(prCardinality);
 		this.deltas = new ArrayList<Double>(prCardinality);
 		for (int i = 0; i < prCardinality; i++) {
 			double val = Math.random() * (maxChoVal - minChoVal) + minChoVal;
@@ -96,7 +108,7 @@ public class S1RepresentationParameters {
 			val = Math.random() * (maxChoVal - minChoVal) + minChoVal;
 			Cholesky2s.add(val);
 			Hs.add(_H);
-			ks.add(_K);
+			repKs.add(_K);
 			deltas.add(_Delta);
 		}
 	}
@@ -109,14 +121,17 @@ public class S1RepresentationParameters {
 		out.maxChoVal = this.maxChoVal;
 		out.minKernelDelta = this.minKernelDelta;
 		out.maxKernelDelta = this.maxKernelDelta;
-		out.minKernelK = this.minKernelK;
-		out.maxKernelK = this.maxKernelK;
+		out.minKernelRepK = this.minKernelRepK;
+		out.maxKernelRepK = this.maxKernelRepK;
+		out.minKernelInK = this.minKernelInK;
+		out.maxKernelInK = this.maxKernelInK;
 
 		out.Cholesky1s = CloneUtil.cloneAsArrayList(this.Cholesky1s);
 		out.Cholesky2s = CloneUtil.cloneAsArrayList(this.Cholesky2s);
 		out.Hs = CloneUtil.cloneAsArrayList(this.Hs);
-		out.ks = CloneUtil.cloneAsArrayList(this.ks);
+		out.repKs = CloneUtil.cloneAsArrayList(this.repKs);
 		out.deltas = CloneUtil.cloneAsArrayList(this.deltas);
+		out.inKs = CloneUtil.cloneAsArrayList(this.inKs);
 		return out;
 	}
 
@@ -140,17 +155,28 @@ public class S1RepresentationParameters {
 		// }
 		// i = 0;
 		// sb.append("; ");
-		for (double k : this.ks) {
+		sb.append("repKs: ");
+		for (double k : this.repKs) {
 			sb.append(k);
-			if (i++ < ks.size() - 1) {
+			if (i++ < repKs.size() - 1) {
 				sb.append(",");
 			}
 		}
 		i = 0;
 		sb.append("; ");
+		sb.append("deltas: ");
 		for (double d : this.deltas) {
 			sb.append(d);
 			if (i++ < deltas.size() - 1) {
+				sb.append(",");
+			}
+		}
+		i = 0;
+		sb.append("; ");
+		sb.append("inKs: ");
+		for (double d : this.deltas) {
+			sb.append(d);
+			if (i++ < inKs.size() - 1) {
 				sb.append(",");
 			}
 		}
@@ -177,8 +203,8 @@ public class S1RepresentationParameters {
 		return maxChoVal;
 	}
 
-	public List<Double> getKs() {
-		return ks;
+	public List<Double> getRepKs() {
+		return repKs;
 	}
 
 	public List<Double> getHs() {
@@ -189,12 +215,16 @@ public class S1RepresentationParameters {
 		return deltas;
 	}
 
-	public double getMinKernelK() {
-		return minKernelK;
+	public List<Double> getInKs() {
+		return inKs;
 	}
 
-	public double getMaxKernelK() {
-		return maxKernelK;
+	public double getMinKernelRepK() {
+		return minKernelRepK;
+	}
+
+	public double getMaxKernelRepK() {
+		return maxKernelRepK;
 	}
 
 	public double getMinKernelDelta() {
@@ -204,4 +234,14 @@ public class S1RepresentationParameters {
 	public double getMaxKernelDelta() {
 		return maxKernelDelta;
 	}
+
+	public double getMinKernelInK() {
+		return minKernelInK;
+	}
+
+	public double getMaxKernelInK() {
+		return maxKernelInK;
+	}
+	
+	
 }

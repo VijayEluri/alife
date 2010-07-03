@@ -56,13 +56,15 @@ public class CircleFieldsEvolution {
 
 	static double[] _Chol1 = { 1, 1 };
 	static double[] _Chol2 = { 0, 0 };
-	static double[] _ks = { 0d, 0.8d, 0d, 0.2d, 
+	static double[] _maps = { 0d, 1.0d, 0d, 0.0d, 
 							0.8d, 0.0d, 0.2d, 0.0d };
-	static double[] _alphas = { 0.0, 0.0 };
-	static double _minKernelK = 1.d;
-	static double _maxKernelK = 1.5d;
-	static double _minKernelDelta = 1.0d;
-	static double _maxKernelDelta = 4.0d;
+	static double[] _alphas = { 1.0, 0.0 };
+	static double _minKernelRepK = 0.0d;
+	static double _maxKernelRepK = 1.0d;
+	static double _minKernelInK = 2.0d;
+	static double _maxKernelInK = 5.0d;
+	static double _minKernelDelta = 0.1d;
+	static double _maxKernelDelta = 1.0d;
 	static Integer _affectedRecurrentPop = 0;
 
 	public static Environment getEnvironment(S1ControllerGenotype g, int points) {
@@ -74,15 +76,17 @@ public class CircleFieldsEvolution {
 	public static Operator[] getOperators(Environment env) {
 		Operator[] opers;
 
-		double sigmaKs = 0.05;
-		double sigmaDeltas = 0.2;
-		double sigmaKs2 = 0.2;
-		double sigmaDeltas2 = 0.7;
+		double sigmaRepKs = 0.1;
+		double sigmaDeltas = 0.1;
+		double sigmaInKs = 0.3;
+		double sigmaRepKs2 = 0.3;
+		double sigmaDeltas2 = 0.3;
+		double sigmaInKs2 = 0.9;
 
 		S1RepresentationKernelMutation mutation = new S1RepresentationKernelMutation(
-				env, sigmaDeltas, sigmaKs, _affectedRecurrentPop);
+				env, sigmaDeltas, sigmaRepKs, sigmaInKs, _affectedRecurrentPop);
 		S1RepresentationKernelMutation mutation2 = new S1RepresentationKernelMutation(
-				env, sigmaDeltas2, sigmaKs2, _affectedRecurrentPop);
+				env, sigmaDeltas2, sigmaRepKs2, sigmaInKs2, _affectedRecurrentPop);
 
 		// S1InputKsMutation ksMutation = new S1InputKsMutation(env, rvlKs,
 		// sigmaKs);
@@ -135,13 +139,13 @@ public class CircleFieldsEvolution {
 	public static void main(String[] args) {
 		System.out.println("-- "+new Date());
 		S1ControllerGenotype genotype = new S1ControllerGenotype(_points,
-				_noInputs, _noGoals, _noOutputs, _Chol1, _Chol2, _ks, _alphas,
-				_minKernelK, _maxKernelK, _minKernelDelta, _maxKernelDelta);
+				_noInputs, _noGoals, _noOutputs, _Chol1, _Chol2, _maps, _alphas,
+				_minKernelRepK, _maxKernelRepK, _minKernelDelta, _maxKernelDelta, _minKernelInK, _maxKernelInK);
 		Environment env = getEnvironment(genotype, _points);
 		// TODO:Continuar
 		Operator[] opers = getOperators(env);
-		int popsize = 20;
-		int maxiter = 1;
+		int popsize = 100;
+		int maxiter = 300;
 		System.out.println("-- "+"Population Size: "+popsize);
 		System.out.println("-- "+"Max iterations: "+maxiter);
 		Population p = evolve(popsize, env, maxiter, opers, new SimpleConsoleTracer());
@@ -189,24 +193,24 @@ public class CircleFieldsEvolution {
 		pendulumPopulation
 				.setElementValue(PendulumEquation.STATE_X, initialPos);
 		co.edu.unal.alife.output.Tracer tracer = new co.edu.unal.alife.output.Tracer(
-				5);
+				_N);
 
 		// field.addObserver(printer);
 		field.addObserver(tracer);
 
 		// Run simulation
 		double t0 = 0;
-		double tf = 10;
-		double h = 0.04;
+		double tf = 5;
+		double h = 0.05;
 		SolverUtility.simulate(t0, tf, h, field);
 
 		// String[] filenames =
 		// {"inputPopulation_evo","fieldPopulation_evo","pendulum_evo"}; /3d
-		String[] filenames = { null, null, null, null, "pendulum_ijcnn20102" }; // 2d
-		tracer.printToFiles(filenames, true);
+//		String[] filenames = { null, null, null, null, "pendulum_ijcnn20102" }; // 2d
+//		tracer.printToFiles(filenames, true);
 		System.out.println("-- "+new Date());
 		// Run animation
-		new PendulumFrame(0,4,1,tracer);
+		new PendulumFrame(0,5.0,4,2.0,5,tracer);
 	}
 
 }
