@@ -3,10 +3,10 @@ package co.edu.unal.alife.pendulum;
 import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.DifferentialEquation;
-import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.AbstractDifferentialEquation;
+import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 
-public abstract class SystemEquation extends DifferentialEquation {
+public abstract class SystemEquation extends AbstractDifferentialEquation {
 
 	public SystemEquation() {
 		super();
@@ -14,7 +14,7 @@ public abstract class SystemEquation extends DifferentialEquation {
 
 	protected abstract void getDx(DeltaPopulation<Double> deltaPopulation, double u, double tao);
 
-	public abstract void evalEquation(DeltaPopulation<Double> localPopulation, List<DeltaPopulation<Double>> populations, List<KernelFunction> kernelList);
+	public abstract void evalEquation(DeltaPopulation<Double> localPopulation, List<DeltaPopulation<Double>> populations, List<AbstractKernelFunction> kernelList);
 	
 	public abstract void setActionPopulation(DeltaPopulation<Double> actionPopulation);
 }

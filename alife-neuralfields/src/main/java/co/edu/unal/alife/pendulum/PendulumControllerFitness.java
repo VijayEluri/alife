@@ -5,9 +5,8 @@ package co.edu.unal.alife.pendulum;
 
 import jml.evolution.Fitness;
 import jml.evolution.Individual;
-import co.edu.unal.alife.dynamics.SolverUtility;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.DeltaField;
+import co.edu.unal.alife.neuralfield.AbstractDeltaField;
 import co.edu.unal.alife.output.Tracer;
 
 /**
@@ -55,7 +54,7 @@ public class PendulumControllerFitness extends Fitness {
 	@Override
 	public double evaluate(Individual obj) {
 		PendulumController controller = (PendulumController)obj.getThing();
-		DeltaField<Double> field = controller.getField();
+		AbstractDeltaField<Double> field = controller.getField();
 		
 		// Setup initial values
 		DeltaPopulation<Double> pendulumPopulation = field.getPopulations().get(2);
@@ -67,7 +66,7 @@ public class PendulumControllerFitness extends Fitness {
 		field.addObserver(tracer);
 
 		// Run simulation
-		SolverUtility.simulate(t0, tf, hh, field);
+		field.getSolver().simulate(t0, tf, hh, field);
 		
 		return PendulumEquation.getFitness(tracer);
 	}

@@ -9,13 +9,12 @@ import java.util.Date;
 import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.dynamics.RungeKutta4thSolver;
-import co.edu.unal.alife.dynamics.SolverUtility;
-import co.edu.unal.alife.evolution.ParameterizedKernel;
+import co.edu.unal.alife.dynamics.impl.RungeKutta4thSolver;
+import co.edu.unal.alife.evolution.impl.ParameterizedKernel;
+import co.edu.unal.alife.neuralfield.AbstractDeltaField;
+import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
+import co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
-import co.edu.unal.alife.neuralfield.DeltaField;
-import co.edu.unal.alife.neuralfield.KernelFunction;
-import co.edu.unal.alife.neuralfield.NonDifferentialEquation;
 import co.edu.unal.alife.neuralfield.impl.InputEquationForPendulum;
 import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
@@ -52,10 +51,10 @@ public class FirstProblemSimulation {
 		pendulumPopulation.setElementValue(PendulumEquation.STATE_X, initialPos);
 
 		// Kernel Matrix setup
-		List<List<KernelFunction>> kernelMatrix = new ArrayList<List<KernelFunction>>(N);
-		List<KernelFunction> firstRow = new ArrayList<KernelFunction>(N);
-		List<KernelFunction> secondRow = new ArrayList<KernelFunction>(N);
-		List<KernelFunction> thirdRow = null;
+		List<List<AbstractKernelFunction>> kernelMatrix = new ArrayList<List<AbstractKernelFunction>>(N);
+		List<AbstractKernelFunction> firstRow = new ArrayList<AbstractKernelFunction>(N);
+		List<AbstractKernelFunction> secondRow = new ArrayList<AbstractKernelFunction>(N);
+		List<AbstractKernelFunction> thirdRow = null;
 		// KernelFunction inputKernelFunction = new MexicanHatKernel(0.10,2,2.50);
 		// KernelFunction selfKernelFunction = new MexicanHatKernel(0.10,2,0.30);
 
@@ -86,8 +85,8 @@ public class FirstProblemSimulation {
 		List<Double> inputList = Arrays.asList(inputArray);
 		List<Double> processingList = Arrays.asList(processingArray);
 
-		KernelFunction inputKernelFunction = new ParameterizedKernel(inputList);
-		KernelFunction selfKernelFunction = new ParameterizedKernel(processingList);
+		AbstractKernelFunction inputKernelFunction = new ParameterizedKernel(inputList);
+		AbstractKernelFunction selfKernelFunction = new ParameterizedKernel(processingList);
 
 		firstRow.add(null); // self-connectivity of input field
 		firstRow.add(null); // connectivity from output to input
@@ -101,7 +100,7 @@ public class FirstProblemSimulation {
 
 		// Equations setup
 		List<DeltaEquation<Double>> equations = new ArrayList<DeltaEquation<Double>>(N);
-		NonDifferentialEquation inputEquation = new InputEquationForPendulum(halfSize, pendulumPopulation);
+		AbstractNonDifferentialEquation inputEquation = new InputEquationForPendulum(halfSize, pendulumPopulation);
 		SimpleDifferentialEquation simpleEquation = new SimpleDifferentialEquation();
 		PendulumEquation pendulumEquation = new PendulumEquation(outputPopulation);
 		// PendulumEquation pendulumEquation = new PendulumEquation(inputPopulation);
@@ -112,7 +111,7 @@ public class FirstProblemSimulation {
 		// Solver setup
 		RungeKutta4thSolver solver = new RungeKutta4thSolver();
 
-		DeltaField<Double> field = new SimpleDeltaField(equations, kernelMatrix, populations,
+		AbstractDeltaField<Double> field = new SimpleDeltaField(equations, kernelMatrix, populations,
 				solver);
 
 		// Visualizer printer = new PendulumPrinter(pendulumStates, mainSize, mainSize);
@@ -121,7 +120,7 @@ public class FirstProblemSimulation {
 		field.addObserver(tracer);
 
 		// Run simulation
-		SolverUtility.simulate(t0, tf, hh, field);
+		field.getSolver().simulate(t0, tf, hh, field);
 
 		// String[] filenames = {"inputPopulation","fieldPopulation","pendulum"};
 		// String[] filenames = { "inputPopulation_old", "fieldPopulation_old", "pendulum_old" };

@@ -10,7 +10,7 @@ import static java.lang.Math.sin;
 import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 import co.edu.unal.alife.neuralfield.impl.S1ActionEquation;
 import co.edu.unal.alife.output.Tracer;
 
@@ -52,7 +52,7 @@ public class S1PendulumEquation extends SystemEquation {
 	@Override
 	public void evalEquation(DeltaPopulation<Double> localPopulation,
 			List<DeltaPopulation<Double>> populations,
-			List<KernelFunction> kernelList) {
+			List<AbstractKernelFunction> kernelList) {
 		double u = 0;
 		while (actionPopulation.hasNextPopulation()) {
 			actionPopulation = actionPopulation.getNextPopulation();

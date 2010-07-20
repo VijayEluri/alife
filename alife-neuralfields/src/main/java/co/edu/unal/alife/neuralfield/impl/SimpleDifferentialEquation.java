@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.DifferentialEquation;
-import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.AbstractDifferentialEquation;
+import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 
 /**
  * @author Juan Figueredo
@@ -17,7 +17,7 @@ import co.edu.unal.alife.neuralfield.KernelFunction;
 /**
  * @author Juan Figueredo
  */
-public class SimpleDifferentialEquation extends DifferentialEquation {
+public class SimpleDifferentialEquation extends AbstractDifferentialEquation {
 
 	private double tao = 0.1;
 	private double restingPotential = -0.2;
@@ -35,7 +35,7 @@ public class SimpleDifferentialEquation extends DifferentialEquation {
 	@Override
 	public void evalEquation(DeltaPopulation<Double> localPopulation,
 			List<DeltaPopulation<Double>> populations,
-			List<KernelFunction> kernelList) {
+			List<AbstractKernelFunction> kernelList) {
 		Set<Double> localPositions = localPopulation.getPositions();
 		// For each element (or tuple) in the local population do...
 		for (Double localPosition : localPositions) {
@@ -46,7 +46,7 @@ public class SimpleDifferentialEquation extends DifferentialEquation {
 				DeltaPopulation<Double> population = populations.get(i);
 				Set<Double> positions = population.getPositions();
 				// System.out.println("In population:"+i);
-				KernelFunction kernelFunction = kernelList.get(i);
+				AbstractKernelFunction kernelFunction = kernelList.get(i);
 				// System.out.println(i + " | " + kernelFunction);
 				// Do nothing on null kernel
 				if (kernelFunction != null) {

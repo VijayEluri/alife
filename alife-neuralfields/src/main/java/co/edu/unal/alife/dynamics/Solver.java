@@ -1,20 +1,30 @@
 package co.edu.unal.alife.dynamics;
 
-import co.edu.unal.alife.neuralfield.DeltaField;
 
 /**
  * @author Juan Figueredo
- *
+ * 
  * @param <V>
  */
-public interface Solver<K,V> {
+public interface Solver<K, V> {
 
 	/**
 	 * 
-	 * @param field
+	 * @param simulable
 	 * @param localIndex
 	 * @param h
-	 * @return A NEW population with values evaluated after the solver step
+	 * @return A NEW simulable with values evaluated after the solver step
 	 */
-	DeltaPopulation<K> step(DeltaField<K> field, int localIndex, double h) throws UnsupportedOperationException;
+	DeltaPopulation<K> step(Simulable<K> simulable, int localIndex,
+			double h) throws UnsupportedOperationException;
+
+	/**
+	 * @param t0
+	 * @param tf
+	 * @param h
+	 * @param simulable
+	 */
+	void simulate(double t0, double tf, double h,
+			Simulable<Double> simulable);
+
 }

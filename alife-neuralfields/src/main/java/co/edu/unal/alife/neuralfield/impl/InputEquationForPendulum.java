@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.NonDifferentialEquation;
+import co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation;
 import co.edu.unal.alife.pendulum.PendulumEquation;
 
 /**
  * @author Juan Figueredo
  */
-public class InputEquationForPendulum extends NonDifferentialEquation {
+public class InputEquationForPendulum extends AbstractNonDifferentialEquation {
 
 	DeltaPopulation<Double> pendulum;
 	double halfSize;
@@ -44,7 +44,7 @@ public class InputEquationForPendulum extends NonDifferentialEquation {
 //		System.out.println("OMEGA:" + omega + "->" + boundedValue2 + ":" + eqPosition2);
 
 		Set<Double> positions = localPopulation.getPositions();
-		DeltaPopulation<Double> newPopulation = new MapDeltaPopulation(positions);
+		DeltaPopulation<Double> newPopulation = localPopulation.cloneEmpty(positions);
 		for (Double position : positions) {
 			if (position.equals(eqPosition)) {
 				newPopulation.setElementValue(position, 1.0);

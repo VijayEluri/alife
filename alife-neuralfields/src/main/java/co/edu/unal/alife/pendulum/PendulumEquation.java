@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 import co.edu.unal.alife.output.Tracer;
 
 /**
@@ -43,7 +43,7 @@ public class PendulumEquation extends SystemEquation {
 	 */
 	@Override
 	public void evalEquation(DeltaPopulation<Double> localPopulation, List<DeltaPopulation<Double>> populations,
-			List<KernelFunction> kernelList) {
+			List<AbstractKernelFunction> kernelList) {
 		double u = 0;
 		while (actionPopulation.hasNextPopulation()) {
 			actionPopulation = actionPopulation.getNextPopulation();

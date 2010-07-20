@@ -1,0 +1,227 @@
+<class-diagram version="0.9.86" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
+  associations="true" dependencies="true" nesting-relationships="true">  
+  <interface corner="BOTTOM_RIGHT" language="java" name="co.edu.unal.alife.dynamics.DeltaPopulation" 
+    project="alife-neuralfields" 
+    file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/DeltaPopulation.java" binary="false">    
+    <position x="429" y="509" width="137" height="288"/>    
+    <display autosize="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <interface corner="BOTTOM_RIGHT" language="java" name="co.edu.unal.alife.dynamics.Solver" project="alife-neuralfields" 
+    file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/Solver.java" binary="false">    
+    <position x="469" y="357" width="120" height="80"/>    
+    <display autosize="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <interface corner="BOTTOM_RIGHT" language="java" name="co.edu.unal.alife.dynamics.Simulable" 
+    project="alife-neuralfields" file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/Simulable.java" 
+    binary="false">    
+    <position x="41" y="357" width="120" height="64"/>    
+    <display autosize="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class corner="BOTTOM_RIGHT" language="java" name="co.edu.unal.alife.neuralfield.AbstractDeltaField" 
+    project="alife-neuralfields" 
+    file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractDeltaField.java" binary="false">    
+    <position x="85" y="141" width="153" height="160"/>    
+    <display autosize="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="co.edu.unal.alife.neuralfield.AbstractDifferentialEquation" 
+    project="alife-neuralfields" 
+    file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractDifferentialEquation.java" 
+    binary="false">    
+    <position x="278" y="141" width="187" height="144"/>    
+    <display autosize="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="co.edu.unal.alife.neuralfield.AbstractKernelFunction" 
+    project="alife-neuralfields" 
+    file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractKernelFunction.java" binary="false">    
+    <position x="203" y="509" width="160" height="64"/>    
+    <display autosize="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class corner="BOTTOM_RIGHT" language="java" name="co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation" 
+    project="alife-neuralfields" 
+    file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractNonDifferentialEquation.java" 
+    binary="false">    
+    <position x="505" y="141" width="210" height="176"/>    
+    <display autosize="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <interface corner="BOTTOM_RIGHT" language="java" name="co.edu.unal.alife.neuralfield.DeltaEquation" 
+    project="alife-neuralfields" 
+    file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/DeltaEquation.java" binary="false">    
+    <position x="264" y="357" width="123" height="112"/>    
+    <display autosize="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </interface>  
+  <class corner="BOTTOM_RIGHT" language="java" name="co.edu.unal.alife.dynamics.AbstractFixedStepSolver" 
+    project="alife-neuralfields" 
+    file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/AbstractFixedStepSolver.java" binary="false">    
+    <position x="455" y="89" width="-1" height="-1"/>    
+    <display autosize="true" package="true" initial-value="false" signature="false" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="true" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <association>    
+    <bendpoint x="233" y="357"/>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractDeltaField" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractDeltaField.java" binary="false" 
+      navigable="false">      
+      <attribute name="populations"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.dynamics.DeltaPopulation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/DeltaPopulation.java" binary="false" 
+      navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency>    
+    <bendpoint x="191" y="357"/>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractDeltaField" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractDeltaField.java" binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractKernelFunction" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractKernelFunction.java" binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <bendpoint x="619" y="357"/>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractNonDifferentialEquation.java" 
+      binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.dynamics.DeltaPopulation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/DeltaPopulation.java" binary="false"/>  
+  </dependency>  
+  <realization>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractNonDifferentialEquation.java" 
+      binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.DeltaEquation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/DeltaEquation.java" binary="false"/>  
+  </realization>  
+  <dependency>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.dynamics.Solver" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/Solver.java" binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.dynamics.Simulable" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/Simulable.java" binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <bendpoint x="438" y="357"/>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractDifferentialEquation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractDifferentialEquation.java" 
+      binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.dynamics.DeltaPopulation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/DeltaPopulation.java" binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.dynamics.Solver" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/Solver.java" binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.dynamics.DeltaPopulation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/DeltaPopulation.java" binary="false"/>  
+  </dependency>  
+  <association>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractDeltaField" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractDeltaField.java" binary="false" 
+      navigable="false">      
+      <attribute name="equations"/>      
+      <multiplicity minimum="0" maximum="2147483647"/>    
+    </source>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.DeltaEquation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/DeltaEquation.java" binary="false" 
+      navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.dynamics.DeltaPopulation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/DeltaPopulation.java" binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractDeltaField" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractDeltaField.java" binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.DeltaEquation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/DeltaEquation.java" binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.dynamics.DeltaPopulation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/DeltaPopulation.java" binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.DeltaEquation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/DeltaEquation.java" binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractKernelFunction" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractKernelFunction.java" binary="false"/>  
+  </dependency>  
+  <realization>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.dynamics.AbstractFixedStepSolver" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/AbstractFixedStepSolver.java" binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.dynamics.Solver" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/Solver.java" binary="false"/>  
+  </realization>  
+  <dependency>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.dynamics.AbstractFixedStepSolver" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/AbstractFixedStepSolver.java" binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.dynamics.Simulable" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/Simulable.java" binary="false"/>  
+  </dependency>  
+  <realization>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractDeltaField" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractDeltaField.java" binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.dynamics.Simulable" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/Simulable.java" binary="false"/>  
+  </realization>  
+  <dependency>    
+    <bendpoint x="212" y="357"/>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractDifferentialEquation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractDifferentialEquation.java" 
+      binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractKernelFunction" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractKernelFunction.java" binary="false"/>  
+  </dependency>  
+  <dependency>    
+    <bendpoint x="417" y="357"/>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractNonDifferentialEquation.java" 
+      binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractKernelFunction" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractKernelFunction.java" binary="false"/>  
+  </dependency>  
+  <association>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractDeltaField" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractDeltaField.java" binary="false" 
+      navigable="false">      
+      <attribute name="solver"/>      
+      <multiplicity minimum="0" maximum="1"/>    
+    </source>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.dynamics.Solver" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/dynamics/Solver.java" binary="false" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization>    
+    <source project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.AbstractDifferentialEquation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/AbstractDifferentialEquation.java" 
+      binary="false"/>    
+    <target project="alife-neuralfields" name="co.edu.unal.alife.neuralfield.DeltaEquation" 
+      file="/alife-neuralfields/src/main/java/co/edu/unal/alife/neuralfield/DeltaEquation.java" binary="false"/>  
+  </realization>  
+  <classifier-display autosize="true" package="true" initial-value="false" signature="false" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false"/>    
+    <operations public="true" package="false" protected="false" private="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

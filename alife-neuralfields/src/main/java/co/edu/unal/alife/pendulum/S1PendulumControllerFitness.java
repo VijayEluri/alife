@@ -2,12 +2,11 @@ package co.edu.unal.alife.pendulum;
 
 import java.util.List;
 
-import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.dynamics.SolverUtility;
-import co.edu.unal.alife.neuralfield.DeltaField;
-import co.edu.unal.alife.output.Tracer;
 import jml.evolution.Fitness;
 import jml.evolution.Individual;
+import co.edu.unal.alife.dynamics.DeltaPopulation;
+import co.edu.unal.alife.neuralfield.AbstractDeltaField;
+import co.edu.unal.alife.output.Tracer;
 
 public class S1PendulumControllerFitness extends Fitness {
 	
@@ -27,7 +26,7 @@ public class S1PendulumControllerFitness extends Fitness {
 	@SuppressWarnings("unchecked")
 	@Override
 	public double evaluate(Individual obj) {
-		DeltaField<Double> field = (DeltaField<Double>) obj.getThing();
+		AbstractDeltaField<Double> field = (AbstractDeltaField<Double>) obj.getThing();
 
 		// Setup initial values
 		List<DeltaPopulation<Double>> pops = field.getPopulations();
@@ -42,7 +41,7 @@ public class S1PendulumControllerFitness extends Fitness {
 		field.addObserver(tracer);
 
 		// Run simulation
-		SolverUtility.simulate(t0, tf, hh, field);
+		field.getSolver().simulate(t0, tf, hh, field);
 
 		return S1PendulumEquation.getFitness(tracer);
 	}

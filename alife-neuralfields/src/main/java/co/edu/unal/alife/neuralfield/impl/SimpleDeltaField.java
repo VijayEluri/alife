@@ -8,14 +8,14 @@ import java.util.List;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.dynamics.Solver;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
-import co.edu.unal.alife.neuralfield.DeltaField;
-import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.AbstractDeltaField;
+import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 
 /**
  * @author Juan Figueredo
  *
  */
-public class SimpleDeltaField extends DeltaField<Double> {
+public class SimpleDeltaField extends AbstractDeltaField<Double> {
 
 	/**
 	 * @param equations
@@ -24,7 +24,7 @@ public class SimpleDeltaField extends DeltaField<Double> {
 	 * @param solver
 	 */
 	public SimpleDeltaField(List<DeltaEquation<Double>> equations,
-			List<List<KernelFunction>> kernelMatrix, List<DeltaPopulation<Double>> populations,
+			List<List<AbstractKernelFunction>> kernelMatrix, List<DeltaPopulation<Double>> populations,
 			Solver<Double, Double> solver) {
 		super(equations, kernelMatrix, populations, solver);
 		// TODO Auto-generated constructor stub

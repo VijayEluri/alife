@@ -4,10 +4,9 @@ import java.util.List;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.NonDifferentialEquation;
-import co.edu.unal.alife.neuralfield.S1TopologyUtility;
+import co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation;
 
-public class S1ActionEquation extends NonDifferentialEquation {
+public class S1ActionEquation extends AbstractNonDifferentialEquation {
 
 	private List<DeltaPopulation<Double>> representationPops;
 	private List<List<S1ActionTransformation>> transformations;
@@ -25,8 +24,8 @@ public class S1ActionEquation extends NonDifferentialEquation {
 	@Override
 	public DeltaPopulation<Double> applyInput(
 			DeltaPopulation<Double> localPopulation) {
-		DeltaPopulation<Double> newPopulation = new MapDeltaPopulation(
-				localPopulation.getPositions());
+		DeltaPopulation<Double> newPopulation = localPopulation
+				.cloneEmpty(localPopulation.getPositions());
 		localPopulation.setNextPopulation(newPopulation);
 		Set<Double> localPositions = localPopulation.getPositions();
 		int indexX = 0;
@@ -67,10 +66,10 @@ public class S1ActionEquation extends NonDifferentialEquation {
 				indexY++;
 			}
 			// double x = S1TopologyUtility.stereoProjection(u);
-//			double x = u == 0 ? 0 : (u > 0 ? maxAction : -maxAction);
-			
+			// double x = u == 0 ? 0 : (u > 0 ? maxAction : -maxAction);
+
 			double x = u;
-//			x*=scale;
+			// x*=scale;
 			// if (Math.abs(x) > maxAction) {
 			// x = (x >= 0) ? maxAction : -maxAction;
 			// }

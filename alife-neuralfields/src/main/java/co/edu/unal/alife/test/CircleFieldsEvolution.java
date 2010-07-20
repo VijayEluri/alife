@@ -24,12 +24,12 @@ import jml.util.ForLoopCondition;
 import jml.util.Predicate;
 import jml.util.SimpleConsoleTracer;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.dynamics.SolverUtility;
-import co.edu.unal.alife.evolution.S1ControllerGenotype;
-import co.edu.unal.alife.evolution.S1ControllerPhenotypeForPendulum;
-import co.edu.unal.alife.evolution.operator.S1RepresentationKernelMutation;
-import co.edu.unal.alife.evolution.params.S1ControllerParameters;
-import co.edu.unal.alife.neuralfield.DeltaField;
+import co.edu.unal.alife.evolution.impl.S1ControllerGenotype;
+import co.edu.unal.alife.evolution.impl.S1ControllerPhenotypeForPendulum;
+import co.edu.unal.alife.evolution.impl.operator.S1RepresentationKernelMutation;
+import co.edu.unal.alife.evolution.param.S1ControllerParameters;
+import co.edu.unal.alife.neuralfield.AbstractDeltaField;
+import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.output.PendulumFrame;
 import co.edu.unal.alife.pendulum.PendulumEquation;
 import co.edu.unal.alife.pendulum.S1PendulumControllerFitness;
@@ -43,7 +43,7 @@ public class CircleFieldsEvolution {
 	static final int _noInputs = 4;
 	static final int _noGoals = 2;
 	static final int _noOutputs = 1;
-	static final int _N = _noGoals+_noGoals+1+1;
+	static final int _N = _noGoals + _noGoals + 1 + 1;
 
 	static final double _minCholeskyVal = 0.2;
 	static final double _maxCholeskyVal = 5.0;
@@ -56,8 +56,7 @@ public class CircleFieldsEvolution {
 
 	static double[] _Chol1 = { 1, 1 };
 	static double[] _Chol2 = { 0, 0 };
-	static double[] _maps = { 0d, 1.0d, 0d, 0.0d, 
-							0.8d, 0.0d, 0.2d, 0.0d };
+	static double[] _maps = { 0d, 1.0d, 0d, 0.0d, 0.8d, 0.0d, 0.2d, 0.0d };
 	static double[] _alphas = { 1.0, 0.0 };
 	static double _minKernelRepK = 0.0d;
 	static double _maxKernelRepK = 1.0d;
@@ -69,7 +68,8 @@ public class CircleFieldsEvolution {
 
 	public static Environment getEnvironment(S1ControllerGenotype g, int points) {
 		Fitness f = new S1PendulumControllerFitness(_N);
-		Phenotype p = new S1ControllerPhenotypeForPendulum(points);
+		Phenotype p = new S1ControllerPhenotypeForPendulum(points,
+				new MapDeltaPopulation());
 		return new Environment(g, p, f);
 	}
 
@@ -86,7 +86,8 @@ public class CircleFieldsEvolution {
 		S1RepresentationKernelMutation mutation = new S1RepresentationKernelMutation(
 				env, sigmaDeltas, sigmaRepKs, sigmaInKs, _affectedRecurrentPop);
 		S1RepresentationKernelMutation mutation2 = new S1RepresentationKernelMutation(
-				env, sigmaDeltas2, sigmaRepKs2, sigmaInKs2, _affectedRecurrentPop);
+				env, sigmaDeltas2, sigmaRepKs2, sigmaInKs2,
+				_affectedRecurrentPop);
 
 		// S1InputKsMutation ksMutation = new S1InputKsMutation(env, rvlKs,
 		// sigmaKs);
@@ -136,19 +137,22 @@ public class CircleFieldsEvolution {
 		return ea.getPopulation();
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
-		System.out.println("-- "+new Date());
+		System.out.println("-- " + new Date());
 		S1ControllerGenotype genotype = new S1ControllerGenotype(_points,
-				_noInputs, _noGoals, _noOutputs, _Chol1, _Chol2, _maps, _alphas,
-				_minKernelRepK, _maxKernelRepK, _minKernelDelta, _maxKernelDelta, _minKernelInK, _maxKernelInK);
+				_noInputs, _noGoals, _noOutputs, _Chol1, _Chol2, _maps,
+				_alphas, _minKernelRepK, _maxKernelRepK, _minKernelDelta,
+				_maxKernelDelta, _minKernelInK, _maxKernelInK);
 		Environment env = getEnvironment(genotype, _points);
 		// TODO:Continuar
 		Operator[] opers = getOperators(env);
 		int popsize = 100;
 		int maxiter = 300;
-		System.out.println("-- "+"Population Size: "+popsize);
-		System.out.println("-- "+"Max iterations: "+maxiter);
-		Population p = evolve(popsize, env, maxiter, opers, new SimpleConsoleTracer());
+		System.out.println("-- " + "Population Size: " + popsize);
+		System.out.println("-- " + "Max iterations: " + maxiter);
+		Population p = evolve(popsize, env, maxiter, opers,
+				new SimpleConsoleTracer());
 		Vector<Individual> individuals = p.individuals;
 		S1PendulumControllerFitness fitness = (S1PendulumControllerFitness) env
 				.getFitness();
@@ -181,10 +185,11 @@ public class CircleFieldsEvolution {
 		// System.out.println("P:\n" );
 		// double fit = fitness.evaluate(bestInd);
 
-		DeltaField<Double> field = (DeltaField<Double>) bestInd.getThing();
-		Object genome = bestInd.getGenome();
+		AbstractDeltaField<Double> field = (AbstractDeltaField<Double>) bestInd
+				.getThing();
+		// Object genome = bestInd.getGenome();
 		// Setup initial values
-		double initialAngle = 0*Math.PI / 10;
+		double initialAngle = 0 * Math.PI / 10;
 		double initialPos = 0.0;
 		List<DeltaPopulation<Double>> pops = field.getPopulations();
 		DeltaPopulation<Double> pendulumPopulation = pops.get(pops.size() - 1);
@@ -202,15 +207,16 @@ public class CircleFieldsEvolution {
 		double t0 = 0;
 		double tf = 5;
 		double h = 0.05;
-		SolverUtility.simulate(t0, tf, h, field);
+		field.getSolver().simulate(t0, tf, h, field);
 
 		// String[] filenames =
 		// {"inputPopulation_evo","fieldPopulation_evo","pendulum_evo"}; /3d
-//		String[] filenames = { null, null, null, null, "pendulum_ijcnn20102" }; // 2d
-//		tracer.printToFiles(filenames, true);
-		System.out.println("-- "+new Date());
+		// String[] filenames = { null, null, null, null, "pendulum_ijcnn20102"
+		// }; // 2d
+		// tracer.printToFiles(filenames, true);
+		System.out.println("-- " + new Date());
 		// Run animation
-		new PendulumFrame(0,5.0,4,2.0,5,tracer);
+		new PendulumFrame(0, 5.0, 4, 2.0, 5, tracer);
 	}
 
 }

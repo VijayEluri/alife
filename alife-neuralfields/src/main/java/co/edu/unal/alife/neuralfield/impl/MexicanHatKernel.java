@@ -3,13 +3,13 @@
  */
 package co.edu.unal.alife.neuralfield.impl;
 
-import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 
 /**
  * @author Juan Figueredo
  * 
  */
-public class MexicanHatKernel extends KernelFunction {
+public class MexicanHatKernel extends AbstractKernelFunction {
 
 //	public static final double sigma = 1;
 	protected double H0 = 0.05;

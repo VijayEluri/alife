@@ -22,15 +22,14 @@ import jml.evolution.selections.Elitism;
 import jml.util.ForLoopCondition;
 import jml.util.Predicate;
 import jml.util.SimpleConsoleTracer;
-import co.edu.unal.alife.dynamics.SolverUtility;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.evolution.PendulumControllerGenotype;
-import co.edu.unal.alife.evolution.PendulumControllerInputMutation;
-import co.edu.unal.alife.evolution.PendulumControllerMutation;
-import co.edu.unal.alife.evolution.PendulumControllerParameters;
-import co.edu.unal.alife.evolution.PendulumControllerPhenotype;
-import co.edu.unal.alife.evolution.PendulumControllerProcessingMutation;
-import co.edu.unal.alife.neuralfield.DeltaField;
+import co.edu.unal.alife.evolution.impl.PendulumControllerGenotype;
+import co.edu.unal.alife.evolution.impl.PendulumControllerInputMutation;
+import co.edu.unal.alife.evolution.impl.PendulumControllerMutation;
+import co.edu.unal.alife.evolution.impl.PendulumControllerParameters;
+import co.edu.unal.alife.evolution.impl.PendulumControllerPhenotype;
+import co.edu.unal.alife.evolution.impl.PendulumControllerProcessingMutation;
+import co.edu.unal.alife.neuralfield.AbstractDeltaField;
 import co.edu.unal.alife.output.PendulumFrame;
 import co.edu.unal.alife.pendulum.PendulumController;
 import co.edu.unal.alife.pendulum.PendulumControllerFitness;
@@ -88,6 +87,7 @@ public class FirstProblemEvolution {
 		return ea.getPopulation();
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		int size = 10;
 		Environment env = getEnvironment(size);
@@ -124,7 +124,7 @@ public class FirstProblemEvolution {
 		
 		double initialAngle = Math.PI/6;
 		double initialPos = -5.0;
-		DeltaField<Double> field = controller.getField();
+		AbstractDeltaField<Double> field = controller.getField();
 		DeltaPopulation<Double> pendulumPopulation = field.getPopulations().get(2);
 		pendulumPopulation.setElementValue(PendulumEquation.STATE_THETA, initialAngle);
 		pendulumPopulation.setElementValue(PendulumEquation.STATE_X, initialPos);
@@ -137,7 +137,7 @@ public class FirstProblemEvolution {
 		double t0 = 0;
 		double tf = 10;
 		double h = 0.04;
-		SolverUtility.simulate(t0, tf, h, field);
+		field.getSolver().simulate(t0, tf, h, field);
 		System.out.println(bestInd.getGenome());
 		
 //		String[] filenames = {"inputPopulation_evo","fieldPopulation_evo","pendulum_evo"}; /3d

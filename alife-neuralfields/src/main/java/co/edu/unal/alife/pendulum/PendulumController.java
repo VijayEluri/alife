@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.dynamics.RungeKutta4thSolver;
-import co.edu.unal.alife.evolution.ParameterizedKernel;
-import co.edu.unal.alife.evolution.PendulumControllerParameters;
+import co.edu.unal.alife.dynamics.impl.RungeKutta4thSolver;
+import co.edu.unal.alife.evolution.impl.ParameterizedKernel;
+import co.edu.unal.alife.evolution.impl.PendulumControllerParameters;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
-import co.edu.unal.alife.neuralfield.DeltaField;
-import co.edu.unal.alife.neuralfield.NonDifferentialEquation;
-import co.edu.unal.alife.neuralfield.KernelFunction;
+import co.edu.unal.alife.neuralfield.AbstractDeltaField;
+import co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation;
+import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 import co.edu.unal.alife.neuralfield.impl.InputEquationForPendulum;
 import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
@@ -24,7 +24,7 @@ import co.edu.unal.alife.neuralfield.impl.SimpleDifferentialEquation;
  */
 public class PendulumController {
 	
-	private DeltaField<Double> field = null;
+	private AbstractDeltaField<Double> field = null;
 
 	/**
 	 * @param halfSize
@@ -42,7 +42,7 @@ public class PendulumController {
 	 * @param initialPos
 	 * @return
 	 */
-	private DeltaField<Double> buildController(PendulumControllerParameters parameters, int halfSize) {
+	private AbstractDeltaField<Double> buildController(PendulumControllerParameters parameters, int halfSize) {
 		int N = 3;
 		
 		// Populations setup
@@ -59,12 +59,12 @@ public class PendulumController {
 //		pendulumPopulation.setElementValue(PendulumEquation.STATE_X, initialPos);
 
 		// Kernel Matrix setup
-		List<List<KernelFunction>> kernelMatrix = new ArrayList<List<KernelFunction>>(N);
-		List<KernelFunction> firstRow = new ArrayList<KernelFunction>(N);
-		List<KernelFunction> secondRow = new ArrayList<KernelFunction>(N);
-		List<KernelFunction> thirdRow = null;
-		KernelFunction inputKernelFunction = new ParameterizedKernel(parameters.getInputKernel());
-		KernelFunction selfKernelFunction = new ParameterizedKernel(parameters.getSelfKernel());
+		List<List<AbstractKernelFunction>> kernelMatrix = new ArrayList<List<AbstractKernelFunction>>(N);
+		List<AbstractKernelFunction> firstRow = new ArrayList<AbstractKernelFunction>(N);
+		List<AbstractKernelFunction> secondRow = new ArrayList<AbstractKernelFunction>(N);
+		List<AbstractKernelFunction> thirdRow = null;
+		AbstractKernelFunction inputKernelFunction = new ParameterizedKernel(parameters.getInputKernel());
+		AbstractKernelFunction selfKernelFunction = new ParameterizedKernel(parameters.getSelfKernel());
 		firstRow.add(null); // self-connectivity of input field
 		firstRow.add(null); // connectivity from output to input
 		firstRow.add(null); // connectivity from plant to input
@@ -77,7 +77,7 @@ public class PendulumController {
 
 		// Equations setup
 		List<DeltaEquation<Double>> equations = new ArrayList<DeltaEquation<Double>>(N);
-		NonDifferentialEquation inputEquation = new InputEquationForPendulum(halfSize, pendulumPopulation);
+		AbstractNonDifferentialEquation inputEquation = new InputEquationForPendulum(halfSize, pendulumPopulation);
 		SimpleDifferentialEquation simpleEquation = new SimpleDifferentialEquation();
 		PendulumEquation pendulumEquation = new PendulumEquation(processingPopulation);
 		equations.add(inputEquation); // input field equation
@@ -87,7 +87,7 @@ public class PendulumController {
 		// Solver setup
 		RungeKutta4thSolver solver = new RungeKutta4thSolver();
 		
-		DeltaField<Double> field = new SimpleDeltaField(equations, kernelMatrix, populations, solver);
+		AbstractDeltaField<Double> field = new SimpleDeltaField(equations, kernelMatrix, populations, solver);
 		
 		return field;
 	}
@@ -95,7 +95,7 @@ public class PendulumController {
 	/**
 	 * @return the field
 	 */
-	public DeltaField<Double> getField() {
+	public AbstractDeltaField<Double> getField() {
 		return field;
 	}
 

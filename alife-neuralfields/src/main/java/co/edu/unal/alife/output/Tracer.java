@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-import jml.evolution.Population;
-
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 
 public class Tracer implements Visualizer {

@@ -3,7 +3,6 @@
  */
 package co.edu.unal.alife.neuralfield.impl;
 
-import co.edu.unal.alife.neuralfield.S1SymmetryTransformation;
 
 /**
  * @author Juan Figueredo
