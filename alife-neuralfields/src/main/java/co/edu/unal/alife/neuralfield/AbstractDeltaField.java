@@ -7,26 +7,25 @@ import java.util.List;
 import java.util.Observable;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.dynamics.Simulable;
 import co.edu.unal.alife.dynamics.Solver;
 
 /**
  * @author Juan Figueredo
  */
-public abstract class AbstractDeltaField<K> extends Observable implements Simulable<K> {
+public abstract class AbstractDeltaField extends Observable {
 
-	protected List<DeltaPopulation<K>> populations;
-	protected List<DeltaEquation<K>> equations;
+	protected List<DeltaPopulation> populations;
+	protected List<DeltaEquation> equations;
 	protected List<List<AbstractKernelFunction>> kernelMatrix;
-	protected Solver<K, Double> solver;
+	protected Solver solver;
 
 	/**
 	 * @param equations
 	 * @param kernelMatrix
 	 * @param populations
 	 */
-	public AbstractDeltaField(List<DeltaEquation<K>> equations, List<List<AbstractKernelFunction>> kernelMatrix,
-			List<DeltaPopulation<K>> populations, Solver<K, Double> solver) {
+	public AbstractDeltaField(List<DeltaEquation> equations, List<List<AbstractKernelFunction>> kernelMatrix,
+			List<DeltaPopulation> populations, Solver solver) {
 		super();
 		this.equations = equations;
 		this.kernelMatrix = kernelMatrix;
@@ -37,14 +36,14 @@ public abstract class AbstractDeltaField<K> extends Observable implements Simula
 	/**
 	 * @return the populations
 	 */
-	public List<DeltaPopulation<K>> getPopulations() {
+	public List<DeltaPopulation> getPopulations() {
 		return populations;
 	}
 
 	/**
 	 * @return the equations
 	 */
-	public List<DeltaEquation<K>> getEquations() {
+	public List<DeltaEquation> getEquations() {
 		return equations;
 	}
 
@@ -55,11 +54,15 @@ public abstract class AbstractDeltaField<K> extends Observable implements Simula
 		return kernelMatrix;
 	}
 
-	@Override
+	/**
+	 * Evaluates an iteration of the entire field in a population-by-population basis
+	 * @param h the step size.
+	 * @param nextStepCount the step count for next step
+	 */
 	public void evaluateStep(double h, int nextStepCount) {
 		double t = nextStepCount * h;
 		for (int i = 0; i < populations.size(); i++) {
-			DeltaPopulation<K> deltaPopulation = null;
+			DeltaPopulation deltaPopulation = null;
 			try {
 				deltaPopulation = solver.step(this, i, h);
 				// System.out.println("Step - Pop "+i);
@@ -73,11 +76,11 @@ public abstract class AbstractDeltaField<K> extends Observable implements Simula
 		}
 	}
 
-	public Solver<K, Double> getSolver() {
+	public Solver getSolver() {
 		return solver;
 	}
 
-	public void setSolver(Solver<K, Double> solver) {
+	public void setSolver(Solver solver) {
 		this.solver = solver;
 	}
 

@@ -73,9 +73,9 @@ public class DeltaFieldFactory {
 	 *            TODO
 	 * @return A delta field composed of the populations.
 	 */
-	public AbstractDeltaField<Double> buildLayeredS1Field(
+	public AbstractDeltaField buildLayeredS1Field(
 			S1ControllerParameters controllerParams, int points,
-			DeltaPopulation<Double> systemPopulation,
+			DeltaPopulation systemPopulation,
 			SystemEquation systemEquation) {
 		// Number of varibles fedback by the system
 		//int noInputs = controllerParams.getInSize();
@@ -88,7 +88,7 @@ public class DeltaFieldFactory {
 		final int N = noGoals + noGoals + 1 + 1; // Input[]+Representation[]+Action+System
 
 		// Population construction
-		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(
+		List<DeltaPopulation> populations = new ArrayList<DeltaPopulation>(
 				N);
 		// Creation and addition of input and representation populations
 		for (int i = 0; i < noGoals; i++) {
@@ -111,7 +111,7 @@ public class DeltaFieldFactory {
 		systemEquation.setActionPopulation(actionPopulation);
 
 		// Equation creation
-		List<DeltaEquation<Double>> equations = new ArrayList<DeltaEquation<Double>>(
+		List<DeltaEquation> equations = new ArrayList<DeltaEquation>(
 				N);
 		// Creation and addition of input equations
 		for (int i = 0; i < noGoals; i++) {
@@ -193,7 +193,7 @@ public class DeltaFieldFactory {
 		kernelMatrix.add(systemRow);
 		// Solver and field creation
 		RungeKutta4thSolver solver = new RungeKutta4thSolver();
-		AbstractDeltaField<Double> field = new SimpleDeltaField(equations,
+		AbstractDeltaField field = new SimpleDeltaField(equations,
 				kernelMatrix, populations, solver);
 
 		return field;
@@ -230,17 +230,17 @@ public class DeltaFieldFactory {
 		DeltaFieldFactory factory = DeltaFieldFactory.getInstance();
 
 		// System (pendulum) population construction
-		DeltaPopulation<Double> systemPopulation = new MapDeltaPopulation(4,
+		DeltaPopulation systemPopulation = new MapDeltaPopulation(4,
 				false);
 
 		// PendulumEquation Construction
 		SystemEquation systemEquation = new S1PendulumEquation();
 
 		// Field construction
-		AbstractDeltaField<Double> field = factory.buildLayeredS1Field(parameters,
+		AbstractDeltaField field = factory.buildLayeredS1Field(parameters,
 				points, systemPopulation, systemEquation);
 
-//		DeltaPopulation<Double> rep1 = field.getPopulations().get(2);
+//		DeltaPopulation rep1 = field.getPopulations().get(2);
 //		rep1.setElementValue(1.0*points/2, 1.0);
 		// Monitoring
 		Tracer tracer = new Tracer(N);
@@ -253,11 +253,11 @@ public class DeltaFieldFactory {
 		double initialAngle = 1*Math.PI / 20.0;
 		double initialPos = 0.0;
 
-		DeltaPopulation<Double> pendulum = field.getPopulations().get(N-1);
+		DeltaPopulation pendulum = field.getPopulations().get(N-1);
 		pendulum.setElementValue(S1PendulumEquation.STATE_THETA, initialAngle);
 		pendulum.setElementValue(S1PendulumEquation.STATE_X, initialPos);
 		
-		Solver<Double,Double> solver = field.getSolver();
+		Solver solver = field.getSolver();
 		solver.simulate(t0, tf, h, field);
 
 		double fitness = S1PendulumEquation.getFitness(tracer);

@@ -4,7 +4,7 @@ import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 
-public abstract class AbstractNonDifferentialEquation  implements DeltaEquation<Double> {
+public abstract class AbstractNonDifferentialEquation  implements DeltaEquation {
 
 	public AbstractNonDifferentialEquation() {
 		super();
@@ -29,7 +29,7 @@ public abstract class AbstractNonDifferentialEquation  implements DeltaEquation<
 	}
 
 	@Override
-	public void evalEquation(DeltaPopulation<Double> localPopulation, List<DeltaPopulation<Double>> populations, List<AbstractKernelFunction> kernelList) {
+	public void evalEquation(DeltaPopulation localPopulation, List<DeltaPopulation> populations, List<AbstractKernelFunction> kernelList) {
 		throw new UnsupportedOperationException();
 	}
 

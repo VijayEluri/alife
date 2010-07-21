@@ -16,20 +16,20 @@ import co.edu.unal.alife.pendulum.PendulumEquation;
  */
 public class InputEquationForPendulum extends AbstractNonDifferentialEquation {
 
-	DeltaPopulation<Double> pendulum;
+	DeltaPopulation pendulum;
 	double halfSize;
 
 	/**
 	 * @param halfSize
 	 * @param pendulum
 	 */
-	public InputEquationForPendulum(double halfSize, DeltaPopulation<Double> pendulum) {
+	public InputEquationForPendulum(double halfSize, DeltaPopulation pendulum) {
 		super();
 		this.halfSize = halfSize;
 		this.pendulum = pendulum;
 	}
 
-	public DeltaPopulation<Double> applyInput(DeltaPopulation<Double> localPopulation) {
+	public DeltaPopulation applyInput(DeltaPopulation localPopulation) {
 		while (pendulum.hasNextPopulation()) {
 			pendulum = pendulum.getNextPopulation();
 		}
@@ -44,7 +44,7 @@ public class InputEquationForPendulum extends AbstractNonDifferentialEquation {
 //		System.out.println("OMEGA:" + omega + "->" + boundedValue2 + ":" + eqPosition2);
 
 		Set<Double> positions = localPopulation.getPositions();
-		DeltaPopulation<Double> newPopulation = localPopulation.cloneEmpty(positions);
+		DeltaPopulation newPopulation = localPopulation.cloneEmpty(positions);
 		for (Double position : positions) {
 			if (position.equals(eqPosition)) {
 				newPopulation.setElementValue(position, 1.0);

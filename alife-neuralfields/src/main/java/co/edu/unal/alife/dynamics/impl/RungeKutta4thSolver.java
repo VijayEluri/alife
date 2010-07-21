@@ -6,13 +6,13 @@ import java.util.Set;
 
 import co.edu.unal.alife.dynamics.AbstractFixedStepSolver;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.dynamics.Simulable;
+import co.edu.unal.alife.neuralfield.AbstractDeltaField;
 
 /**
  * @author Juan Figueredo
  */
 public class RungeKutta4thSolver extends
-		AbstractFixedStepSolver<Double, Double> {
+		AbstractFixedStepSolver {
 
 	public RungeKutta4thSolver() {
 		super();
@@ -26,13 +26,13 @@ public class RungeKutta4thSolver extends
 	 * DeltaField, int)
 	 */
 	@Override
-	public DeltaPopulation<Double> step(Simulable<Double> field,
+	public DeltaPopulation step(AbstractDeltaField field,
 			int localIndex, double h) throws UnsupportedOperationException {
-		DeltaPopulation<Double> population = field.getPopulations().get(
+		DeltaPopulation population = field.getPopulations().get(
 				localIndex);
 		int size = population.getSize();
 		Set<Double> positions = population.getPositions();
-		DeltaPopulation<Double> workingPopulation = population
+		DeltaPopulation workingPopulation = population
 				.cloneEmpty(positions);
 		Map<Double, Double> k1dh = new LinkedHashMap<Double, Double>(size);
 		Map<Double, Double> k2dh = new LinkedHashMap<Double, Double>(size);

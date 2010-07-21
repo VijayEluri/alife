@@ -124,8 +124,8 @@ public class FirstProblemEvolution {
 		
 		double initialAngle = Math.PI/6;
 		double initialPos = -5.0;
-		AbstractDeltaField<Double> field = controller.getField();
-		DeltaPopulation<Double> pendulumPopulation = field.getPopulations().get(2);
+		AbstractDeltaField field = controller.getField();
+		DeltaPopulation pendulumPopulation = field.getPopulations().get(2);
 		pendulumPopulation.setElementValue(PendulumEquation.STATE_THETA, initialAngle);
 		pendulumPopulation.setElementValue(PendulumEquation.STATE_X, initialPos);
 		

@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.AbstractDeltaField;
 import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
+import co.edu.unal.alife.neuralfield.DeltaEquation;
 
 /**
  * @author jjfigueredou
@@ -24,10 +24,10 @@ import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 /**
  * @author Juan Figueredo
  */
-public class MapDeltaPopulation implements DeltaPopulation<Double> {
+public class MapDeltaPopulation implements DeltaPopulation {
 
 	private Map<Double, DeltaPopulation.Element> populationMap = new LinkedHashMap<Double, DeltaPopulation.Element>();
-	private DeltaPopulation<Double> nextPopulation;
+	private DeltaPopulation nextPopulation;
 
 	/**
 	 * 
@@ -37,23 +37,18 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MapDeltaPopulation(DeltaPopulation<Double> population) {
-		this.populationMap = new LinkedHashMap<Double, DeltaPopulation.Element>(
-				population.getPopulationMap());
-	}
-
 	public MapDeltaPopulation(int providedSize, boolean isHalfSize) {
 		super();
 		if (isHalfSize) {
 			for (int i = -providedSize; i <= providedSize; i++) {
-				Element element = new Element();
+				SimpleElement element = new SimpleElement();
 				element.setValue(0.0);
 				element.setDelta(0.0);
 				populationMap.put((double) i, element);
 			}
 		} else {
 			for (int i = 0; i < providedSize; i++) {
-				Element element = new Element();
+				SimpleElement element = new SimpleElement();
 				element.setValue(0.0);
 				element.setDelta(0.0);
 				populationMap.put((double) i, element);
@@ -67,7 +62,7 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 
 	public MapDeltaPopulation(Set<Double> positions) {
 		for (Double position : positions) {
-			Element element = new Element();
+			SimpleElement element = new SimpleElement();
 			element.setValue(0.0);
 			element.setDelta(0.0);
 			populationMap.put(position, element);
@@ -141,11 +136,11 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 	 * java.util.List)
 	 */
 	@Override
-	public void updatePopulationDelta(AbstractDeltaField<Double> environment,
+	public void updatePopulationDelta(AbstractDeltaField environment,
 			int localIndex) {
-		List<DeltaPopulation<Double>> populations = environment
+		List<DeltaPopulation> populations = environment
 				.getPopulations();
-		DeltaEquation<Double> equation = environment.getEquations().get(
+		DeltaEquation equation = environment.getEquations().get(
 				localIndex);
 		List<AbstractKernelFunction> kernelList = environment.getKernelMatrix()
 				.get(localIndex);
@@ -158,12 +153,11 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Gets the map that backs the delta population.
 	 * 
-	 * @see co.edu.unal.alife.dynamics.DeltaPopulation#getPopulationMap()
+	 * @return the population map
 	 */
-	@Override
 	public Map<Double, DeltaPopulation.Element> getPopulationMap() {
 		return populationMap;
 	}
@@ -184,7 +178,7 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 	 * @see co.edu.unal.alife.dynamics.DeltaPopulation#getNextPopulation()
 	 */
 	@Override
-	public DeltaPopulation<Double> getNextPopulation() {
+	public DeltaPopulation getNextPopulation() {
 		return nextPopulation;
 	}
 
@@ -196,7 +190,7 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 	 * .alife.dynamics.DeltaPopulation)
 	 */
 	@Override
-	public void setNextPopulation(DeltaPopulation<Double> nextPopulation) {
+	public void setNextPopulation(DeltaPopulation nextPopulation) {
 		this.nextPopulation = nextPopulation;
 	}
 
@@ -227,13 +221,13 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 	}
 
 	@Override
-	public DeltaPopulation<Double> cloneEmpty(int size) {
+	public DeltaPopulation cloneEmpty(int size) {
 		return new MapDeltaPopulation(size, false);
 	}
 
 	
 	@Override
-	public DeltaPopulation<Double> cloneEmpty(Set<Double> positions) {
+	public DeltaPopulation cloneEmpty(Set<Double> positions) {
 		// TODO Auto-generated method stub
 		return new MapDeltaPopulation(positions);
 	}
@@ -262,12 +256,12 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 	 */
 	@Override
 	public String toString(List<String> times,
-			List<DeltaPopulation<Double>> dataSource) {
+			List<DeltaPopulation> dataSource) {
 		StringBuffer sb = new StringBuffer();
 		Set<Double> positions = getPositions();
 		for (Double x : positions) {
 			int j = 0;
-			for (DeltaPopulation<Double> pop : dataSource) {
+			for (DeltaPopulation pop : dataSource) {
 				String t = times.get(j++);
 				sb.append(t + "\t" + pop.getElementValue(x).toString());
 				sb.append("\n");
@@ -275,50 +269,5 @@ public class MapDeltaPopulation implements DeltaPopulation<Double> {
 			sb.append("\n\n");
 		}
 		return sb.toString();
-	}
-
-	/**
-	 * @author Juan Figueredo
-	 * 
-	 */
-	public class Element implements DeltaPopulation.Element {
-		private Double value;
-		private Double delta;
-
-		/**
-		 * 
-		 */
-		public Element() {
-			super();
-			value = 0.0;
-			delta = 0.0;
-		}
-
-		public Double getValue() {
-			return value;
-		}
-
-		public void setValue(Double value) {
-			this.value = value;
-		}
-
-		public Double getDelta() {
-			return delta;
-		}
-
-		public void setDelta(Double delta) {
-			this.delta = delta;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.lang.Object#toString()
-		 */
-		@Override
-		public String toString() {
-			// return "E{Value:"+this.getValue()+",Delta:"+this.getDelta()+"}";
-			return this.getValue().toString();
-		}
 	};
 }

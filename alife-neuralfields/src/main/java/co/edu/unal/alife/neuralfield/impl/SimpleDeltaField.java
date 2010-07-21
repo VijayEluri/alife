@@ -15,7 +15,7 @@ import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
  * @author Juan Figueredo
  *
  */
-public class SimpleDeltaField extends AbstractDeltaField<Double> {
+public class SimpleDeltaField extends AbstractDeltaField {
 
 	/**
 	 * @param equations
@@ -23,9 +23,9 @@ public class SimpleDeltaField extends AbstractDeltaField<Double> {
 	 * @param populations
 	 * @param solver
 	 */
-	public SimpleDeltaField(List<DeltaEquation<Double>> equations,
-			List<List<AbstractKernelFunction>> kernelMatrix, List<DeltaPopulation<Double>> populations,
-			Solver<Double, Double> solver) {
+	public SimpleDeltaField(List<DeltaEquation> equations,
+			List<List<AbstractKernelFunction>> kernelMatrix, List<DeltaPopulation> populations,
+			Solver solver) {
 		super(equations, kernelMatrix, populations, solver);
 		// TODO Auto-generated constructor stub
 	}

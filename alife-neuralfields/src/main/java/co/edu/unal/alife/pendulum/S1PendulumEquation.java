@@ -26,7 +26,7 @@ public class S1PendulumEquation extends SystemEquation {
 	private static final double M = 1, m = 1, l = 1, g = 9.81;
 	public static final double STATE_X = 0.0, STATE_THETA = 1.0, STATE_V = 2.0,
 			STATE_OMEGA = 3.0;
-	DeltaPopulation<Double> actionPopulation;
+	DeltaPopulation actionPopulation;
 
 	public S1PendulumEquation() {
 		super();
@@ -36,7 +36,7 @@ public class S1PendulumEquation extends SystemEquation {
 	/**
 	 * @param actionPopulation
 	 */
-	public S1PendulumEquation(DeltaPopulation<Double> actionPopulation) {
+	public S1PendulumEquation(DeltaPopulation actionPopulation) {
 		super();
 		this.actionPopulation = actionPopulation;
 	}
@@ -50,8 +50,8 @@ public class S1PendulumEquation extends SystemEquation {
 	 * java.util.List)
 	 */
 	@Override
-	public void evalEquation(DeltaPopulation<Double> localPopulation,
-			List<DeltaPopulation<Double>> populations,
+	public void evalEquation(DeltaPopulation localPopulation,
+			List<DeltaPopulation> populations,
 			List<AbstractKernelFunction> kernelList) {
 		double u = 0;
 		while (actionPopulation.hasNextPopulation()) {
@@ -87,7 +87,7 @@ public class S1PendulumEquation extends SystemEquation {
 	 * @return
 	 */
 	@Override
-	protected void getDx(DeltaPopulation<Double> deltaPopulation, double u,
+	protected void getDx(DeltaPopulation deltaPopulation, double u,
 			double tao) {
 		double theta = deltaPopulation.getElementValue(STATE_THETA);
 		double v = deltaPopulation.getElementValue(STATE_V);
@@ -108,13 +108,13 @@ public class S1PendulumEquation extends SystemEquation {
 	}
 
 	@Override
-	public void setActionPopulation(DeltaPopulation<Double> actionPopulation) {
+	public void setActionPopulation(DeltaPopulation actionPopulation) {
 		this.actionPopulation = actionPopulation;
 	}
 
 	public static double getFitness(Tracer tracer) {
 		int N = tracer.getN();
-		DeltaPopulation<Double> pendulumData = tracer.getData().get(N - 1).get(
+		DeltaPopulation pendulumData = tracer.getData().get(N - 1).get(
 				0);
 		double val = 0;
 		boolean penalty = false;

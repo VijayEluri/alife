@@ -2,17 +2,19 @@ package co.edu.unal.alife.dynamics;
 
 import java.util.Observable;
 
+import co.edu.unal.alife.neuralfield.AbstractDeltaField;
+
 /**
  * @author Juan Figueredo
  * 
  */
-public abstract class AbstractFixedStepSolver<K,V> extends Observable implements Solver<K,V> {
+public abstract class AbstractFixedStepSolver extends Observable implements Solver {
 	
 
 	/* (non-Javadoc)
 	 * @see co.edu.unal.alife.dynamics.Solver#simulate(double, double, double, co.edu.unal.alife.neuralfield.AbstractDeltaField)
 	 */
-	public void simulate(double t0, double tf, double h, Simulable<Double> simulable) {
+	public void simulate(double t0, double tf, double h, AbstractDeltaField simulable) {
 		int n = (int) Math.ceil(tf / h);
 //		double t = 0;
 		for (int i = 0; i < n; i++) {

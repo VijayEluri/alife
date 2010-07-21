@@ -8,13 +8,13 @@ import co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation;
 
 public class S1ActionEquation extends AbstractNonDifferentialEquation {
 
-	private List<DeltaPopulation<Double>> representationPops;
+	private List<DeltaPopulation> representationPops;
 	private List<List<S1ActionTransformation>> transformations;
 	public static final double FIRST_ACTION = 0d;
 	private static double maxAction = 10.0;
 	private static double scale = 100.0;
 
-	public S1ActionEquation(List<DeltaPopulation<Double>> representationPops,
+	public S1ActionEquation(List<DeltaPopulation> representationPops,
 			List<List<S1ActionTransformation>> transformations) {
 		super();
 		this.representationPops = representationPops;
@@ -22,9 +22,9 @@ public class S1ActionEquation extends AbstractNonDifferentialEquation {
 	}
 
 	@Override
-	public DeltaPopulation<Double> applyInput(
-			DeltaPopulation<Double> localPopulation) {
-		DeltaPopulation<Double> newPopulation = localPopulation
+	public DeltaPopulation applyInput(
+			DeltaPopulation localPopulation) {
+		DeltaPopulation newPopulation = localPopulation
 				.cloneEmpty(localPopulation.getPositions());
 		localPopulation.setNextPopulation(newPopulation);
 		Set<Double> localPositions = localPopulation.getPositions();
@@ -32,7 +32,7 @@ public class S1ActionEquation extends AbstractNonDifferentialEquation {
 		int indexY = 0;
 		for (Double locPos : localPositions) {
 			double u = 0;
-			for (DeltaPopulation<Double> population : representationPops) {
+			for (DeltaPopulation population : representationPops) {
 				while (population.hasNextPopulation()) {
 					population = population.getNextPopulation();
 				}

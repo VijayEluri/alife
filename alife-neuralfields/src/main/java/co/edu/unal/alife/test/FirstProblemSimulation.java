@@ -38,7 +38,7 @@ public class FirstProblemSimulation {
 		double t0 = 0.0;
 		double tf = 10 + hh;
 		// Populations setup
-		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(N);
+		List<DeltaPopulation> populations = new ArrayList<DeltaPopulation>(N);
 		MapDeltaPopulation inputPopulation = new MapDeltaPopulation(halfSize);
 		MapDeltaPopulation outputPopulation = new MapDeltaPopulation(halfSize);
 		MapDeltaPopulation pendulumPopulation = new MapDeltaPopulation(4, false);
@@ -99,7 +99,7 @@ public class FirstProblemSimulation {
 		kernelMatrix.add(thirdRow);
 
 		// Equations setup
-		List<DeltaEquation<Double>> equations = new ArrayList<DeltaEquation<Double>>(N);
+		List<DeltaEquation> equations = new ArrayList<DeltaEquation>(N);
 		AbstractNonDifferentialEquation inputEquation = new InputEquationForPendulum(halfSize, pendulumPopulation);
 		SimpleDifferentialEquation simpleEquation = new SimpleDifferentialEquation();
 		PendulumEquation pendulumEquation = new PendulumEquation(outputPopulation);
@@ -111,7 +111,7 @@ public class FirstProblemSimulation {
 		// Solver setup
 		RungeKutta4thSolver solver = new RungeKutta4thSolver();
 
-		AbstractDeltaField<Double> field = new SimpleDeltaField(equations, kernelMatrix, populations,
+		AbstractDeltaField field = new SimpleDeltaField(equations, kernelMatrix, populations,
 				solver);
 
 		// Visualizer printer = new PendulumPrinter(pendulumStates, mainSize, mainSize);

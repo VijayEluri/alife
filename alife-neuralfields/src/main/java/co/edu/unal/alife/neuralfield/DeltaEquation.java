@@ -4,12 +4,12 @@ import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 
-public interface DeltaEquation<K> {
+public interface DeltaEquation {
 
-	public abstract void evalEquation(DeltaPopulation<K> localPopulation,
-			List<DeltaPopulation<K>> populations, List<AbstractKernelFunction> kernelList) throws UnsupportedOperationException;
+	public abstract void evalEquation(DeltaPopulation localPopulation,
+			List<DeltaPopulation> populations, List<AbstractKernelFunction> kernelList) throws UnsupportedOperationException;
 
-	public abstract DeltaPopulation<K> applyInput(DeltaPopulation<K> localPopulation) throws UnsupportedOperationException;
+	public abstract DeltaPopulation applyInput(DeltaPopulation localPopulation) throws UnsupportedOperationException;
 	
 	public abstract boolean isDifferential();
 	

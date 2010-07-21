@@ -292,7 +292,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			prevY = dy;
 			prevY2 = dy2;
 			prevXr = dxr;
-			DeltaPopulation<Double> pendulumData = tracer.getData().get(
+			DeltaPopulation pendulumData = tracer.getData().get(
 					pendulumPopIndex).get(count - 1);
 
 			Double xValue = pendulumData
@@ -379,7 +379,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 			count++;
 			prevFieldValues = fieldValues != null ? fieldValues
 					: prevFieldValues;
-			DeltaPopulation<Double> fieldData = tracer.getData().get(
+			DeltaPopulation fieldData = tracer.getData().get(
 					deltaPopNumber).get(count - 1);
 			Set<Double> positions = fieldData.getPositions();
 			fieldValues = new ArrayList<Double>();
@@ -427,7 +427,7 @@ public class PendulumFrame extends JFrame implements ActionListener {
 
 		public void actualizar() {
 			count++;
-			DeltaPopulation<Double> pendulumData = tracer.getData().get(
+			DeltaPopulation pendulumData = tracer.getData().get(
 					pendulumPopIndex).get(count - 1);
 
 			Double xValue = pendulumData

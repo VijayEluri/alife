@@ -54,10 +54,10 @@ public class PendulumControllerFitness extends Fitness {
 	@Override
 	public double evaluate(Individual obj) {
 		PendulumController controller = (PendulumController)obj.getThing();
-		AbstractDeltaField<Double> field = controller.getField();
+		AbstractDeltaField field = controller.getField();
 		
 		// Setup initial values
-		DeltaPopulation<Double> pendulumPopulation = field.getPopulations().get(2);
+		DeltaPopulation pendulumPopulation = field.getPopulations().get(2);
 		pendulumPopulation.setElementValue(PendulumEquation.STATE_THETA, initialAngle);
 		pendulumPopulation.setElementValue(PendulumEquation.STATE_X, initialPos);
 		Tracer tracer = new Tracer(N);

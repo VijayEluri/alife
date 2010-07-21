@@ -185,14 +185,14 @@ public class CircleFieldsEvolution {
 		// System.out.println("P:\n" );
 		// double fit = fitness.evaluate(bestInd);
 
-		AbstractDeltaField<Double> field = (AbstractDeltaField<Double>) bestInd
+		AbstractDeltaField field = (AbstractDeltaField) bestInd
 				.getThing();
 		// Object genome = bestInd.getGenome();
 		// Setup initial values
 		double initialAngle = 0 * Math.PI / 10;
 		double initialPos = 0.0;
-		List<DeltaPopulation<Double>> pops = field.getPopulations();
-		DeltaPopulation<Double> pendulumPopulation = pops.get(pops.size() - 1);
+		List<DeltaPopulation> pops = field.getPopulations();
+		DeltaPopulation pendulumPopulation = pops.get(pops.size() - 1);
 		pendulumPopulation.setElementValue(PendulumEquation.STATE_THETA,
 				initialAngle);
 		pendulumPopulation

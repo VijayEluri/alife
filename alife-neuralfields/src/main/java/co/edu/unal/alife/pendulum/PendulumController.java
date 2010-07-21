@@ -24,7 +24,7 @@ import co.edu.unal.alife.neuralfield.impl.SimpleDifferentialEquation;
  */
 public class PendulumController {
 	
-	private AbstractDeltaField<Double> field = null;
+	private AbstractDeltaField field = null;
 
 	/**
 	 * @param halfSize
@@ -42,11 +42,11 @@ public class PendulumController {
 	 * @param initialPos
 	 * @return
 	 */
-	private AbstractDeltaField<Double> buildController(PendulumControllerParameters parameters, int halfSize) {
+	private AbstractDeltaField buildController(PendulumControllerParameters parameters, int halfSize) {
 		int N = 3;
 		
 		// Populations setup
-		List<DeltaPopulation<Double>> populations = new ArrayList<DeltaPopulation<Double>>(N);
+		List<DeltaPopulation> populations = new ArrayList<DeltaPopulation>(N);
 		MapDeltaPopulation inputPopulation = new MapDeltaPopulation(halfSize);
 		MapDeltaPopulation processingPopulation = new MapDeltaPopulation(halfSize);
 		MapDeltaPopulation pendulumPopulation = new MapDeltaPopulation(4,false);
@@ -76,7 +76,7 @@ public class PendulumController {
 		kernelMatrix.add(thirdRow);
 
 		// Equations setup
-		List<DeltaEquation<Double>> equations = new ArrayList<DeltaEquation<Double>>(N);
+		List<DeltaEquation> equations = new ArrayList<DeltaEquation>(N);
 		AbstractNonDifferentialEquation inputEquation = new InputEquationForPendulum(halfSize, pendulumPopulation);
 		SimpleDifferentialEquation simpleEquation = new SimpleDifferentialEquation();
 		PendulumEquation pendulumEquation = new PendulumEquation(processingPopulation);
@@ -87,7 +87,7 @@ public class PendulumController {
 		// Solver setup
 		RungeKutta4thSolver solver = new RungeKutta4thSolver();
 		
-		AbstractDeltaField<Double> field = new SimpleDeltaField(equations, kernelMatrix, populations, solver);
+		AbstractDeltaField field = new SimpleDeltaField(equations, kernelMatrix, populations, solver);
 		
 		return field;
 	}
@@ -95,7 +95,7 @@ public class PendulumController {
 	/**
 	 * @return the field
 	 */
-	public AbstractDeltaField<Double> getField() {
+	public AbstractDeltaField getField() {
 		return field;
 	}
 

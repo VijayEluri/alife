@@ -23,14 +23,13 @@ public class S1PendulumControllerFitness extends Fitness {
 		this.N = N;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public double evaluate(Individual obj) {
-		AbstractDeltaField<Double> field = (AbstractDeltaField<Double>) obj.getThing();
+		AbstractDeltaField field = (AbstractDeltaField) obj.getThing();
 
 		// Setup initial values
-		List<DeltaPopulation<Double>> pops = field.getPopulations();
-		DeltaPopulation<Double> pendulumPopulation = pops.get(pops.size() - 1);
+		List<DeltaPopulation> pops = field.getPopulations();
+		DeltaPopulation pendulumPopulation = pops.get(pops.size() - 1);
 		pendulumPopulation.setElementValue(PendulumEquation.STATE_THETA,
 				initialAngle);
 		pendulumPopulation

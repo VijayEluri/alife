@@ -12,9 +12,9 @@ public abstract class SystemEquation extends AbstractDifferentialEquation {
 		super();
 	}
 
-	protected abstract void getDx(DeltaPopulation<Double> deltaPopulation, double u, double tao);
+	protected abstract void getDx(DeltaPopulation deltaPopulation, double u, double tao);
 
-	public abstract void evalEquation(DeltaPopulation<Double> localPopulation, List<DeltaPopulation<Double>> populations, List<AbstractKernelFunction> kernelList);
+	public abstract void evalEquation(DeltaPopulation localPopulation, List<DeltaPopulation> populations, List<AbstractKernelFunction> kernelList);
 	
-	public abstract void setActionPopulation(DeltaPopulation<Double> actionPopulation);
+	public abstract void setActionPopulation(DeltaPopulation actionPopulation);
 }

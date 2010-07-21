@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.dynamics.DeltaPopulation.Element;
 import co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation;
 import co.edu.unal.alife.pendulum.PendulumEquation;
 import co.edu.unal.alife.pendulum.S1PendulumEquation;
@@ -19,14 +18,14 @@ import co.edu.unal.alife.pendulum.S1PendulumEquation;
  */
 public class S1InputEquationForPendulum extends AbstractNonDifferentialEquation {
 
-	DeltaPopulation<Double> pendulum;
+	DeltaPopulation pendulum;
 	List<Double> ks;
 
 	/**
 	 * @param pendulum
 	 * @param halfSize
 	 */
-	public S1InputEquationForPendulum(DeltaPopulation<Double> pendulum,
+	public S1InputEquationForPendulum(DeltaPopulation pendulum,
 			List<Double> ks) {
 		super();
 		this.pendulum = pendulum;
@@ -37,8 +36,8 @@ public class S1InputEquationForPendulum extends AbstractNonDifferentialEquation 
 		}
 	}
 
-	public DeltaPopulation<Double> applyInput(
-			DeltaPopulation<Double> localPopulation) {
+	public DeltaPopulation applyInput(
+			DeltaPopulation localPopulation) {
 		int points = localPopulation.getSize();
 		double kTheta = ks.get((int) S1PendulumEquation.STATE_THETA);
 		double kOmega = ks.get((int) S1PendulumEquation.STATE_OMEGA);
@@ -71,7 +70,7 @@ public class S1InputEquationForPendulum extends AbstractNonDifferentialEquation 
 		double eqPosition4 = Math.round(boundedValue4);
 
 		Set<Double> positions = localPopulation.getPositions();
-		DeltaPopulation<Double> newPopulation = localPopulation
+		DeltaPopulation newPopulation = localPopulation
 				.cloneEmpty(positions);
 		for (Double position : positions) {
 			double value = 0.0;

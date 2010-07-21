@@ -14,7 +14,7 @@ public class Tracer implements Visualizer {
 
 	private List<List<String>> labels;
 	private int N;
-	protected List<List<DeltaPopulation<Double>>> data;
+	protected List<List<DeltaPopulation>> data;
 
 	/**
 	 * @param N
@@ -22,10 +22,10 @@ public class Tracer implements Visualizer {
 	public Tracer(int N) {
 		this.N = N;
 		this.labels = new ArrayList<List<String>>(N);
-		this.data = new ArrayList<List<DeltaPopulation<Double>>>(N);
+		this.data = new ArrayList<List<DeltaPopulation>>(N);
 		for (int i = 0; i < N; i++) {
 			labels.add(new ArrayList<String>());
-			data.add(i, new ArrayList<DeltaPopulation<Double>>());
+			data.add(i, new ArrayList<DeltaPopulation>());
 		}
 	}
 
@@ -41,12 +41,11 @@ public class Tracer implements Visualizer {
 	/**
 	 * @param arg
 	 */
-	@SuppressWarnings("unchecked")
 	public void processTuple(Object arg) {
 		Object[] tuple = (Object[]) arg;
 		int number = (Integer) tuple[0];
 		Double t = (Double) tuple[1];
-		DeltaPopulation<Double> population = (DeltaPopulation<Double>) tuple[2];
+		DeltaPopulation population = (DeltaPopulation) tuple[2];
 		labels.get(number).add(t.toString());
 		data.get(number).add(population);
 	}
@@ -61,14 +60,14 @@ public class Tracer implements Visualizer {
 	/**
 	 * @return the data
 	 */
-	public List<List<DeltaPopulation<Double>>> getData() {
+	public List<List<DeltaPopulation>> getData() {
 		return data;
 	}
 
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		int i = 0;
-		for (List<DeltaPopulation<Double>> dataSource : data) {
+		for (List<DeltaPopulation> dataSource : data) {
 			sb.append(toString(i++, dataSource));
 		}
 		return sb.toString();
@@ -79,12 +78,12 @@ public class Tracer implements Visualizer {
 	 * @param i
 	 * @param dataSource
 	 */
-	private String toString(int i, List<DeltaPopulation<Double>> dataSource) {
+	private String toString(int i, List<DeltaPopulation> dataSource) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("\n#Printing population " + i + ":\n");
 		List<String> times = labels.get(i);
 		int j = 0;
-		for (DeltaPopulation<Double> population : dataSource) {
+		for (DeltaPopulation population : dataSource) {
 			sb.append(population.toString(times.get(j++)));
 			sb.append("\n");
 		}
@@ -97,11 +96,11 @@ public class Tracer implements Visualizer {
 	 * @param i
 	 * @param dataSource
 	 */
-	private String toString2D(int i, List<DeltaPopulation<Double>> dataSource) {
+	private String toString2D(int i, List<DeltaPopulation> dataSource) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("\n#Printing population " + i + ":\n");
 		List<String> times = labels.get(i);
-		DeltaPopulation<Double> pop = dataSource.get(0);
+		DeltaPopulation pop = dataSource.get(0);
 		sb.append(pop.toString(times, dataSource));
 		return sb.toString();
 	}
@@ -109,7 +108,7 @@ public class Tracer implements Visualizer {
 	public void printToFiles(String[] filenames, boolean is2d) {
 		try {
 			int i = 0;
-			for (List<DeltaPopulation<Double>> dataSource : data) {
+			for (List<DeltaPopulation> dataSource : data) {
 				if (filenames[i] != null) {
 					File f = new File(filenames[i]);
 					FileWriter fw = new FileWriter(f);

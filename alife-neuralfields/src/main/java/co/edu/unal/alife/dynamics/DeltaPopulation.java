@@ -14,9 +14,9 @@ import co.edu.unal.alife.neuralfield.AbstractDeltaField;
 /**
  * @author Juan Figueredo
  * 
- * @param <K>
+ * @param 
  */
-public abstract interface DeltaPopulation<K> {
+public abstract interface DeltaPopulation {
 
 	/**
 	 * Gets the value of an element at the specified position.
@@ -24,7 +24,7 @@ public abstract interface DeltaPopulation<K> {
 	 * @param position
 	 * @return element value
 	 */
-	public abstract Double getElementValue(K position);
+	public abstract Double getElementValue(Double position);
 
 	/**
 	 * Sets the value of an element at the specified position.
@@ -32,7 +32,7 @@ public abstract interface DeltaPopulation<K> {
 	 * @param position
 	 * @param value
 	 */
-	public abstract void setElementValue(K position, Double value);
+	public abstract void setElementValue(Double position, Double value);
 
 	/**
 	 * Gets the delta of an element at the specified position.
@@ -40,7 +40,7 @@ public abstract interface DeltaPopulation<K> {
 	 * @param position
 	 * @return element value
 	 */
-	public abstract Double getElementDelta(K position);
+	public abstract Double getElementDelta(Double position);
 
 	/**
 	 * Sets the delta of an element at the specified position.
@@ -48,7 +48,7 @@ public abstract interface DeltaPopulation<K> {
 	 * @param position
 	 * @param value
 	 */
-	public abstract void setElementDelta(K position, Double value);
+	public abstract void setElementDelta(Double position, Double value);
 
 	// /**
 	// * Gets an element at the specified position.
@@ -56,7 +56,7 @@ public abstract interface DeltaPopulation<K> {
 	// * @param position
 	// * @return element
 	// */
-	// public abstract Element getElement(K position);
+	// public abstract Element getElement(Double position);
 
 	// /**
 	// * Gets the elements contained in the neural population.
@@ -70,7 +70,7 @@ public abstract interface DeltaPopulation<K> {
 	 * 
 	 * @return set of positions
 	 */
-	public abstract Set<K> getPositions();
+	public abstract Set<Double> getPositions();
 
 	/**
 	 * Prepares the population for the update rule applied by a ODE solver.
@@ -82,15 +82,9 @@ public abstract interface DeltaPopulation<K> {
 	 * @param kernelTable
 	 */
 	public abstract void updatePopulationDelta(
-			AbstractDeltaField<K> environment, int localIndex)
+			AbstractDeltaField environment, int localIndex)
 			throws UnsupportedOperationException;
 
-	/**
-	 * Gets the map that back the delta population.
-	 * 
-	 * @return the population map
-	 */
-	public Map<K, Element> getPopulationMap();
 
 	/**
 	 * Gets the size of the population, i.e the number of elements contained on
@@ -113,21 +107,21 @@ public abstract interface DeltaPopulation<K> {
 	 * 
 	 * @return next delta population
 	 */
-	public DeltaPopulation<K> getNextPopulation();
+	public DeltaPopulation getNextPopulation();
 
 	/**
 	 * Sets the population for the next simulation step
 	 * 
 	 * @param nextPopulation
 	 */
-	public void setNextPopulation(DeltaPopulation<K> nextPopulation);
+	public void setNextPopulation(DeltaPopulation nextPopulation);
 
 	/**
 	 * Interface that represent an element of a neural population, i.e. a point
 	 * with an associated value and a delta.
 	 * 
 	 * @author jjfigueredou
-	 * @param <K>
+	 * @param 
 	 * @param
 	 */
 	public interface Element {
@@ -166,7 +160,7 @@ public abstract interface DeltaPopulation<K> {
 	 * @param size
 	 * @return
 	 */
-	DeltaPopulation<K> cloneEmpty(int size);
+	DeltaPopulation cloneEmpty(int size);
 
 	/**
 	 * A delta population of the same type, and same positions, but empty.
@@ -174,7 +168,7 @@ public abstract interface DeltaPopulation<K> {
 	 * @param size
 	 * @return
 	 */
-	DeltaPopulation<K> cloneEmpty(Set<K> positions);
+	DeltaPopulation cloneEmpty(Set<Double> positions);
 
 	
 	/**
@@ -192,6 +186,6 @@ public abstract interface DeltaPopulation<K> {
 	 * @param dataSource
 	 * @return
 	 */
-	String toString(List<String> times, List<DeltaPopulation<Double>> dataSource);
+	String toString(List<String> times, List<DeltaPopulation> dataSource);
 
 }

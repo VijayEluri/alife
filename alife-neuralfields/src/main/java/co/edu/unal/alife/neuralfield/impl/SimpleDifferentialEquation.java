@@ -33,8 +33,8 @@ public class SimpleDifferentialEquation extends AbstractDifferentialEquation {
 	 * java.util.List)
 	 */
 	@Override
-	public void evalEquation(DeltaPopulation<Double> localPopulation,
-			List<DeltaPopulation<Double>> populations,
+	public void evalEquation(DeltaPopulation localPopulation,
+			List<DeltaPopulation> populations,
 			List<AbstractKernelFunction> kernelList) {
 		Set<Double> localPositions = localPopulation.getPositions();
 		// For each element (or tuple) in the local population do...
@@ -43,7 +43,7 @@ public class SimpleDifferentialEquation extends AbstractDifferentialEquation {
 			double totalSum = 0;
 			// For each population in the field do...
 			for (int i = 0; i < populations.size(); i++) {
-				DeltaPopulation<Double> population = populations.get(i);
+				DeltaPopulation population = populations.get(i);
 				Set<Double> positions = population.getPositions();
 				// System.out.println("In population:"+i);
 				AbstractKernelFunction kernelFunction = kernelList.get(i);
