@@ -20,11 +20,11 @@ import co.edu.unal.alife.output.Tracer;
  * @author Juan Figueredo
  */
 public class PendulumEquation extends SystemEquation {
-
-	private static final double M = 1, m = 1, l = 1, g = 9.81, halfSize = 10, Amp = 20;
-	public static final double STATE_X = 0.0, STATE_THETA = 1.0, STATE_V = 2.0, STATE_OMEGA = 3.0;
-	DeltaPopulation actionPopulation;
-
+	
+	private static final double	M	= 1, m = 1, l = 1, g = 9.81, halfSize = 10, Amp = 20;
+	public static final double	STATE_X	= 0.0, STATE_THETA = 1.0, STATE_V = 2.0, STATE_OMEGA = 3.0;
+	DeltaPopulation				actionPopulation;
+	
 	/**
 	 * @param actionPopulation
 	 */
@@ -32,10 +32,9 @@ public class PendulumEquation extends SystemEquation {
 		super();
 		this.actionPopulation = actionPopulation;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * co.edu.unal.alife.neuralfield.DeltaPopulationEquation#evalEquation(co
 	 * .edu.unal.alife.dynamics .DeltaPopulation, java.util.List,
@@ -44,6 +43,18 @@ public class PendulumEquation extends SystemEquation {
 	@Override
 	public void evalEquation(DeltaPopulation localPopulation, List<DeltaPopulation> populations,
 			List<AbstractKernelFunction> kernelList) {
+		double u = getU();		
+		double tao = getTao();
+		wrapStates(localPopulation);
+		getDx(localPopulation, u, tao);
+	}
+
+	private double getTao() {
+		double tao = 0;
+		return tao;
+	}
+
+	private double getU() {
 		double u = 0;
 		while (actionPopulation.hasNextPopulation()) {
 			actionPopulation = actionPopulation.getNextPopulation();
@@ -79,9 +90,10 @@ public class PendulumEquation extends SystemEquation {
 			// System.out.println(argMaxSoFar + " : " + maxSoFar);
 			u = (argMaxSoFar) / halfSize * Amp;
 		}
-		// localPopulation
-		// .setElementValue(STATE_X,
-		// stdAngle(localPopulation.getElementValue(STATE_X)));
+		return u;
+	}
+
+	private void wrapStates(DeltaPopulation localPopulation) {
 		int maxPos = 5;
 		if (localPopulation.getElementValue(STATE_X) > maxPos) {
 			localPopulation.setElementValue(STATE_X, (localPopulation.getElementValue(STATE_X) % maxPos) - maxPos);
@@ -90,14 +102,12 @@ public class PendulumEquation extends SystemEquation {
 			localPopulation.setElementValue(STATE_X, maxPos - (localPopulation.getElementValue(STATE_X) % maxPos));
 		}
 		localPopulation.setElementValue(STATE_THETA, stdAngle(localPopulation.getElementValue(STATE_THETA)));
-		double tao = 0;
-		getDx(localPopulation, u, tao);
 	}
-
+	
 	public static double stdAngle(double angle) {
 		return ((angle + PI) % (2 * PI) + 2 * PI) % (2 * PI) - PI;
 	}
-
+	
 	/**
 	 * @param u
 	 * @param tao
@@ -120,32 +130,30 @@ public class PendulumEquation extends SystemEquation {
 				/ (l * (M + m * st * st)) - 0.5 * omega + m * l * l * tao);
 		// / (l * (M + m * st * st)) + tao/(m * l * l));
 	}
-
+	
 	@Override
 	public void setActionPopulation(DeltaPopulation actionPopulation) {
 		this.actionPopulation = actionPopulation;
 	}
-
-	 public static double getFitness(Tracer tracer) {
-	 DeltaPopulation pendulumData = tracer.getData().get(2).get(0);
 	
-	 double val = 0;
-	 while (pendulumData.hasNextPopulation()) {
-	 Double xValue =
-	 pendulumData.getElementValue(S1PendulumEquation.STATE_X);
-	 Double thetaValue =
-	 pendulumData.getElementValue(S1PendulumEquation.STATE_THETA);
-	
-	 double ang = stdAngle(thetaValue);
-	 val += ang * ang * ang * ang + abs(xValue) / 10;
-	
-	 pendulumData = pendulumData.getNextPopulation();
-	 }
-	
-	 val /= tracer.getData().get(2).size();
-	
-	 double fitness = 100 - val * 100 / (PI * PI * PI * PI + 2);
-	
-	 return fitness;
-	 }
+	public static double getFitness(Tracer tracer) {
+		DeltaPopulation pendulumData = tracer.getData().get(2).get(0);
+		
+		double val = 0;
+		while (pendulumData.hasNextPopulation()) {
+			Double xValue = pendulumData.getElementValue(S1PendulumEquation.STATE_X);
+			Double thetaValue = pendulumData.getElementValue(S1PendulumEquation.STATE_THETA);
+			
+			double ang = stdAngle(thetaValue);
+			val += ang * ang * ang * ang + abs(xValue) / 10;
+			
+			pendulumData = pendulumData.getNextPopulation();
+		}
+		
+		val /= tracer.getData().get(2).size();
+		
+		double fitness = 100 - val * 100 / (PI * PI * PI * PI + 2);
+		
+		return fitness;
+	}
 }

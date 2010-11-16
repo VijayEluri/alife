@@ -70,6 +70,7 @@ public class SimpleDifferentialEquation extends AbstractDifferentialEquation {
 					totalSum += kernelSum;
 				}
 			}
+			totalSum = totalSum / localPopulation.getSize();
 			// Evaluate the delta of the element using the totalSum, the
 			// localValue and tao
 			double delta = (-localValue + totalSum + restingPotential) / tao;

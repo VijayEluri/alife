@@ -8,37 +8,32 @@ import java.util.List;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation;
+import co.edu.unal.alife.neuralfield.InputEquation;
 import co.edu.unal.alife.pendulum.PendulumEquation;
 
 /**
  * @author Juan Figueredo
  */
-public class InputEquationForPendulum extends AbstractNonDifferentialEquation {
-
-	DeltaPopulation pendulum;
-	double halfSize;
+public class InputEquationForPendulum extends InputEquation {
 
 	/**
 	 * @param halfSize
 	 * @param pendulum
 	 */
 	public InputEquationForPendulum(double halfSize, DeltaPopulation pendulum) {
-		super();
-		this.halfSize = halfSize;
-		this.pendulum = pendulum;
+		super(halfSize, pendulum);
 	}
 
 	public DeltaPopulation applyInput(DeltaPopulation localPopulation) {
-		while (pendulum.hasNextPopulation()) {
-			pendulum = pendulum.getNextPopulation();
+		while (inputPopulation.hasNextPopulation()) {
+			inputPopulation = inputPopulation.getNextPopulation();
 		}
-		double theta = pendulum.getElementValue(PendulumEquation.STATE_THETA);
+		double theta = inputPopulation.getElementValue(PendulumEquation.STATE_THETA);
 		double boundedValue = bipolarSigmoid(theta) * halfSize;
 		double eqPosition = Math.round(boundedValue);
 //		System.out.println("THETA:" + theta + "->" + boundedValue + ":" + eqPosition);
 
-		double omega = pendulum.getElementValue(PendulumEquation.STATE_OMEGA);
+		double omega = inputPopulation.getElementValue(PendulumEquation.STATE_OMEGA);
 		double boundedValue2 = bipolarSigmoid(omega) * halfSize;
 		double eqPosition2 = Math.round(boundedValue2);
 //		System.out.println("OMEGA:" + omega + "->" + boundedValue2 + ":" + eqPosition2);
