@@ -229,45 +229,6 @@ public class MapDeltaPopulation implements DeltaPopulation {
 	@Override
 	public DeltaPopulation cloneEmpty(Set<Double> positions) {
 		// TODO Auto-generated method stub
-		return new MapDeltaPopulation(positions);
+			return new MapDeltaPopulation(positions);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString(String t) {
-		StringBuffer sb = new StringBuffer();
-		Set<Double> positions = getPositions();
-		for (Double x : positions) {
-			sb.append(x + "\t" + t + "\t" + getElementValue(x).toString());
-			sb.append("\n");
-		}
-		return sb.toString();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see co.edu.unal.alife.dynamics.DeltaPopulation#toString(java.util.List,
-	 * java.util.List)
-	 */
-	@Override
-	public String toString(List<String> times,
-			List<DeltaPopulation> dataSource) {
-		StringBuffer sb = new StringBuffer();
-		Set<Double> positions = getPositions();
-		for (Double x : positions) {
-			int j = 0;
-			for (DeltaPopulation pop : dataSource) {
-				String t = times.get(j++);
-				sb.append(t + "\t" + pop.getElementValue(x).toString());
-				sb.append("\n");
-			}
-			sb.append("\n\n");
-		}
-		return sb.toString();
-	};
 }

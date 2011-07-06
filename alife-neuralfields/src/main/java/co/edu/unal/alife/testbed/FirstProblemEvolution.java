@@ -1,7 +1,7 @@
 /**
  * 
  */
-package co.edu.unal.alife.test;
+package co.edu.unal.alife.testbed;
 
 import java.util.Iterator;
 import java.util.Vector;

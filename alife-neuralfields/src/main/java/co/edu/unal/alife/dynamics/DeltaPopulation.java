@@ -169,23 +169,4 @@ public abstract interface DeltaPopulation {
 	 * @return
 	 */
 	DeltaPopulation cloneEmpty(Set<Double> positions);
-
-	
-	/**
-	 * To string useful for 3d printing
-	 * 
-	 * @param t
-	 * @return
-	 */
-	String toString(String t);
-
-	/**
-	 * To string useful for 2d with datasources printing
-	 * 
-	 * @param times
-	 * @param dataSource
-	 * @return
-	 */
-	String toString(List<String> times, List<DeltaPopulation> dataSource);
-
 }

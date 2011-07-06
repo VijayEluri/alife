@@ -7,15 +7,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 
 public class Tracer implements Visualizer {
-
-	private List<List<String>> labels;
-	private int N;
-	protected List<List<DeltaPopulation>> data;
-
+	
+	private List<List<String>>				labels;
+	private int								N;
+	protected List<List<DeltaPopulation>>	data;
+	
 	/**
 	 * @param N
 	 */
@@ -28,7 +29,7 @@ public class Tracer implements Visualizer {
 			data.add(i, new ArrayList<DeltaPopulation>());
 		}
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
@@ -37,7 +38,7 @@ public class Tracer implements Visualizer {
 	public void update(Observable o, Object arg) {
 		processTuple(arg);
 	}
-
+	
 	/**
 	 * @param arg
 	 */
@@ -49,21 +50,21 @@ public class Tracer implements Visualizer {
 		labels.get(number).add(t.toString());
 		data.get(number).add(population);
 	}
-
+	
 	/**
 	 * @return the labels
 	 */
 	public List<List<String>> getLabels() {
 		return labels;
 	}
-
+	
 	/**
 	 * @return the data
 	 */
 	public List<List<DeltaPopulation>> getData() {
 		return data;
 	}
-
+	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		int i = 0;
@@ -72,7 +73,7 @@ public class Tracer implements Visualizer {
 		}
 		return sb.toString();
 	}
-
+	
 	/**
 	 * @param sb
 	 * @param i
@@ -84,13 +85,13 @@ public class Tracer implements Visualizer {
 		List<String> times = labels.get(i);
 		int j = 0;
 		for (DeltaPopulation population : dataSource) {
-			sb.append(population.toString(times.get(j++)));
+			sb.append(populationToString(population,times.get(j++)));
 			sb.append("\n");
 		}
 		sb.append("\n");
 		return sb.toString();
 	}
-
+	
 	/**
 	 * @param sb
 	 * @param i
@@ -101,10 +102,10 @@ public class Tracer implements Visualizer {
 		sb.append("\n#Printing population " + i + ":\n");
 		List<String> times = labels.get(i);
 		DeltaPopulation pop = dataSource.get(0);
-		sb.append(pop.toString(times, dataSource));
+		sb.append(populationToString(times, dataSource));
 		return sb.toString();
 	}
-
+	
 	public void printToFiles(String[] filenames, boolean is2d) {
 		try {
 			int i = 0;
@@ -113,7 +114,7 @@ public class Tracer implements Visualizer {
 					File f = new File(filenames[i]);
 					FileWriter fw = new FileWriter(f);
 					BufferedWriter bw = new BufferedWriter(fw);
-					if(is2d) {
+					if (is2d) {
 						bw.write(toString2D(i, dataSource)); //2d
 					} else {
 						bw.write(toString(i, dataSource)); //3d
@@ -128,9 +129,36 @@ public class Tracer implements Visualizer {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public int getN() {
 		return N;
 	}
-
+	
+	private String populationToString(List<String> times, List<DeltaPopulation> dataSource) {
+		StringBuffer sb = new StringBuffer();
+		if (dataSource.size() == 0) {
+			return null;
+		}
+		Set<Double> positions = dataSource.get(0).getPositions();
+		for (Double x : positions) {
+			int j = 0;
+			for (DeltaPopulation pop : dataSource) {
+				String t = times.get(j++);
+				sb.append(t + "\t" + pop.getElementValue(x).toString());
+				sb.append("\n");
+			}
+			sb.append("\n\n");
+		}
+		return sb.toString();
+	};
+	
+	private String populationToString(DeltaPopulation pop, String t) {
+		StringBuffer sb = new StringBuffer();
+		Set<Double> positions = pop.getPositions();
+		for (Double x : positions) {
+			sb.append(x + "\t" + t + "\t" + pop.getElementValue(x).toString());
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
 }
