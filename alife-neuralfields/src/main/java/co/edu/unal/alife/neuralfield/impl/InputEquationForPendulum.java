@@ -39,7 +39,7 @@ public class InputEquationForPendulum extends InputEquation {
 //		System.out.println("OMEGA:" + omega + "->" + boundedValue2 + ":" + eqPosition2);
 
 		Set<Double> positions = localPopulation.getPositions();
-		DeltaPopulation newPopulation = localPopulation.cloneEmpty(positions);
+		DeltaPopulation newPopulation = localPopulation.cloneEmpty();
 		for (Double position : positions) {
 			if (position.equals(eqPosition)) {
 				newPopulation.setElementValue(position, 1.0);

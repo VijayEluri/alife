@@ -1,7 +1,5 @@
 package co.edu.unal.alife.dynamics;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import co.edu.unal.alife.neuralfield.AbstractDeltaField;
@@ -49,22 +47,7 @@ public abstract interface DeltaPopulation {
 	 * @param value
 	 */
 	public abstract void setElementDelta(Double position, Double value);
-
-	// /**
-	// * Gets an element at the specified position.
-	// *
-	// * @param position
-	// * @return element
-	// */
-	// public abstract Element getElement(Double position);
-
-	// /**
-	// * Gets the elements contained in the neural population.
-	// *
-	// * @return collection of elements
-	// */
-	// public abstract Collection<? extends Element> getElements();
-
+	
 	/**
 	 * Get the positions from elements contained in the neural population.
 	 * 
@@ -154,6 +137,7 @@ public abstract interface DeltaPopulation {
 		void setDelta(Double value);
 	}
 
+	//TODO: Remove cloneEmpty(int size)
 	/**
 	 * A delta population of the same type, indicated size, but empty.
 	 * 
@@ -165,8 +149,7 @@ public abstract interface DeltaPopulation {
 	/**
 	 * A delta population of the same type, and same positions, but empty.
 	 * 
-	 * @param size
 	 * @return
 	 */
-	DeltaPopulation cloneEmpty(Set<Double> positions);
+	DeltaPopulation cloneEmpty();
 }

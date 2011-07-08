@@ -25,7 +25,7 @@ public class S1ActionEquation extends AbstractNonDifferentialEquation {
 	public DeltaPopulation applyInput(
 			DeltaPopulation localPopulation) {
 		DeltaPopulation newPopulation = localPopulation
-				.cloneEmpty(localPopulation.getPositions());
+				.cloneEmpty();
 		localPopulation.setNextPopulation(newPopulation);
 		Set<Double> localPositions = localPopulation.getPositions();
 		int indexX = 0;

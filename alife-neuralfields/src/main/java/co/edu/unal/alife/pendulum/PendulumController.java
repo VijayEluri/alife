@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
+import co.edu.unal.alife.dynamics.impl.MapDeltaPopulation;
 import co.edu.unal.alife.dynamics.impl.RungeKutta4thSolver;
 import co.edu.unal.alife.evolution.impl.ParameterizedKernel;
 import co.edu.unal.alife.evolution.impl.PendulumControllerParameters;
@@ -15,7 +16,6 @@ import co.edu.unal.alife.neuralfield.AbstractDeltaField;
 import co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation;
 import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 import co.edu.unal.alife.neuralfield.impl.InputEquationForPendulum;
-import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
 import co.edu.unal.alife.neuralfield.impl.SimpleDifferentialEquation;
 

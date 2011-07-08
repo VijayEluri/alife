@@ -5,6 +5,7 @@ import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.dynamics.Solver;
+import co.edu.unal.alife.dynamics.impl.MapDeltaPopulation;
 import co.edu.unal.alife.dynamics.impl.RungeKutta4thSolver;
 import co.edu.unal.alife.evolution.param.S1ControllerParameters;
 import co.edu.unal.alife.evolution.param.S1InputParameters;

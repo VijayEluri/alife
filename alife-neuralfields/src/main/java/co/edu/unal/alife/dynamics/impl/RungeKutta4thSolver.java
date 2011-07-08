@@ -33,7 +33,7 @@ public class RungeKutta4thSolver extends
 		int size = population.getSize();
 		Set<Double> positions = population.getPositions();
 		DeltaPopulation workingPopulation = population
-				.cloneEmpty(positions);
+				.cloneEmpty();
 		Map<Double, Double> k1dh = new LinkedHashMap<Double, Double>(size);
 		Map<Double, Double> k2dh = new LinkedHashMap<Double, Double>(size);
 		Map<Double, Double> k3dh = new LinkedHashMap<Double, Double>(size);

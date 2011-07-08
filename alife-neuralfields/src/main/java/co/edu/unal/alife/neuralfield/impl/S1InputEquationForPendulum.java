@@ -71,7 +71,7 @@ public class S1InputEquationForPendulum extends AbstractNonDifferentialEquation 
 
 		Set<Double> positions = localPopulation.getPositions();
 		DeltaPopulation newPopulation = localPopulation
-				.cloneEmpty(positions);
+				.cloneEmpty();
 		for (Double position : positions) {
 			double value = 0.0;
 			newPopulation.setElementValue(position, value);

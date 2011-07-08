@@ -33,7 +33,7 @@ public class InputEquationVectorCoding extends InputEquation {
 		double eqPosition = Math.round(boundedValue);
 		
 		Set<Double> positions = localPopulation.getPositions();
-		DeltaPopulation newPopulation = localPopulation.cloneEmpty(positions);
+		DeltaPopulation newPopulation = localPopulation.cloneEmpty();
 		for (Double position : positions) {
 			newPopulation.setElementValue(position, 1.0*kernelFunction.evaluateTransformation(position, eqPosition));
 		}

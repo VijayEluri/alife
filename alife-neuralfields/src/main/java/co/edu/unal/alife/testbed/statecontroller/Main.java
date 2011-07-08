@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
+import co.edu.unal.alife.dynamics.impl.MapDeltaPopulation;
 import co.edu.unal.alife.dynamics.impl.RungeKutta4thSolver;
 import co.edu.unal.alife.neuralfield.AbstractDeltaField;
 import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 import co.edu.unal.alife.neuralfield.AbstractNonDifferentialEquation;
 import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.neuralfield.impl.InputEquationVectorCoding;
-import co.edu.unal.alife.neuralfield.impl.MapDeltaPopulation;
 import co.edu.unal.alife.neuralfield.impl.MexicanHatKernel;
 import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
 import co.edu.unal.alife.neuralfield.impl.SimpleDifferentialEquation;
