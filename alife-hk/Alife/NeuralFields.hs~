@@ -1,0 +1,8 @@
+module Alife.Neuralfields 
+       where
+
+import Alife.MathUtil
+
+noDelayDelta :: (Fractional a) => a -> [a] -> [a] -> [a] -> [a] -> [a]
+noDelayDelta tao wa wi pa pi = map (/ tao) $ fixconv wa pa +. fixconv wi pi -. pa 
+

@@ -1,0 +1,25 @@
+module NeuralFieldsInput () where
+
+ana :: (Fractional a, Integral b) => ((b, b) -> (a, (b, b))) -> ((b, b) -> Bool) -> (b, b) -> [a]
+ana g p x 
+  | p x = []
+  | otherwise = y:ana g p x' where (y, x') = g x
+
+pvc :: (Integral b) => (b, b) -> Bool
+pvc (_, 0) = True
+pvc _ = False
+
+gvc :: (Num a, Integral b) => (b, b) -> (a, (b, b))
+gvc (x, y)
+  | x==y = (1, (x, y-1)) 
+  | otherwise = (0, (x, y-1))
+
+vcRound :: (Fractional a, Integral b) => b -> a -> a -> b
+vcRound n max x = 
+  let n' = fromIntegral (n-1) / 2   
+      x' = (x / max) * n'
+  in round . (* (n'/max)) x 
+
+vectorCode :: (Fractional a, Integral b) => ((a,b) -> (b, b)) -> b -> a -> [a] 
+vectorCode n x = ana gvc pvc (vcRound (n x), n) 
+  
