@@ -42,13 +42,4 @@ public abstract class AbstractDeltaPopulation implements DeltaPopulation {
 		}
 		return sb.toString();
 	}
-	
-	@Override
-	public void updatePopulationDelta(AbstractDeltaField environment, int localIndex)
-			throws UnsupportedOperationException {
-		List<DeltaPopulation> populations = environment.getPopulations();
-		DeltaEquation equation = environment.getEquations().get(localIndex);
-		List<AbstractKernelFunction> kernelList = environment.getKernelMatrix().get(localIndex);
-		equation.evalEquation(this, populations, kernelList); //may throw UnsupportedOperationException
-	}
 }

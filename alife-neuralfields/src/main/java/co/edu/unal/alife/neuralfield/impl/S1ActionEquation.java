@@ -11,8 +11,8 @@ public class S1ActionEquation extends AbstractNonDifferentialEquation {
 	private List<DeltaPopulation> representationPops;
 	private List<List<S1ActionTransformation>> transformations;
 	public static final double FIRST_ACTION = 0d;
-	private static double maxAction = 10.0;
-	private static double scale = 100.0;
+//	private static double maxAction = 10.0;
+//	private static double scale = 100.0;
 
 	public S1ActionEquation(List<DeltaPopulation> representationPops,
 			List<List<S1ActionTransformation>> transformations) {

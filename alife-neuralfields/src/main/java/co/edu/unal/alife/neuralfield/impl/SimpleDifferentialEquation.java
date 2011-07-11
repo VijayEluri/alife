@@ -21,8 +21,8 @@ public class SimpleDifferentialEquation extends AbstractDifferentialEquation {
 
 	private double tao = 0.1;
 	private double restingPotential = -0.2;
-	private double minValue = -3.0;
-	private double maxValue = 3.0;
+//	private double minValue = -3.0;
+//	private double maxValue = 3.0;
 
 	/*
 	 * (non-Javadoc)

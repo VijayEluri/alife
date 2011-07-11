@@ -74,7 +74,7 @@ public class MapDeltaPopulation extends AbstractDeltaPopulation {
 	 * .lang.Object)
 	 */
 	@Override
-	public Double getElementDelta(Double position) {
+	public double getElementDelta(Double position) {
 		return populationMap.get(position).getDelta();
 	}
 	
@@ -85,7 +85,7 @@ public class MapDeltaPopulation extends AbstractDeltaPopulation {
 	 * .lang.Object)
 	 */
 	@Override
-	public Double getElementValue(Double position) {
+	public double getElementValue(Double position) {
 		return populationMap.get(position).getValue();
 	}
 	

@@ -89,12 +89,12 @@ public class ArrayDeltaPopulation extends AbstractDeltaPopulation {
 	}
 	
 	@Override
-	public Double getElementDelta(Double position) {
+	public double getElementDelta(Double position) {
 		return getElement(position).getDelta();
 	}
 	
 	@Override
-	public Double getElementValue(Double position) {
+	public double getElementValue(Double position) {
 		return getElement(position).getValue();
 	}
 	

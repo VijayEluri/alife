@@ -18,7 +18,7 @@ import co.edu.unal.alife.output.Tracer;
  * @author Juan Figueredo
  */
 public class S1PendulumEquation extends SystemEquation {
-	private static final double PENALTY = 0.5;
+//	private static final double PENALTY = 0.5;
 	private static final double K_X = (0.0) / (5 * 5);
 	private static final double K_A = (1.0) / (Math.PI);
 	private static final double MAX_VAL = K_X*5*5+K_A*Math.PI+0.5;

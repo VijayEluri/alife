@@ -12,123 +12,109 @@ import co.edu.unal.alife.neuralfield.AbstractDeltaField;
 /**
  * @author Juan Figueredo
  * 
- * @param 
+ * @param
  */
-public abstract interface DeltaPopulation {
-
+public interface DeltaPopulation {
+	
 	/**
 	 * Gets the value of an element at the specified position.
 	 * 
 	 * @param position
 	 * @return element value
 	 */
-	public abstract Double getElementValue(Double position);
-
+	double getElementValue(Double position);
+	
 	/**
 	 * Sets the value of an element at the specified position.
 	 * 
 	 * @param position
 	 * @param value
 	 */
-	public abstract void setElementValue(Double position, Double value);
-
+	void setElementValue(Double position, Double value);
+	
 	/**
 	 * Gets the delta of an element at the specified position.
 	 * 
 	 * @param position
 	 * @return element value
 	 */
-	public abstract Double getElementDelta(Double position);
-
+	double getElementDelta(Double position);
+	
 	/**
 	 * Sets the delta of an element at the specified position.
 	 * 
 	 * @param position
 	 * @param value
 	 */
-	public abstract void setElementDelta(Double position, Double value);
+	void setElementDelta(Double position, Double value);
 	
 	/**
 	 * Get the positions from elements contained in the neural population.
 	 * 
 	 * @return set of positions
 	 */
-	public abstract Set<Double> getPositions();
-
-	/**
-	 * Prepares the population for the update rule applied by a ODE solver.
-	 * Updates the state of the delta of all elements contained in the
-	 * population.
-	 * 
-	 * @param populations
-	 * @param equation
-	 * @param kernelTable
-	 */
-	public abstract void updatePopulationDelta(
-			AbstractDeltaField environment, int localIndex)
-			throws UnsupportedOperationException;
-
-
+	Set<Double> getPositions();
+	
 	/**
 	 * Gets the size of the population, i.e the number of elements contained on
 	 * it.
 	 * 
 	 * @return the size
 	 */
-	public int getSize();
-
+	int getSize();
+	
 	/**
 	 * Returns true if there is a population registered for the next simulation
 	 * step
 	 * 
 	 * @return has next delta population
 	 */
-	public boolean hasNextPopulation();
-
+	boolean hasNextPopulation();
+	
 	/**
 	 * Gets the population for the next simulation step
 	 * 
 	 * @return next delta population
 	 */
-	public DeltaPopulation getNextPopulation();
-
+	DeltaPopulation getNextPopulation();
+	
 	/**
 	 * Sets the population for the next simulation step
 	 * 
 	 * @param nextPopulation
 	 */
-	public void setNextPopulation(DeltaPopulation nextPopulation);
-
+	void setNextPopulation(DeltaPopulation nextPopulation);
+	
 	/**
 	 * Interface that represent an element of a neural population, i.e. a point
 	 * with an associated value and a delta.
 	 * 
 	 * @author jjfigueredou
-	 * @param 
+	 * @param
 	 * @param
 	 */
-	public interface Element {
+	interface Element {
 		/**
 		 * Gets the value of the element.
 		 * 
 		 * @return value
 		 */
-		Double getValue();
-
+		double getValue();
+		
 		/**
 		 * Sets the value of the element.
 		 * 
 		 * @param value
 		 */
 		void setValue(Double value);
-
+		
 		/**
 		 * Gets the delta of the element.
 		 * 
 		 * @return delta
 		 */
-		Double getDelta();
-
+		double getDelta();
+		
 		/**
 		 * Sets the delta of the element.
 		 * 
@@ -136,7 +122,7 @@ public abstract interface DeltaPopulation {
 		 */
 		void setDelta(Double value);
 	}
-
+	
 	//TODO: Remove cloneEmpty(int size)
 	/**
 	 * A delta population of the same type, indicated size, but empty.
@@ -145,7 +131,7 @@ public abstract interface DeltaPopulation {
 	 * @return
 	 */
 	DeltaPopulation cloneEmpty(int size);
-
+	
 	/**
 	 * A delta population of the same type, and same positions, but empty.
 	 * 

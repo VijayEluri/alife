@@ -19,12 +19,12 @@ public class S1ControllerGenotype extends Genotype {
 	private int noGoals;
 	private int noOutputs;
 
-	private double minCholeskyVal;
-	private double maxCholeskyVal;
-	private double minKVal;
-	private double maxKVal;
-	private double minAlphaVal;
-	private double maxAlphaVal;
+//	private double minCholeskyVal;
+//	private double maxCholeskyVal;
+//	private double minKVal;
+//	private double maxKVal;
+//	private double minAlphaVal;
+//	private double maxAlphaVal;
 
 	private double[] Chol1;
 	private double[] Chol2;
@@ -37,11 +37,11 @@ public class S1ControllerGenotype extends Genotype {
 	private double minKernelInK;
 	private double maxKernelInK;
 
-	public S1ControllerGenotype(int points, int noInputs, int noGoals,
-			int noOutputs) {
-		this(points, noInputs, noGoals, noOutputs, _minCholeskyVal,
-				_maxCholeskyVal, _minKVal, _maxKVal, _minAlphaVal, _maxAlphaVal);
-	}
+//	public S1ControllerGenotype(int points, int noInputs, int noGoals,
+//			int noOutputs) {
+//		this(points, noInputs, noGoals, noOutputs, _minCholeskyVal,
+//				_maxCholeskyVal, _minKVal, _maxKVal, _minAlphaVal, _maxAlphaVal);
+//	}
 
 	public S1ControllerGenotype(int points, int noInputs, int noGoals,
 			int noOutputs, double[] Chol1, double[] Chol2, double[] ks,
@@ -64,22 +64,22 @@ public class S1ControllerGenotype extends Genotype {
 		this.maxKernelInK = maxKernelInK;
 	}
 
-	public S1ControllerGenotype(int points, int noInputs, int noGoals,
-			int noOutputs, double minCholeskyVal, double maxCholeskyVal,
-			double minKVal, double maxKVal, double minAlphaVal,
-			double maxAlphaVal) {
-		super();
-		this.points = points;
-		this.noInputs = noInputs;
-		this.noGoals = noGoals;
-		this.noOutputs = noOutputs;
-		this.minCholeskyVal = minCholeskyVal;
-		this.maxCholeskyVal = maxCholeskyVal;
-		this.minKVal = minKVal;
-		this.maxKVal = maxKVal;
-		this.minAlphaVal = minAlphaVal;
-		this.maxAlphaVal = maxAlphaVal;
-	}
+//	public S1ControllerGenotype(int points, int noInputs, int noGoals,
+//			int noOutputs, double minCholeskyVal, double maxCholeskyVal,
+//			double minKVal, double maxKVal, double minAlphaVal,
+//			double maxAlphaVal) {
+//		super();
+//		this.points = points;
+//		this.noInputs = noInputs;
+//		this.noGoals = noGoals;
+//		this.noOutputs = noOutputs;
+//		this.minCholeskyVal = minCholeskyVal;
+//		this.maxCholeskyVal = maxCholeskyVal;
+//		this.minKVal = minKVal;
+//		this.maxKVal = maxKVal;
+//		this.minAlphaVal = minAlphaVal;
+//		this.maxAlphaVal = maxAlphaVal;
+//	}
 
 	@Override
 	public Object newInstance() {

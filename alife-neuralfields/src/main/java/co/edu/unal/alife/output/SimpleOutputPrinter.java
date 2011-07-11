@@ -31,7 +31,7 @@ public class SimpleOutputPrinter implements Visualizer {
 	public void processTuple(Object arg) {
 		Object[] pair = (Object[])arg;
 		t = (Double)pair[0];
-		values = (List)pair[1];
+		values = (List<Double>)pair[1];
 	}
 	
 	public void printTrace() {

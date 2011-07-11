@@ -5,7 +5,6 @@ import java.util.Set;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 import co.edu.unal.alife.neuralfield.InputEquation;
-import co.edu.unal.alife.pendulum.PendulumEquation;
 
 public class InputEquationVectorCoding extends InputEquation {
 	

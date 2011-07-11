@@ -3,13 +3,14 @@ package co.edu.unal.alife.test.unit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.Set;
 
 import org.junit.Test;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
+import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
+import co.edu.unal.alife.neuralfield.impl.SimpleDifferentialEquation;
 
 public abstract class DeltaPopulationITest {
 	
@@ -24,7 +25,7 @@ public abstract class DeltaPopulationITest {
 			pop.setElementDelta(p, p + k);
 		}
 		for (Double p : positions) {
-			assertTrue(pop.getElementDelta(p).doubleValue() == p + k);
+			assertTrue(pop.getElementDelta(p) == p + k);
 		}
 	}
 	
@@ -36,14 +37,13 @@ public abstract class DeltaPopulationITest {
 			pop.setElementValue(p, p + k);
 		}
 		for (Double p : positions) {
-			assertTrue(pop.getElementValue(p).doubleValue() == p + k);
+			assertTrue(pop.getElementValue(p) == p + k);
 		}
 	}
 	
-	@Test
-	public void testUpdatePopulationDelta() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	public void testUpdatePopulationDelta() {
+//	}
 	
 	@Test
 	public void testHasNextPopulation() {

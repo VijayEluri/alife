@@ -49,7 +49,7 @@ public class PendulumPrinter extends SimpleOutputPrinter {
 	public void processTuple(Object arg) {
 		Object[] pair = (Object[])arg;
 		t = (Double)pair[0];
-		List values = (List)pair[1];
+		List<Double> values = (List<Double>)pair[1];
 		int from = 0;
 		int to = pendulumStates;
 		pendulumAngles = values.subList(from, to);

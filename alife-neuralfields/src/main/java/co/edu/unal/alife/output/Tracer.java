@@ -101,7 +101,7 @@ public class Tracer implements Visualizer {
 		StringBuffer sb = new StringBuffer();
 		sb.append("\n#Printing population " + i + ":\n");
 		List<String> times = labels.get(i);
-		DeltaPopulation pop = dataSource.get(0);
+//		DeltaPopulation pop = dataSource.get(0);
 		sb.append(populationToString(times, dataSource));
 		return sb.toString();
 	}
@@ -144,7 +144,7 @@ public class Tracer implements Visualizer {
 			int j = 0;
 			for (DeltaPopulation pop : dataSource) {
 				String t = times.get(j++);
-				sb.append(t + "\t" + pop.getElementValue(x).toString());
+				sb.append(t + "\t" + pop.getElementValue(x));
 				sb.append("\n");
 			}
 			sb.append("\n\n");
@@ -156,7 +156,7 @@ public class Tracer implements Visualizer {
 		StringBuffer sb = new StringBuffer();
 		Set<Double> positions = pop.getPositions();
 		for (Double x : positions) {
-			sb.append(x + "\t" + t + "\t" + pop.getElementValue(x).toString());
+			sb.append(x + "\t" + t + "\t" + pop.getElementValue(x));
 			sb.append("\n");
 		}
 		return sb.toString();
