@@ -2,8 +2,6 @@ package co.edu.unal.alife.dynamics;
 
 import java.util.Set;
 
-import co.edu.unal.alife.neuralfield.AbstractDeltaField;
-
 /**
  * Interface that represents a population of a neural field.
  * 

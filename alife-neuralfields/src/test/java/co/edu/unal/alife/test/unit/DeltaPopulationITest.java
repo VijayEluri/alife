@@ -9,8 +9,6 @@ import java.util.Set;
 import org.junit.Test;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
-import co.edu.unal.alife.neuralfield.impl.SimpleDeltaField;
-import co.edu.unal.alife.neuralfield.impl.SimpleDifferentialEquation;
 
 public abstract class DeltaPopulationITest {
 	

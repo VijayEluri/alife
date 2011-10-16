@@ -1,11 +1,6 @@
 package co.edu.unal.alife.dynamics;
 
-import java.util.List;
 import java.util.Set;
-
-import co.edu.unal.alife.neuralfield.AbstractDeltaField;
-import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
-import co.edu.unal.alife.neuralfield.DeltaEquation;
 
 /**
  * @author Juan Figueredo

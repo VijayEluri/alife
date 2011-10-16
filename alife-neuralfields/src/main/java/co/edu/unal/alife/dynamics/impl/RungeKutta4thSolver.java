@@ -24,8 +24,7 @@ public class RungeKutta4thSolver extends AbstractFixedStepSolver {
 	 * DeltaField, int)
 	 */
 	@Override
-	public DeltaPopulation step(AbstractDeltaField field, int localIndex, double h)
-			throws UnsupportedOperationException {
+	public DeltaPopulation step(AbstractDeltaField field, int localIndex, double h) {
 		DeltaPopulation population = field.getPopulations().get(localIndex);
 		int size = population.getSize();
 		Set<Double> positions = population.getPositions();
