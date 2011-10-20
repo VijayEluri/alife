@@ -1,4 +1,4 @@
-package co.edu.unal.alife.pendulum;
+package co.edu.unal.alife.dynamics.impl;
 
 import java.util.List;
 

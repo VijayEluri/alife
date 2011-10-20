@@ -23,7 +23,8 @@ public interface Solver {
 	 * @param tf
 	 * @param h
 	 * @param field
+	 * @return If the simulation ended on a terminal event
 	 */
-	void simulate(double t0, double tf, double h, AbstractDeltaField field);
+	boolean simulate(double t0, double tf, double h, AbstractDeltaField field);
 	
 }

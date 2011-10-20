@@ -10,6 +10,7 @@ import static java.lang.Math.sin;
 import java.util.List;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
+import co.edu.unal.alife.dynamics.impl.SystemEquation;
 import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 import co.edu.unal.alife.neuralfield.impl.S1ActionEquation;
 import co.edu.unal.alife.output.Tracer;

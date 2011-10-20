@@ -56,28 +56,39 @@ public abstract class AbstractDeltaField extends Observable {
 	}
 	
 	/**
-	 * Evaluates an iteration of the entire field in a population-by-population basis
+	 * Evaluates an iteration of the entire field in a population-by-population basis. Returns true if this step is
+	 * terminal (a terminal event was found), otherwise it returns false.
 	 * 
 	 * @param h
 	 *            the step size.
 	 * @param nextStepCount
 	 *            the step count for next step
+	 * @return isTerminal
 	 */
-	public void evaluateStep(double h, int nextStepCount) {
+	public boolean evaluateStep(double h, int nextStepCount) {
+		boolean isTerminal = false;
 		double t = nextStepCount * h;
 		for (int i = 0; i < populations.size(); i++) {
 			DeltaPopulation deltaPopulation = null;
-			try {
-				deltaPopulation = solver.step(this, i, h);
-				// System.out.println("Step - Pop "+i);
-			} catch (UnsupportedOperationException e) {
-				deltaPopulation = equations.get(i).applyInput(populations.get(i));
-				// System.out.println("Apply - Pop "+i);
+			DeltaEquation equation = equations.get(i);
+			if (equation.requiresApplyInput()) {
+				deltaPopulation = equation.applyInput(populations.get(i));
+				//System.out.println("Apply - Pop "+t);
 			}
+			if (equation.isDifferential()) {
+				try {
+					deltaPopulation = solver.step(this, i, h);
+					// System.out.println("Step - Pop "+i);
+				} catch (UnsupportedOperationException e) {
+					throw new RuntimeException(e.getMessage());
+				}
+			}
+			isTerminal = deltaPopulation.isTerminal() ? true : isTerminal;
 			populations.set(i, deltaPopulation);
 			this.setChanged();
 			this.notifyObservers(new Object[] { i, t, deltaPopulation });
 		}
+		return isTerminal;
 	}
 	
 	public Solver getSolver() {
@@ -101,6 +112,14 @@ public abstract class AbstractDeltaField extends Observable {
 		DeltaEquation equation = this.getEquations().get(localIndex);
 		List<AbstractKernelFunction> kernelList = this.getKernelMatrix().get(localIndex);
 		equation.evalEquation(population, this.getPopulations(), kernelList); //may throw UnsupportedOperationException
+	}
+	
+	public void init() {
+		for (int i = 0; i < populations.size(); i++) {
+			DeltaPopulation deltaPopulation = populations.get(i);
+			this.setChanged();
+			this.notifyObservers(new Object[] { i, 0d, deltaPopulation });
+		}
 	}
 	
 }

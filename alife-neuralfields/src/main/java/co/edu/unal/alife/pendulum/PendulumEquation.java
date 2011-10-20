@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 import co.edu.unal.alife.dynamics.DeltaPopulation;
+import co.edu.unal.alife.dynamics.impl.SystemEquation;
 import co.edu.unal.alife.neuralfield.AbstractKernelFunction;
 import co.edu.unal.alife.output.Tracer;
 

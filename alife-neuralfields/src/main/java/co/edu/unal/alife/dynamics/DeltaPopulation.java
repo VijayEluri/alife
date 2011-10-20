@@ -84,6 +84,18 @@ public interface DeltaPopulation {
 	void setNextPopulation(DeltaPopulation nextPopulation);
 	
 	/**
+	 * Returns if this population is terminal (i.e. a terminal event was found)
+	 * @return isTerminal
+	 */
+	boolean isTerminal();
+	
+	/**
+	 * Sets if this population is terminal (signaling that a terminal event was found)
+	 * @param isTerminal
+	 */
+	void setTerminal(boolean isTerminal);
+	
+	/**
 	 * Interface that represent an element of a neural population, i.e. a point
 	 * with an associated value and a delta.
 	 * 

@@ -20,9 +20,11 @@ public class ArrayDeltaPopulation extends AbstractDeltaPopulation {
 	private Set<Double>	positionSet;
 	private boolean		isHalfSize;
 	private int			size;
+	private boolean		isTerminal	= false;
 	
 	/**
-	 * Creates an ArrayDeltaPopulation of providedSize. If isHalfSize, then the positions are created from -providedSize to
+	 * Creates an ArrayDeltaPopulation of providedSize. If isHalfSize, then the positions are created from -providedSize
+	 * to
 	 * +providedSize. Otherwise they are created from 0 to providedSize.
 	 * 
 	 * @param providedSize
@@ -60,7 +62,6 @@ public class ArrayDeltaPopulation extends AbstractDeltaPopulation {
 		positionSet = Collections.unmodifiableSet(positionSet);
 	}
 	
-
 	/**
 	 * Creates an ArrayDeltaPopulation of providedSize as half size. The positions are created from -providedSize to
 	 * +providedSize. The total size is 2 * providedSize + 1.
@@ -116,6 +117,14 @@ public class ArrayDeltaPopulation extends AbstractDeltaPopulation {
 	@Override
 	public void setElementValue(Double position, Double value) {
 		getElement(position).setValue(value);
+	}
+	
+	public boolean isTerminal() {
+		return isTerminal;
+	}
+	
+	public void setTerminal(boolean isTerminal) {
+		this.isTerminal = isTerminal;
 	}
 	
 	private Element getElement(Double position) {

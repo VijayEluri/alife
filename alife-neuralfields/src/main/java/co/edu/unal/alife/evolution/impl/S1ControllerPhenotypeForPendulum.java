@@ -2,10 +2,10 @@ package co.edu.unal.alife.evolution.impl;
 
 import jml.evolution.Phenotype;
 import co.edu.unal.alife.dynamics.DeltaPopulation;
+import co.edu.unal.alife.dynamics.impl.SystemEquation;
 import co.edu.unal.alife.evolution.param.S1ControllerParameters;
 import co.edu.unal.alife.neuralfield.impl.DeltaFieldFactory;
 import co.edu.unal.alife.pendulum.S1PendulumEquation;
-import co.edu.unal.alife.pendulum.SystemEquation;
 
 public class S1ControllerPhenotypeForPendulum extends Phenotype {
 

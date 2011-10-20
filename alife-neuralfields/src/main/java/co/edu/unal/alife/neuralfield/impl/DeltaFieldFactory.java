@@ -7,6 +7,7 @@ import co.edu.unal.alife.dynamics.DeltaPopulation;
 import co.edu.unal.alife.dynamics.Solver;
 import co.edu.unal.alife.dynamics.impl.MapDeltaPopulation;
 import co.edu.unal.alife.dynamics.impl.RungeKutta4thSolver;
+import co.edu.unal.alife.dynamics.impl.SystemEquation;
 import co.edu.unal.alife.evolution.param.S1ControllerParameters;
 import co.edu.unal.alife.evolution.param.S1InputParameters;
 import co.edu.unal.alife.evolution.param.S1OutputParameters;
@@ -18,7 +19,6 @@ import co.edu.unal.alife.neuralfield.DeltaEquation;
 import co.edu.unal.alife.output.PendulumFrame;
 import co.edu.unal.alife.output.Tracer;
 import co.edu.unal.alife.pendulum.S1PendulumEquation;
-import co.edu.unal.alife.pendulum.SystemEquation;
 
 public class DeltaFieldFactory {
 

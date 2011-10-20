@@ -16,9 +16,14 @@ import co.edu.unal.alife.neuralfield.impl.SimpleElement;
  *         Class that implements a Map-based Neural Population.
  * 
  */
+/**
+ * @author shrein
+ *
+ */
 public class MapDeltaPopulation extends AbstractDeltaPopulation {
 	
 	private Map<Double, DeltaPopulation.Element>	populationMap	= new LinkedHashMap<Double, DeltaPopulation.Element>();
+	private boolean isTerminal = false;
 	
 	//TODO: Delete MapDeltaPopulation() 
 	public MapDeltaPopulation() {
@@ -145,5 +150,13 @@ public class MapDeltaPopulation extends AbstractDeltaPopulation {
 		}
 		return population;
 	}
-	
+
+	public boolean isTerminal() {
+		return isTerminal;
+	}
+
+	public void setTerminal(boolean isTerminal) {
+		this.isTerminal = isTerminal;
+	}
+
 }
