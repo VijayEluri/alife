@@ -13,7 +13,7 @@ options = odeset('Events',@sbw3_test,...
     'RelTol',1e-9,...
     'AbsTol',[1e-9 1e-9 1e-9 1e-9]);
 t0 = 0;
-tfinal = 100;
+tfinal = 200;
 
 tprev = t0;
 tt=[];
@@ -43,7 +43,8 @@ if(~isempty(ien) && ien(length(ien)) == 2)
 end
 
 %if (isplot==1) 
-    subplot(2,2,[1 2]);
+    %subplot(2,2,[1 2]);
+    figure;
     hold on;
     plot(tt,qt(:,1:2));
     %plot(tt,0)
@@ -54,27 +55,34 @@ end
     %disp(yet(:,4)-2*yet(:,3))
     xlabel('time');
     ylabel('angular positions');
-    title('Simplest Biped Walking - Time Simulation');
+    title('Sliding Mode Neural Field SBW - Time Simulation');
+    legend('$\theta$','$\phi$');
     hold off;
     
     p = [];
-    subplot(2,2,3);
+    %subplot(2,2,3);
+    figure;
     hold on;
     for i=1:length(yet(:,1))
         p(i,:) = sbw1_switch(yet(i,:));
     end
-    [p(:,1) p(:,3)]
-    plot(p(:,1),p(:,1)+p(:,3));
+    p = [qi;p(:,1),p(:,3)]; 
+    plot(p(:,1),p(:,2),'k-',p(:,1),p(:,2),'ro');
     xlabel('\theta');
     ylabel('$\theta + \dot{\theta}$');
-    title('Simplest Biped Walking');
+    title('Sliding Mode SBW - Poincaré Section');
+    xlim([0 0.4]);
+    ylim([-0.4 0]);
+    grid on;
     hold off;
     
-    subplot(2,2,4)
+    %subplot(2,2,4)
+    figure;
     hold on;
-    plot([0;tet],[kt;kt(length(kt))]);
+    plot([0;tet],[kt;kt(length(kt))],'k.');
     xlabel('time');
-    ylabel('$k_phi$');
-    title('SBW - K values');
+    ylabel('$k_{\phi}$');
+    title('Sliding Mode SBW - K values');
+    grid on;
     hold off;
 %end

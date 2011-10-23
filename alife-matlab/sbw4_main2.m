@@ -1,20 +1,11 @@
-function fitness = sbw3_fitness(kk,qi,isplot)
-k=kk';
+function fitness = sbw4_main(qi)
 %an = a+(0.5-rand(1,2))/20;
 theta0 = qi(1);
 thetap0 = qi(2);
 gamma = 0.004;
-%qprev = [theta0 0 thetap0 0];
-%qinit = sbw1_switch(qprev);
 qinit = [theta0 2*theta0 thetap0 (1-cos(2*theta0))*thetap0];
-%fprintf('gamma = %f, theta+ = %f, thetadot+ = %f\n', gamma, qinit(1), qinit(3));
 
-%k=[-0;0]; % theta*1 thetap*1
-%k=[-0.8;0.45]; % theta*1.3
-%k=[0.2;1.5]; % thetap*1.3
-%k=[0;1.8]; % thetap*1.3
-
-maxiters = 100;
+maxiters = 1000;
 
 refine = 1;
 options = odeset('Events',@sbw3_test,...
@@ -22,7 +13,7 @@ options = odeset('Events',@sbw3_test,...
     'RelTol',1e-9,...
     'AbsTol',[1e-9 1e-9 1e-9 1e-9]);
 t0 = 0;
-tfinal = 30;
+tfinal = 200;
 
 tprev = t0;
 tt=[];
@@ -31,8 +22,11 @@ tet=[];
 yet=[];
 ien = 1;
 n=1;
+kt = [];
 while(tprev < tfinal && ien(length(ien)) == 1 && n<=maxiters)
-    [tn,qn,ten,yen,ien] = ode45(@(t,y) sbw3(t,y,gamma,k),[t0 tfinal],qinit,options);
+    k_phi = sbw4_klookup2([qinit(1) qinit(3)]);
+    kt = [kt;k_phi];
+    [tn,qn,ten,yen,ien] = ode45(@(t,y) sbw3(t,y,gamma,[0 k_phi]),[t0 tfinal],qinit,options);
     tt = [tt;tprev+tn];
     qt = [qt;qn];
     tet = [tet;tprev+ten];
@@ -47,9 +41,8 @@ fitness = 0;
 if(~isempty(ien) && ien(length(ien)) == 2)
     fitness = 20000;
 end
-fitness = fitness + k'*k;
 
-if (isplot==1) 
+%if (isplot==1) 
     %subplot(2,2,[1 2]);
     figure;
     hold on;
@@ -62,7 +55,7 @@ if (isplot==1)
     %disp(yet(:,4)-2*yet(:,3))
     xlabel('time');
     ylabel('angular positions');
-    title('State Feedback SBW - Time Simulation');
+    title('Sliding Mode Neural Field SBW - Time Simulation');
     legend('$\theta$','$\phi$');
     hold off;
     
@@ -73,11 +66,11 @@ if (isplot==1)
     for i=1:length(yet(:,1))
         p(i,:) = sbw1_switch(yet(i,:));
     end
-    p = [qi; p(:,1),p(:,3)];
+    p = [qi;p(:,1),p(:,3)]; 
     plot(p(:,1),p(:,2),'k-',p(:,1),p(:,2),'ro');
     xlabel('\theta');
     ylabel('$\theta + \dot{\theta}$');
-    title('State Feedback SBW - Poincaré Map');
+    title('Sliding Mode SBW - Poincaré Section');
     xlim([0 0.4]);
     ylim([-0.4 0]);
     grid on;
@@ -86,10 +79,10 @@ if (isplot==1)
     %subplot(2,2,4)
     figure;
     hold on;
-    plot([0;tt],k(2)*ones(length(tt)+1,1),'k.');
+    plot([0;tet],[kt;kt(length(kt))],'k.');
     xlabel('time');
     ylabel('$k_{\phi}$');
-    title('State Feedback SBW - K values');
+    title('Sliding Mode SBW - K values');
     grid on;
     hold off;
-end
+%end
