@@ -13,7 +13,7 @@ options = odeset('Events',@sbw3_test,...
     'RelTol',1e-9,...
     'AbsTol',[1e-9 1e-9 1e-9 1e-9]);
 t0 = 0;
-tfinal = 200;
+tfinal = 100;
 
 tprev = t0;
 tt=[];
@@ -68,8 +68,8 @@ end
     end
     p = [qi;p(:,1),p(:,3)]; 
     plot(p(:,1),p(:,2),'k-',p(:,1),p(:,2),'ro');
-    xlabel('\theta');
-    ylabel('$\theta + \dot{\theta}$');
+    xlabel('$\theta$');
+    ylabel('$\dot{\theta}$');
     title('Sliding Mode SBW - Poincaré Section');
     xlim([0 0.4]);
     ylim([-0.4 0]);

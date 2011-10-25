@@ -14,7 +14,7 @@ qinit = [theta0 2*theta0 thetap0 (1-cos(2*theta0))*thetap0];
 %k=[0.2;1.5]; % thetap*1.3
 %k=[0;1.8]; % thetap*1.3
 
-maxiters = 100;
+maxiters = 1000;
 
 refine = 1;
 options = odeset('Events',@sbw3_test,...
@@ -22,7 +22,7 @@ options = odeset('Events',@sbw3_test,...
     'RelTol',1e-9,...
     'AbsTol',[1e-9 1e-9 1e-9 1e-9]);
 t0 = 0;
-tfinal = 30;
+tfinal = 100;
 
 tprev = t0;
 tt=[];
@@ -77,7 +77,7 @@ if (isplot==1)
     plot(p(:,1),p(:,2),'k-',p(:,1),p(:,2),'ro');
     xlabel('\theta');
     ylabel('$\theta + \dot{\theta}$');
-    title('State Feedback SBW - Poincaré Map');
+    title('State Feedback SBW - Poincare Section');
     xlim([0 0.4]);
     ylim([-0.4 0]);
     grid on;

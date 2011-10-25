@@ -47,8 +47,8 @@ end
     figure;
     hold on;
     plot(tt,qt(:,1:2));
-    %plot(tt,0)
-    %plot(tt,qt(:,2)-2*qt(:,1),'r-.');
+    plot(tt,0,'y');
+    plot(tt,qt(:,2)-2*qt(:,1),'r-.');
     %plot(tt,qt(:,4),'b--');
     plot(tet,yet(:,1:2),'ro');
     %disp(tet)
@@ -70,7 +70,7 @@ end
     plot(p(:,1),p(:,2),'k-',p(:,1),p(:,2),'ro');
     xlabel('\theta');
     ylabel('$\theta + \dot{\theta}$');
-    title('Sliding Mode SBW - Poincaré Section');
+    title('Sliding Mode SBW - Poincare Section');
     xlim([0 0.4]);
     ylim([-0.4 0]);
     grid on;
