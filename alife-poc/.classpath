@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+  <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/junit/junit/4.8.1/junit-4.8.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-math/2.2/commons-math-2.2.jar">
+    <attributes>
+      <attribute value="jar:file:/home/shrein/.m2/repository/org/apache/commons/commons-math/2.2/commons-math-2.2-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/co/edu/unal/alife/alife-jml/1.0-SNAPSHOT/alife-jml-1.0-SNAPSHOT.jar"/>
+  <classpathentry kind="var" path="M2_REPO/grafics/grafics/1.0/grafics-1.0.jar"/>
+</classpath>
