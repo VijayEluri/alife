@@ -5,7 +5,6 @@ import static java.lang.Math.sin;
 
 import org.apache.commons.math3.ode.FirstOrderDifferentialEquations;
 
-
 public class PocSBW3Equation implements FirstOrderDifferentialEquations {
 
 	/**
@@ -96,7 +95,7 @@ public class PocSBW3Equation implements FirstOrderDifferentialEquations {
 	 * @param y
 	 *            state vector to be changed
 	 */
-	public static void switchState(double t, double[] y) {
+	public void switchState(double t, double[] y) {
 		double theta = y[0];
 		double thetadot = y[2];
 		y[0] = -theta;

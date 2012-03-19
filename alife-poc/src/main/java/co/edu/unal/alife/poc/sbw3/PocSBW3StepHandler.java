@@ -7,9 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.events.EventException;
 
-public class PocSBW3SwitchTest implements EventHandler {
+public class PocSBW3StepHandler implements EventHandler {
 
-	static final Logger logger = LoggerFactory.getLogger(PocSBW3SwitchTest.class);
+	static final Logger logger = LoggerFactory.getLogger(PocSBW3StepHandler.class);
+	private PocSBW3Equation equation;
+	
+	public PocSBW3StepHandler(PocSBW3Equation equation) {
+		this.equation = equation;
+	}
 
 	@Override
 	public void init(double t0, double[] y0, double t) {
@@ -21,7 +26,7 @@ public class PocSBW3SwitchTest implements EventHandler {
 		double value = 1;
 		// check if time is greater than 0 (because at t=0 the event condition
 		// is met, but an action should not be triggered)
-		if (t > 0) {
+		if (true) {
 			value = y[1] - 2 * y[0];
 		}
 //		logger.debug("Exiting g");
@@ -49,7 +54,7 @@ public class PocSBW3SwitchTest implements EventHandler {
 	public void resetState(double t, double[] y) throws EventException {
 		logger.trace("Entering resetState");
 		logger.trace("Time t="+t+" State y="+Arrays.toString(y));
-		PocSBW3Equation.switchState(t, y);
+		equation.switchState(t, y);
 		logger.trace("Exiting resetState");
 		logger.trace("Time t="+t+" State y="+Arrays.toString(y));
 	}
