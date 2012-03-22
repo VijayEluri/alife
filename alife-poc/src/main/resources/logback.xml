@@ -5,7 +5,8 @@
       <pattern>%-4r [%t] %-5p %c - %m%n</pattern>
     </encoder>
   </appender>
-  <root level="DEBUG">
+  <logger name="co.edu.unal.alife.poc.sbw3.two" level="INFO" />
+  <root level="INFO">
     <appender-ref ref="A1"/>
   </root>
 </configuration>

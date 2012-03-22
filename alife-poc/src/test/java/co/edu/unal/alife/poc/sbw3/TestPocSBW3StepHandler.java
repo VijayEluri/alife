@@ -16,20 +16,21 @@ public class TestPocSBW3StepHandler {
 
 	@Before
 	public void setUp() {
-		PocSBW3Equation equation = new PocSBW3Equation(0.004,
-				new APocSBW3Controller(2) {
-					protected double[] evaluateK(double t, double[] q,
-							double[] r) {
-						return new double[] { 0, 0 };
-					}
+		APocSBW3Controller controller = new APocSBW3Controller(2) {
+			protected double[] evaluateK(double t, double[] q, double[] r) {
+				return new double[] { 0, 0 };
+			}
 
-					public void computeDerivatives(double t, double[] q,
-							double[] qDot) {
-						// N/A
-					};
-				});
+			public void computeDerivatives(double t, double[] q, double[] qDot) {
+			}
 
-		this.handler = new PocSBW3StepHandler(equation);
+			@Override
+			protected void switchEvent(double t, double[] q) {
+			};
+		};
+		PocSBW3Equation equation = new PocSBW3Equation(0.004, controller);
+
+		this.handler = new PocSBW3StepHandler(equation, controller);
 	}
 
 	@Test

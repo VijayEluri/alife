@@ -1,4 +1,5 @@
 package co.edu.unal.alife.poc.sbw3;
+
 import static org.junit.Assert.assertArrayEquals;
 
 import org.junit.Before;
@@ -19,7 +20,10 @@ public class TestPocSBW3Equation {
 			}
 
 			public void computeDerivatives(double t, double[] q, double[] qDot) {
-				// N/A
+			}
+
+			@Override
+			protected void switchEvent(double t, double[] q) {
 			};
 		});
 	};
@@ -38,7 +42,7 @@ public class TestPocSBW3Equation {
 		double[] q = { -0.1, -0.2, -0.490033288920621, -0.009768040419900 };
 		double[] qDotAssert = { -0.490033288920621, -0.009768040419900,
 				-0.103812624028303, 0.046076283310771 };
-		
+
 		double[] qDot = new double[4];
 		equation.computeDerivatives(0, q, qDot);
 		assertArrayEquals(
