@@ -48,6 +48,17 @@ public abstract class APocSBW3Controller implements
 	protected abstract double[] evaluateK(double t, double[] q, double[] r);
 
 	/**
+	 * Handler method for the switch event.
+	 * 
+	 * @param t
+	 *            time
+	 * @param q
+	 *            state vector after the switch (4D)
+	 */
+	protected abstract void switchEvent(double t, double[] q);
+
+	
+	/**
 	 * Updates the state vector derivative for the controller.
 	 * 
 	 * @param t

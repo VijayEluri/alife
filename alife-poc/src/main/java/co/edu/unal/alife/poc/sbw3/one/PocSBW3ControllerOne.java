@@ -19,6 +19,12 @@ public class PocSBW3ControllerOne extends APocSBW3Controller {
 	protected double[] evaluateK(double t, double[] y, double[] r) {
 		return k;
 	}
+	
+
+	@Override
+	protected void switchEvent(double t, double[] q) {
+		// N/A
+	}
 
 	@Override
 	public void computeDerivatives(double t, double[] q, double[] qDot) {

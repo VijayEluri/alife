@@ -1,4 +1,4 @@
-package co.edu.unal.alife.poc.sbw3.one;
+package co.edu.unal.alife.poc.sbw3.two;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -17,25 +17,24 @@ import co.edu.unal.alife.poc.sbw3.APocSBW3Controller;
 import co.edu.unal.alife.poc.sbw3.PocSBW3Simulation;
 import co.edu.unal.alife.poc.sbw3.PocSBW3SimulationResult;
 
-public class TestPocSBW3SimulationOne {
+public class TestPocSBW3SimulationTwo {
 	static final Logger logger = LoggerFactory
-			.getLogger(TestPocSBW3SimulationOne.class);
+			.getLogger(TestPocSBW3SimulationTwo.class);
 	static final double TOL = 1e-8;
 	static final double T_TOL = 1e-6;
 
 	@Test
 	public void testRun() {
 		logger.info("\nStart testRun");
-		double time = 1;
 		double[] qinit = new double[] { 0, 0 };
 		double gamma = 0.004;
-		APocSBW3Controller controller = new PocSBW3ControllerOne();
+		APocSBW3Controller controller = new PocSBW3ControllerTwo();
 		/**
-		 * From alife-matlab: sbw3_fitness([0 81.1293],[0 0],true), with Tol =
-		 * 1e-12 and time=1.
+		 * From alife-matlab: sbw4_main2([0 0]), with Tol = 1e-12 and time=4.
 		 */
-		double[] qAssert = new double[] { -0.002172314996943,
-				-0.296167733150634, -0.004700784275364, -0.002567482685666 };
+		double time = 4;
+		double[] qAssert = new double[] { -0.105205390431593,
+				-0.217690971613171, -0.109077815975517, -0.015052213314171 };
 
 		Callable<PocSBW3SimulationResult> sim = new PocSBW3Simulation(qinit,
 				gamma, controller, time);
@@ -62,16 +61,16 @@ public class TestPocSBW3SimulationOne {
 	@Test
 	public void testRunWitSwitch() {
 		logger.info("\nStart testRunWithSwitch");
-		double time = 14.781589013421927;
 		double[] qinit = new double[] { 0, 0 };
 		double gamma = 0.004;
-		APocSBW3Controller controller = new PocSBW3ControllerOne();
+		APocSBW3Controller controller = new PocSBW3ControllerTwo();
+		
 		/**
-		 * From alife-matlab: sbw3_fitness([0 81.1293],[0 0],true), with Tol =
-		 * 1e-12 and time=10 (which simulates up to time=14.781589013421927).
+		 * From alife-matlab: sbw4_main2([0 0]), with Tol = 1e-12 and time=5.
 		 */
-		double[] qAssert = new double[] { -0.148994671205207,
-				-0.297989342410413, -0.155047578276319, -0.001698804732674 };
+		double time = 11.473241591023712;
+		double[] qAssert = new double[] { -0.127204882205017,
+				-0.254409764410028, -0.138601614928556, -0.015278646716122 };
 
 		Callable<PocSBW3SimulationResult> sim = new PocSBW3Simulation(qinit,
 				gamma, controller, time);
@@ -96,20 +95,15 @@ public class TestPocSBW3SimulationOne {
 	}
 
 	@Test
-	public void testRunWithFall() {
+	public void testRunWithoutFall() {
 		logger.info("\nStart testRunWithFall");
-		double time = 10;
+		double time = 3600;
 		double[] qinit = new double[] { 0, 0 };
 		double gamma = 0.004d;
-		double k_phi = 0d;
-		APocSBW3Controller controller = new PocSBW3ControllerOne(k_phi);
-		/**
-		 * From alife-matlab: sbw3_fitness([0 0],[0 0],true), with Tol = 1e-12
-		 * and time=10.
-		 */
-		double timeAssert = 6.722359460085634d;
-		double[] qAssert = new double[] { -1.570796326794916,
-				-1.082837004367210, -1.417033513607968, -1.556610074585741 };
+		APocSBW3Controller controller = new PocSBW3ControllerTwo();
+		
+		// Should not fall within 1h
+		double timeAssert = 3600;
 
 		Callable<PocSBW3SimulationResult> sim = new PocSBW3Simulation(qinit,
 				gamma, controller, time);
@@ -127,9 +121,5 @@ public class TestPocSBW3SimulationOne {
 		assertEquals(
 				"PocSBW3SimulationOne->Future->PocSBW3SimulationResult->getT equality assertion failed.",
 				timeAssert, result.getT(), T_TOL);
-
-		assertArrayEquals(
-				"PocSBW3SimulationOne->Future->PocSBW3SimulationResult->getQ equality assertion failed.",
-				qAssert, result.getQ(), TOL);
 	}
 }

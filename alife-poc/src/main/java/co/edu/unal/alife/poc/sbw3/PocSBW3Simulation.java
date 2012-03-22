@@ -1,4 +1,4 @@
-package co.edu.unal.alife.poc.sbw3.one;
+package co.edu.unal.alife.poc.sbw3;
 
 import static java.lang.Math.cos;
 
@@ -7,23 +7,26 @@ import java.util.Date;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.math3.ode.FirstOrderIntegrator;
+import org.apache.commons.math3.ode.events.EventHandler;
 import org.apache.commons.math3.ode.nonstiff.DormandPrince853Integrator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import co.edu.unal.alife.poc.sbw3.APocSBW3Controller;
-import co.edu.unal.alife.poc.sbw3.PocSBW3Equation;
-import co.edu.unal.alife.poc.sbw3.PocSBW3FallHandler;
-import co.edu.unal.alife.poc.sbw3.PocSBW3SimulationResult;
-import co.edu.unal.alife.poc.sbw3.PocSBW3StepHandler;
+public class PocSBW3Simulation implements Callable<PocSBW3SimulationResult> {
 
-public class PocSBW3SimulationOne implements Callable<PocSBW3SimulationResult> {
+	private static final double T_TOL = 1.0e-8;
 
-	static final Logger logger = LoggerFactory.getLogger(PocSBW3SimulationOne.class);
-	double[] qinit;
-	double gamma;
-	double tf;
-	APocSBW3Controller controller;
+	private static final double TOL = 1.0e-10;
+
+	protected static final Logger logger = LoggerFactory
+			.getLogger(PocSBW3Simulation.class);
+
+	protected double[] qinit;
+	protected double gamma;
+	protected double tf;
+	protected APocSBW3Controller controller;
+	protected PocSBW3Equation ode;
+	protected FirstOrderIntegrator solver;
 
 	/**
 	 * PcSBW3MainOne constructor.
@@ -39,13 +42,26 @@ public class PocSBW3SimulationOne implements Callable<PocSBW3SimulationResult> {
 	 * @param qAssert
 	 *            the expected final state vector (asserted if not null)
 	 */
-	public PocSBW3SimulationOne(double[] qi, double gamma,
+	public PocSBW3Simulation(double[] qi, double gamma,
 			APocSBW3Controller controller, double tf) {
 		super();
 		this.qinit = qi;
 		this.gamma = gamma;
 		this.controller = controller;
 		this.tf = tf;
+		buildSimulation();
+	}
+
+	/**
+	 * 
+	 */
+	protected void buildSimulation() {
+		solver = new DormandPrince853Integrator(T_TOL, 100.0, TOL, TOL);
+		ode = new PocSBW3Equation(gamma, controller);
+		EventHandler switchHandler = new PocSBW3StepHandler(ode, controller);
+		EventHandler fallHandler = new PocSBW3FallHandler();
+		solver.addEventHandler(switchHandler, 0.01, 1e-9, 100);
+		solver.addEventHandler(fallHandler, 0.01, 1e-9, 100);
 	}
 
 	@Override
@@ -59,16 +75,8 @@ public class PocSBW3SimulationOne implements Callable<PocSBW3SimulationResult> {
 		logger.info("Initial state q+ (after transition): {}",
 				Arrays.toString(q));
 
-		FirstOrderIntegrator dp853 = new DormandPrince853Integrator(1.0e-8,
-				100.0, 1.0e-10, 1.0e-10);
-		PocSBW3Equation ode = new PocSBW3Equation(gamma,
-				controller);
-		PocSBW3StepHandler switchTest = new PocSBW3StepHandler(ode);
-		PocSBW3FallHandler fallTest = new PocSBW3FallHandler();
-		dp853.addEventHandler(switchTest, 0.01, 1e-9, 100);
-		dp853.addEventHandler(fallTest, 0.01, 1e-9, 100);
 		logger.info("Simulation started at {} ...", new Date());
-		double t = dp853.integrate(ode, 0.0, q, tf, q);
+		double t = solver.integrate(ode, 0.0, q, tf, q);
 		logger.info("Simulation ended!");
 		long t2 = System.currentTimeMillis();
 		logger.info("Elapsed simulation (real-life) time: {} ms", (t2 - t1));

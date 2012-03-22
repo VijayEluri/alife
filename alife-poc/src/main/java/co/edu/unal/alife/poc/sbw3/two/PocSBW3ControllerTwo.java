@@ -19,6 +19,7 @@ public class PocSBW3ControllerTwo extends APocSBW3Controller {
 			.getLogger(PocSBW3ControllerTwo.class);
 	public static int N = 2;
 	public static int K_LENGTH = 17;
+	private double[] currentK;
 
 	public static double[][] K = {
 			{ 2.3778, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -61,39 +62,57 @@ public class PocSBW3ControllerTwo extends APocSBW3Controller {
 		super(N);
 	}
 
+	@Override
+	public double[] evaluateK(double t, double[] q, double[] r) {
+		return currentK;
+	}
+
+	@Override
+	public void computeDerivatives(double t, double[] q, double[] qDot) {
+		// N/A
+	}
+
 	/*
-	 * q2 = -q(2)/0.025+0.5; i1a = max(min(floor(q2)+1,n),1); i1b =
-	 * min(i1a+1,n); w1b = q2-floor(q2); w1a = 1 - w1b;
-	 * 
-	 * q1 = q(1)/0.025-0.5; i2a = max(min(floor(q1)+1,n),1); i2b = min(i2a+1,n);
-	 * w2b = q1-floor(q1); w2a = 1 - w2b;
-	 * 
-	 * p_i = [p(i1a,i2a) p(i1a,i2b); p(i1b,i2a) p(i1b,i2b)]; k_phi = [w1a
-	 * w1b]*p_i*[w2a; w2b]+0.1;
+	 * Evalutes k = (k_theta, k_phi) = (0, k_phi) using a look-up table. Valid
+	 * values for q are in the range ([0.0,0.4],[-0.4,0.0]). q[0] is used for
+	 * column selection, and q[1] for row selection. Output k_phi is
+	 * interpolated linearly.
 	 */
 	@Override
-	protected double[] evaluateK(double t, double[] q, double[] r) {
+	protected void switchEvent(double t, double[] q) {
 		boolean isT = logger.isTraceEnabled();
 
-		double q2 = -q[1] / 0.025 + 0.5;
-		int i1a = (int) max(min(floor(q2) + 1, K_LENGTH), 1) - 1;
-		int i1b = min(i1a + 1, K_LENGTH) - 1;
+		// Discretize q2 in steps of size 0.025 and Offset by +0.5
+		double q2 = -q[2] / 0.025 + 0.5;
+		logger.trace("q2 = {}.", q2);
+		// i1a: get the floor(.) of q2 and limit to [0,K_LENGHT-1]
+		int i1a = (int) max(min(floor(q2), K_LENGTH - 1), 0);
+		// i1b: the right neighbor of i1a and less or equal than K_LENGTH-1
+		int i1b = min(i1a + 1, K_LENGTH - 1);
+		logger.trace("Rows: i1a = {}, i1b = {}.", i1a, i1b);
+		// w1* are calculated as the distance of q2 to its closest integers
 		double w1b = q2 - floor(q2);
 		double w1a = 1 - w1b;
 		RealMatrix w1Matrix = new Array2DRowRealMatrix(
 				new double[] { w1a, w1b }).transpose();
 		logger.trace("w1Matrix = {}", isT ? w1Matrix.toString() : null);
 
+		// Discretize q1 in steps of size 0.025 and Offset by -0.5
 		double q1 = q[0] / 0.025 - 0.5;
-		int i2a = (int) max(min(floor(q1) + 1, K_LENGTH), 1) - 1;
-		int i2b = min(i2a + 1, K_LENGTH) - 1;
+		logger.trace("q1 = {}.", q1);
+		// i2a: get the floor(.) of q1 and limit to [0,K_LENGHT-1]
+		int i2a = (int) max(min(floor(q1), K_LENGTH - 1), 0);
+		// i2b: the neighbor below of i2a and less or equal than K_LENGTH-1
+		int i2b = min(i2a + 1, K_LENGTH - 1);
+		logger.trace("Cols: i2a = {}, i2b = {}.", i2a, i2b);
+		// w2* are calculated as the distance of q2 to its closest integers
 		double w2b = q1 - floor(q1);
 		double w2a = 1 - w2b;
-
 		RealMatrix w2Matrix = new Array2DRowRealMatrix(
 				new double[] { w2a, w2b });
 		logger.trace("w2Matrix = {}", isT ? w2Matrix.toString() : null);
 
+		// p_i is the submatrix of K used for interpolation
 		double[][] p_i = { { K[i1a][i2a], K[i1a][i2b] },
 				{ K[i1b][i2a], K[i1b][i2b] } };
 		RealMatrix pMatrix = new Array2DRowRealMatrix(p_i);
@@ -102,16 +121,13 @@ public class PocSBW3ControllerTwo extends APocSBW3Controller {
 		RealMatrix kMatrix = w1Matrix.multiply(pMatrix.multiply(w2Matrix));
 		logger.trace("kMatrix = w1Matrix * pMatrix * w2Matrix = {}",
 				isT ? kMatrix.toString() : null);
-		
-		double k_phi = kMatrix.getEntry(0, 0);
-		double[] k = new double[] { 0, k_phi + 0.1 };
-		logger.debug("t = {}\t k = {}", t, isT ? Arrays.toString(k) : null);
-		return k;
-	}
 
-	@Override
-	public void computeDerivatives(double t, double[] q, double[] qDot) {
-		// N/A
+		double k_phi = kMatrix.getEntry(0, 0);
+
+		currentK = new double[] { 0, k_phi + 0.1 };
+		logger.debug("t = {}\t currentK = {}\t q = {}",
+				new String[] { Double.toString(t), Arrays.toString(currentK),
+						Arrays.toString(q) });
 	}
 
 }

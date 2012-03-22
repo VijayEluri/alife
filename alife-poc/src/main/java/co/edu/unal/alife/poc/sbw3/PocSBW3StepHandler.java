@@ -11,14 +11,16 @@ public class PocSBW3StepHandler implements EventHandler {
 
 	static final Logger logger = LoggerFactory.getLogger(PocSBW3StepHandler.class);
 	private PocSBW3Equation equation;
+	private APocSBW3Controller controller;
 	
-	public PocSBW3StepHandler(PocSBW3Equation equation) {
+	public PocSBW3StepHandler(PocSBW3Equation equation, APocSBW3Controller controller) {
 		this.equation = equation;
+		this.controller = controller;
 	}
 
 	@Override
 	public void init(double t0, double[] y0, double t) {
-		// TODO Auto-generated method stub
+		controller.switchEvent(t0, y0);
 	}
 
 	@Override
@@ -52,10 +54,11 @@ public class PocSBW3StepHandler implements EventHandler {
 
 	@Override
 	public void resetState(double t, double[] y) throws EventException {
-		logger.trace("Entering resetState");
+		logger.trace("Before resetState");
 		logger.trace("Time t="+t+" State y="+Arrays.toString(y));
 		equation.switchState(t, y);
-		logger.trace("Exiting resetState");
+		controller.switchEvent(t, y);
+		logger.trace("After resetState");
 		logger.trace("Time t="+t+" State y="+Arrays.toString(y));
 	}
 
