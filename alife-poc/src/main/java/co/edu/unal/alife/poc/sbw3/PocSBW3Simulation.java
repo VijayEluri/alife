@@ -70,11 +70,13 @@ public class PocSBW3Simulation implements Callable<PocSBW3SimulationResult> {
 		double theta0 = qinit[0];
 		double thetap0 = qinit[1];
 
-		double[] q = new double[] { theta0, 2 * theta0, thetap0,
-				(1 - cos(2 * theta0)) * thetap0 };
+		double[] q = new double[ode.getDimension()];
+		q[0]=theta0;
+		q[1]=2 * theta0;
+		q[2]=thetap0;
+		q[3]=(1 - cos(2 * theta0)) * thetap0;
 		logger.info("Initial state q+ (after transition): {}",
 				Arrays.toString(q));
-
 		logger.info("Simulation started at {} ...", new Date());
 		double t = solver.integrate(ode, 0.0, q, tf, q);
 		logger.info("Simulation ended!");

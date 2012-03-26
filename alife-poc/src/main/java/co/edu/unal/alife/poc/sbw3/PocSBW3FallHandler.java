@@ -12,8 +12,7 @@ public class PocSBW3FallHandler implements EventHandler {
 
 	@Override
 	public void init(double t0, double[] y0, double t) {
-		// TODO Auto-generated method stub
-
+		// N/A
 	}
 
 	@Override

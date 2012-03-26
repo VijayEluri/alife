@@ -62,7 +62,7 @@ public class PocSBW3Equation implements FirstOrderDifferentialEquations {
 	 * ()
 	 */
 	public int getDimension() {
-		return Q_DIMENSION;
+		return Q_DIMENSION+controller.getDimension();
 	}
 
 	/*
@@ -85,6 +85,9 @@ public class PocSBW3Equation implements FirstOrderDifferentialEquations {
 		qDot[2] = tau[0] + (G / L) * sin(q[0] - gamma);
 		qDot[3] = -tau[1] + (1 - cos(q[1])) * qDot[2] + q[2] * q[2] * sin(q[1])
 				+ (G / L) * sin(q[0] - q[1] - gamma);
+		
+		//update controller
+		controller.computeDerivatives(t, q, qDot);
 	}
 
 	/**

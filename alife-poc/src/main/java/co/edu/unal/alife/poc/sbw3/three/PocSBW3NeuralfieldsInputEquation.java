@@ -1,37 +1,25 @@
-package co.edu.unal.alife.poc.sbw3.two;
+package co.edu.unal.alife.poc.sbw3.three;
 
 import static java.lang.Math.floor;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-
-import java.util.Arrays;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import co.edu.unal.alife.poc.sbw3.APocSBW3Controller;
+import co.edu.unal.alife.poc.neuralfield.APocNeuralfieldSpec;
+import co.edu.unal.alife.poc.neuralfield.IPocNeuralfieldInputEquation;
+import co.edu.unal.alife.poc.neuralfield.PocMexicanHatKernelFunction;
 
-/**
- * This controller uses lookup table of feedback loop gain values. It approaches
- * a sliding-mode controller, where in each leg switch a new proportional
- * control gain is evaluated based on a table (it is locally a linear
- * controller).
- * 
- * It is a port of the work developed in alife-matlab (SBW3 and 4).
- * 
- * @author shrein
- * 
- */
-public class PocSBW3ControllerTwo extends APocSBW3Controller {
+public class PocSBW3NeuralfieldsInputEquation implements
+		IPocNeuralfieldInputEquation {
 
 	static final Logger logger = LoggerFactory
-			.getLogger(PocSBW3ControllerTwo.class);
-	public static final int N = 0;
+			.getLogger(PocSBW3NeuralfieldsInputEquation.class);
+	public static final double MAX_K_PHI = 81.1293;
 	public static final int K_LENGTH = 17;
-	private double[] currentK;
-
 	public static double[][] K = {
 			{ 2.3778, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 2.723, 2.4523, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -69,37 +57,38 @@ public class PocSBW3ControllerTwo extends APocSBW3Controller {
 					25.8184, 23.8253, 21.7315, 19.5019, 17.1205, 14.5702,
 					11.854, 9.0109, 6.3139, 3.5082 } };
 
-	public PocSBW3ControllerTwo() {
-		super(N);
+	APocNeuralfieldSpec spec;
+	private PocMexicanHatKernelFunction kernelFunction;
+
+	public PocSBW3NeuralfieldsInputEquation(APocNeuralfieldSpec spec) {
+		super();
+		this.spec = spec;
+		// TODO: Fix kernelFunction constructor values
+		this.kernelFunction = new PocMexicanHatKernelFunction(0.05, 0.5, 1);
 	}
 
-	@Override
-	public double[] evaluateK(double t, double[] q, double[] r) {
-		return currentK;
-	}
-
-	@Override
-	public void computeDerivatives(double t, double[] q, double[] qDot) {
-		// N/A
-	}
-
-	/*
-	 * Evalutes k = (k_theta, k_phi) = (0, k_phi) using a look-up table. Valid
-	 * values for q are in the range ([0.0,0.4],[-0.4,0.0]). q[0] is used for
-	 * column selection, and q[1] for row selection. Output k_phi is
-	 * interpolated linearly.
+	/**
+	 * Evaluates the input delta, applying a kernel function to the projection
+	 * generated with evalProjection().
 	 */
 	@Override
-	protected void switchEvent(double t, double[] q) {
-		double k_phi = evalKPhi(q);
-
-		currentK = new double[] { 0, k_phi + 0.1 };
-		logger.debug("t = {}\t currentK = {}\t q = {}",
-				new String[] { Double.toString(t), Arrays.toString(currentK),
-						Arrays.toString(q) });
+	public double evalInputDelta(double[] lastSwitchQ, int localIndex) {
+		double localPosition = spec.getPosition(localIndex, 0);
+		double projection = evalProjection(lastSwitchQ);
+		double kernelValue = kernelFunction.evalKernelValue(projection,
+				localPosition);
+		return kernelValue;
 	}
 
-	public static double evalKPhi(double[] q) {
+	/**
+	 * Evaluates the non-linear projection from (\theta,\phi) to the one
+	 * dimensional position in the neuralfield, using the same K values of the
+	 * PocSBW3ControllerTwo.
+	 * 
+	 * @param q
+	 * @return
+	 */
+	private static double evalProjection(double[] q) {
 		boolean isT = logger.isTraceEnabled();
 
 		// Discretize q2 in steps of size 0.025 and Offset by +0.5
@@ -143,7 +132,6 @@ public class PocSBW3ControllerTwo extends APocSBW3Controller {
 				isT ? kMatrix.toString() : null);
 
 		double k_phi = kMatrix.getEntry(0, 0);
-		return k_phi;
+		return k_phi / MAX_K_PHI;
 	}
-
 }
