@@ -8,11 +8,11 @@ import org.junit.Test;
 
 import co.edu.unal.alife.poc.sbw3.APocSBW3Controller;
 import co.edu.unal.alife.poc.sbw3.PocSBW3Equation;
-import co.edu.unal.alife.poc.sbw3.PocSBW3StepHandler;
+import co.edu.unal.alife.poc.sbw3.PocSBW3SwitchHandler;
 
 public class TestPocSBW3StepHandler {
 	static final double TOL = 1e-10;
-	PocSBW3StepHandler handler;
+	PocSBW3SwitchHandler handler;
 
 	@Before
 	public void setUp() {
@@ -26,11 +26,16 @@ public class TestPocSBW3StepHandler {
 
 			@Override
 			protected void switchEvent(double t, double[] q) {
+			}
+
+			@Override
+			public String toString(String TOKEN, String COMMENT) {
+				return null;
 			};
 		};
 		PocSBW3Equation equation = new PocSBW3Equation(0.004, controller);
 
-		this.handler = new PocSBW3StepHandler(equation, controller);
+		this.handler = new PocSBW3SwitchHandler(equation, controller);
 	}
 
 	@Test

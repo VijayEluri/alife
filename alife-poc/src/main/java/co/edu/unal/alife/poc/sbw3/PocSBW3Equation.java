@@ -4,9 +4,12 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 import org.apache.commons.math3.ode.FirstOrderDifferentialEquations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PocSBW3Equation implements FirstOrderDifferentialEquations {
-
+	protected static final Logger logger = LoggerFactory
+			.getLogger(PocSBW3Equation.class);
 	/**
 	 * State vector dimension
 	 */
@@ -72,6 +75,8 @@ public class PocSBW3Equation implements FirstOrderDifferentialEquations {
 	 * computeDerivatives(double, double[], double[])
 	 */
 	public void computeDerivatives(double t, double[] q, double[] qDot) {
+		logger.debug("Computing derivates for SBW3 at time: {}",t);
+		logger.debug("System Pre-update qDot: {}",qDot);
 		// control action
 		double[] tau = controller.getControlAction(t, q, r);
 		/**
@@ -86,6 +91,7 @@ public class PocSBW3Equation implements FirstOrderDifferentialEquations {
 		qDot[3] = -tau[1] + (1 - cos(q[1])) * qDot[2] + q[2] * q[2] * sin(q[1])
 				+ (G / L) * sin(q[0] - q[1] - gamma);
 		
+		logger.debug("System Post-update qDot: {}",qDot);
 		//update controller
 		controller.computeDerivatives(t, q, qDot);
 	}

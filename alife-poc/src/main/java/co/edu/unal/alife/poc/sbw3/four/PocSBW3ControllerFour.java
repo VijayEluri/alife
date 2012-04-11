@@ -1,4 +1,4 @@
-package co.edu.unal.alife.poc.sbw3.three;
+package co.edu.unal.alife.poc.sbw3.four;
 
 import java.util.Arrays;
 
@@ -19,17 +19,18 @@ import co.edu.unal.alife.poc.sbw3.APocSBW3Controller;
  * @author shrein
  * 
  */
-public class PocSBW3ControllerThree extends APocSBW3Controller {
+public class PocSBW3ControllerFour extends APocSBW3Controller {
 
 	static final Logger logger = LoggerFactory
-			.getLogger(PocSBW3ControllerThree.class);
-	public static int N = 17;
+			.getLogger(PocSBW3ControllerFour.class);
+	public static final int N = 17;
+	public static final int N2 = N * N;
 	private double[] lastSwitchQ;
 	private APocNeuralfieldSpec spec;
 
-	public PocSBW3ControllerThree() {
-		super(N);
-		this.spec = new PocSBW3NeuralfieldSpec1D(4, N);
+	public PocSBW3ControllerFour() {
+		super(N2);
+		this.spec = new PocSBW3NeuralfieldSpec2D(4, N, N);
 	}
 
 	@Override
@@ -41,6 +42,8 @@ public class PocSBW3ControllerThree extends APocSBW3Controller {
 	@Override
 	public void computeDerivatives(double t, double[] q, double[] qDot) {
 		spec.computeDerivatives(q, lastSwitchQ, qDot);
+		// logger.debug("Time: {}.\t q: {}", t, q);
+		logger.debug("Time: {}.\t qDot: {}", t, qDot);
 	}
 
 	/**
@@ -53,7 +56,14 @@ public class PocSBW3ControllerThree extends APocSBW3Controller {
 	}
 
 	@Override
-	public String toString(String TOKEN, String COMMENT) {
-		return spec.toString();
+	public void init(double t0, double[] y0) {
+		super.init(t0, y0);
+		spec.init(t0, y0);
 	}
+
+	@Override
+	public String toString(String TOKEN, String COMMENT) {
+		return spec.toString(TOKEN, COMMENT);
+	}
+
 }

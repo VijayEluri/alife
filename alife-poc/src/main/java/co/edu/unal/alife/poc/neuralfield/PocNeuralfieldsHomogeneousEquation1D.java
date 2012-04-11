@@ -2,19 +2,19 @@ package co.edu.unal.alife.poc.neuralfield;
 
 import static co.edu.unal.alife.poc.PocUtils.heavisideFunction;
 
-public class PocNeuralfieldsHomogeneousEquation {
+public class PocNeuralfieldsHomogeneousEquation1D extends APocNeuralFieldHomogeneousEquation {
 
-	APocNeuralfieldSpec spec;
-	private PocMexicanHatKernelFunction kernelFunction;
+	private PocMexicanHatKernelFunction1D kernelFunction;
 
-	public PocNeuralfieldsHomogeneousEquation(APocNeuralfieldSpec spec) {
+	public PocNeuralfieldsHomogeneousEquation1D(APocNeuralfieldSpec spec) {
 		super();
 		this.spec = spec;
 		// TODO: Fix kernelFunction constructor values
-		this.kernelFunction = new PocMexicanHatKernelFunction(
+		this.kernelFunction = new PocMexicanHatKernelFunction1D(
 				0.05, 4, 0.05);
 	}
 
+	@Override
 	protected double evalFeedbackDelta(double[] q, int localIndex) {
 		double sum = 0;
 		double localPosition = spec.getPosition(localIndex,0);
@@ -25,13 +25,7 @@ public class PocNeuralfieldsHomogeneousEquation {
 					.evalKernelValue(localPosition, remotePosition)
 					* firingRate;
 		}
-		double feedbackDelta = sum * spec.getH();
+		double feedbackDelta = sum * spec.getH(0);
 		return feedbackDelta;
-	}
-	
-	public double evalHomogeneousDelta(double[] q, int localIndex) {
-		double localValue = q[localIndex];
-		double feedbackDelta = evalFeedbackDelta(q, localIndex);
-		return -localValue + feedbackDelta;
 	}
 }

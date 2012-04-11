@@ -1,4 +1,4 @@
-package co.edu.unal.alife.poc.sbw3.three;
+package co.edu.unal.alife.poc.sbw3;
 
 import static java.lang.Math.floor;
 import static java.lang.Math.max;
@@ -9,17 +9,11 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import co.edu.unal.alife.poc.neuralfield.APocNeuralfieldSpec;
-import co.edu.unal.alife.poc.neuralfield.IPocNeuralfieldInputEquation;
-import co.edu.unal.alife.poc.neuralfield.PocMexicanHatKernelFunction;
+public class PocSBW3Lookup {
 
-public class PocSBW3NeuralfieldsInputEquation implements
-		IPocNeuralfieldInputEquation {
-
-	static final Logger logger = LoggerFactory
-			.getLogger(PocSBW3NeuralfieldsInputEquation.class);
-	public static final double MAX_K_PHI = 81.1293;
+	static final Logger logger = LoggerFactory.getLogger(PocSBW3Lookup.class);
 	public static final int K_LENGTH = 17;
+	public static final double MAX_K_PHI = 81.1293;
 	public static double[][] K = {
 			{ 2.3778, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 			{ 2.723, 2.4523, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -57,42 +51,11 @@ public class PocSBW3NeuralfieldsInputEquation implements
 					25.8184, 23.8253, 21.7315, 19.5019, 17.1205, 14.5702,
 					11.854, 9.0109, 6.3139, 3.5082 } };
 
-	APocNeuralfieldSpec spec;
-	private PocMexicanHatKernelFunction kernelFunction;
-
-	public PocSBW3NeuralfieldsInputEquation(APocNeuralfieldSpec spec) {
-		super();
-		this.spec = spec;
-		// TODO: Fix kernelFunction constructor values
-		this.kernelFunction = new PocMexicanHatKernelFunction(0.05, 0.5, 1);
-	}
-
-	/**
-	 * Evaluates the input delta, applying a kernel function to the projection
-	 * generated with evalProjection().
-	 */
-	@Override
-	public double evalInputDelta(double[] lastSwitchQ, int localIndex) {
-		double localPosition = spec.getPosition(localIndex, 0);
-		double projection = evalProjection(lastSwitchQ);
-		double kernelValue = kernelFunction.evalKernelValue(projection,
-				localPosition);
-		return kernelValue;
-	}
-
-	/**
-	 * Evaluates the non-linear projection from (\theta,\phi) to the one
-	 * dimensional position in the neuralfield, using the same K values of the
-	 * PocSBW3ControllerTwo.
-	 * 
-	 * @param q
-	 * @return
-	 */
-	private static double evalProjection(double[] q) {
+	public static double evalKPhi(double[] q) {
 		boolean isT = logger.isTraceEnabled();
-
+		double h = 0.4 / (K_LENGTH - 1);
 		// Discretize q2 in steps of size 0.025 and Offset by +0.5
-		double q2 = -q[2] / 0.025 + 0.5;
+		double q2 = -q[2] / h + 1;
 		logger.trace("q2 = {}.", q2);
 		// i1a: get the floor(.) of q2 and limit to [0,K_LENGHT-1]
 		int i1a = (int) max(min(floor(q2), K_LENGTH - 1), 0);
@@ -107,7 +70,7 @@ public class PocSBW3NeuralfieldsInputEquation implements
 		logger.trace("w1Matrix = {}", isT ? w1Matrix.toString() : null);
 
 		// Discretize q1 in steps of size 0.025 and Offset by -0.5
-		double q1 = q[0] / 0.025 - 0.5;
+		double q1 = q[0] / h - 1;
 		logger.trace("q1 = {}.", q1);
 		// i2a: get the floor(.) of q1 and limit to [0,K_LENGHT-1]
 		int i2a = (int) max(min(floor(q1), K_LENGTH - 1), 0);
@@ -132,6 +95,6 @@ public class PocSBW3NeuralfieldsInputEquation implements
 				isT ? kMatrix.toString() : null);
 
 		double k_phi = kMatrix.getEntry(0, 0);
-		return k_phi / MAX_K_PHI;
+		return k_phi;
 	}
 }

@@ -2,12 +2,12 @@ package co.edu.unal.alife.poc.neuralfield;
 
 import static co.edu.unal.alife.poc.PocUtils.squareDistance;
 
-public class PocMexicanHatKernelFunction {
+public class PocMexicanHatKernelFunction1D {
 	public double H0;
 	public double delta;
 	public double k;
 
-	public PocMexicanHatKernelFunction(double h0, double delta, double k) {
+	public PocMexicanHatKernelFunction1D(double h0, double delta, double k) {
 		H0 = h0;
 		this.delta = delta;
 		this.k = k;

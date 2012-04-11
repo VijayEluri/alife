@@ -1,7 +1,7 @@
 package co.edu.unal.alife.poc.sbw3.three;
 
 import co.edu.unal.alife.poc.neuralfield.APocNeuralfieldSpec;
-import co.edu.unal.alife.poc.neuralfield.PocNeuralfieldsHomogeneousEquation;
+import co.edu.unal.alife.poc.neuralfield.PocNeuralfieldsHomogeneousEquation1D;
 
 public class PocSBW3NeuralfieldSpec1D extends APocNeuralfieldSpec {
 
@@ -16,9 +16,10 @@ public class PocSBW3NeuralfieldSpec1D extends APocNeuralfieldSpec {
 		this.endIndex = getStartIndex() + getLength() - 1;
 		this.positions = new double[length];
 		this.h = (END_POSITION - START_POSITION) / getLength();
-		this.inputEquation = new PocSBW3NeuralfieldsInputEquation(this);
-		this.outputEquation = new PocSBW3NeuralfieldsOutputEquation(this);
-		this.homogeneousEquation = new PocNeuralfieldsHomogeneousEquation(this);
+		this.inputEquation = new PocSBW3NeuralfieldsInputEquation1D(this);
+		this.outputEquation = new PocSBW3NeuralfieldsOutputEquation1D(this);
+		this.homogeneousEquation = new PocNeuralfieldsHomogeneousEquation1D(
+				this);
 		initPositions();
 	}
 
@@ -45,7 +46,38 @@ public class PocSBW3NeuralfieldSpec1D extends APocNeuralfieldSpec {
 	}
 
 	@Override
-	public double getH() {
-		return h;
+	public double getH(int dimension) {
+		if (dimension == 0) {
+			return h;
+		} else {
+			throw new IndexOutOfBoundsException(
+					"This neuralfield specification only supports dimension 0, but was given dimension "
+							+ dimension + ".");
+		}
+	}
+
+	@Override
+	public String toString(final String TOKEN, final String COMMENT) {
+		String superString = super.toString();
+		StringBuffer sb = new StringBuffer();
+		sb.append(superString);
+		sb.append(COMMENT);
+		sb.append("t");
+		sb.append(TOKEN);
+		sb.append("theta");
+		sb.append(TOKEN);
+		sb.append("phi");
+		sb.append(TOKEN);
+		sb.append("thetaDot");
+		sb.append(TOKEN);
+		sb.append("phiDot");
+		for (int i = 0; i < length; i++) {
+			sb.append(TOKEN);
+			sb.append("(");
+			sb.append(i);
+			sb.append(")");
+		}
+		sb.append("\n");
+		return sb.toString();
 	}
 }

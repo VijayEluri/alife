@@ -24,6 +24,11 @@ public class TestPocSBW3Equation {
 
 			@Override
 			protected void switchEvent(double t, double[] q) {
+			}
+
+			@Override
+			public String toString(String TOKEN, String COMMENT) {
+				return null;
 			};
 		});
 	};

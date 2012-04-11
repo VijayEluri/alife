@@ -4,12 +4,12 @@ import co.edu.unal.alife.poc.neuralfield.APocNeuralfieldSpec;
 import co.edu.unal.alife.poc.neuralfield.IPocNeuralfieldOutputEquation;
 
 
-public class PocSBW3NeuralfieldsOutputEquation implements IPocNeuralfieldOutputEquation {
+public class PocSBW3NeuralfieldsOutputEquation1D implements IPocNeuralfieldOutputEquation {
 	public static final double MAX_K_PHI = 81.1293;
 
 	APocNeuralfieldSpec spec;
 
-	public PocSBW3NeuralfieldsOutputEquation(APocNeuralfieldSpec spec) {
+	public PocSBW3NeuralfieldsOutputEquation1D(APocNeuralfieldSpec spec) {
 		super();
 		this.spec = spec;
 	}
@@ -18,7 +18,7 @@ public class PocSBW3NeuralfieldsOutputEquation implements IPocNeuralfieldOutputE
 	 * @see co.edu.unal.alife.poc.sbw3.three.IPocNeuralfieldOutputEquation#evalOutput(double[])
 	 */
 	@Override
-	public double evalOutput(double[] q) {
+	public double evalOutput(double t, double[] q) {
 		double u = 0;
 		double maxValue = Double.NEGATIVE_INFINITY;
 		int maxValueIndex = -1;

@@ -57,7 +57,6 @@ public abstract class APocSBW3Controller implements
 	 */
 	protected abstract void switchEvent(double t, double[] q);
 
-	
 	/**
 	 * Updates the state vector derivative for the controller.
 	 * 
@@ -117,6 +116,12 @@ public abstract class APocSBW3Controller implements
 	@Override
 	public int getDimension() {
 		return N;
+	}
+
+	public abstract String toString(final String TOKEN, final String COMMENT);
+
+	public void init(double t0, double[] y0) {
+		this.switchEvent(t0, y0);
 	}
 
 }
