@@ -9,7 +9,6 @@ public class PocNeuralfieldsHomogeneousEquation1D extends APocNeuralFieldHomogen
 	public PocNeuralfieldsHomogeneousEquation1D(APocNeuralfieldSpec spec) {
 		super();
 		this.spec = spec;
-		// TODO: Fix kernelFunction constructor values
 		this.kernelFunction = new PocMexicanHatKernelFunction1D(
 				0.05, 4, 0.05);
 	}

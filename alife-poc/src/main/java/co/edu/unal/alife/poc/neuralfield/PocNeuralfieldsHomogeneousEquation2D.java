@@ -9,7 +9,7 @@ public class PocNeuralfieldsHomogeneousEquation2D extends APocNeuralFieldHomogen
 	public PocNeuralfieldsHomogeneousEquation2D(APocNeuralfieldSpec spec) {
 		super();
 		this.spec = spec;
-		// TODO: Fix kernelFunction constructor values
+		// These values are balanced by trial-and-error.
 		this.kernelFunction = new PocMexicanHatKernelFunction2D(0.1, 0.2, 10);
 	}
 

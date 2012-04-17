@@ -28,7 +28,7 @@ public class PocSBW3NeuralfieldsInputEquation2D implements
 	public PocSBW3NeuralfieldsInputEquation2D(APocNeuralfieldSpec spec) {
 		super();
 		this.spec = spec;
-		// TODO: Fix kernelFunction constructor values
+		// These values are balanced by trial-and-error.nction constructor values
 		this.kernelFunction = new PocMexicanHatKernelFunction2D(0.01, 0.1, 1);
 	}
 

@@ -39,7 +39,7 @@ public class PocSBW3NeuralfieldsOutputEquation2D implements
 			double yPosition = spec.getPosition(i, 1);
 			logger.trace("xPosition = {}, yPosition = {}.", xPosition,
 					yPosition);
-			double value = PocUtils.heavisideFunction(q[i]);
+			double value = PocUtils.heavisideFunction(q[i])*q[i];
 			double k = getK(xPosition, yPosition);
 			accK += k * value;
 			acc += value;

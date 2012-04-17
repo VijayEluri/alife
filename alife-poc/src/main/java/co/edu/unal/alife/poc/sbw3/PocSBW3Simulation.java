@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.math3.ode.FirstOrderIntegrator;
 import org.apache.commons.math3.ode.events.EventHandler;
-import org.apache.commons.math3.ode.nonstiff.DormandPrince853Integrator;
+import org.apache.commons.math3.ode.nonstiff.GraggBulirschStoerIntegrator;
 import org.apache.commons.math3.ode.sampling.FixedStepHandler;
 import org.apache.commons.math3.ode.sampling.StepNormalizer;
 import org.slf4j.Logger;
@@ -15,8 +15,10 @@ import org.slf4j.LoggerFactory;
 
 public class PocSBW3Simulation implements Callable<PocSBW3SimulationResult> {
 
-	private static final double T_TOL = 1.0e-8;
-	private static final double TOL = 1.0e-10;
+	private static final double MIN_STEP = 1.0e-5;
+	private static final double MAX_STEP = 100;
+	private static final double T_TOL = 1.0e-5;
+	private static final double TOL = 1.0e-6;
 	private static final double TRACE_STEP_SIZE = 0.1;
 
 	protected static final Logger logger = LoggerFactory
@@ -74,7 +76,8 @@ public class PocSBW3Simulation implements Callable<PocSBW3SimulationResult> {
 	}
 
 	protected void buildSimulation(boolean stepTrace, boolean eventTrace) {
-		solver = new DormandPrince853Integrator(T_TOL, 100.0, TOL, TOL);
+		//solver = new DormandPrince853Integrator(MIN_STEP, MAX_STEP, T_TOL, TOL);
+		solver = new GraggBulirschStoerIntegrator(MIN_STEP, MAX_STEP, T_TOL, TOL);
 		ode = new PocSBW3Equation(gamma, controller);
 		EventHandler switchHandler;
 		EventHandler fallHandler = new PocSBW3FallHandler();
