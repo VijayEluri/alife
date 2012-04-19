@@ -28,7 +28,8 @@ public class PocSBW3NeuralfieldsInputEquation2D implements
 	public PocSBW3NeuralfieldsInputEquation2D(APocNeuralfieldSpec spec) {
 		super();
 		this.spec = spec;
-		// These values are balanced by trial-and-error.nction constructor values
+		// These values are balanced by trial-and-error. The take into account
+		// the fact that the input equation is not divided by H(0)xH(1)
 		this.kernelFunction = new PocMexicanHatKernelFunction2D(0.01, 0.1, 1);
 	}
 
@@ -48,12 +49,12 @@ public class PocSBW3NeuralfieldsInputEquation2D implements
 				localYPosition);
 		double kernelValue = kernelFunction.evalKernelValue(xProjection,
 				yProjection, localXPosition, localYPosition);
-		logger.trace("kernel value: {}",kernelValue);
+		logger.trace("kernel value: {}", kernelValue);
 		/*
-		 *  inputDelta = kernelValue * defaultValue * spec.getH(0) * spec.getH(1)
-		 *  where defaultValue = INPUT_CONSTANT/(spec.getH(0) * spec.getH(1))
+		 * inputDelta = kernelValue * defaultValue * spec.getH(0) * spec.getH(1)
+		 * where defaultValue = INPUT_CONSTANT/(spec.getH(0) * spec.getH(1))
 		 */
-		return kernelValue*INPUT_CONSTANT;
+		return kernelValue * INPUT_CONSTANT;
 	}
 
 	/**

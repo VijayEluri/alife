@@ -10,7 +10,7 @@ public class PocNeuralfieldsHomogeneousEquation2D extends APocNeuralFieldHomogen
 		super();
 		this.spec = spec;
 		// These values are balanced by trial-and-error.
-		this.kernelFunction = new PocMexicanHatKernelFunction2D(0.1, 0.2, 10);
+		this.kernelFunction = new PocMexicanHatKernelFunction2D(0.1, 0.15, 1.5);
 	}
 
 	protected double evalFeedbackDelta(double[] q, int localIndex) {
@@ -26,6 +26,6 @@ public class PocNeuralfieldsHomogeneousEquation2D extends APocNeuralFieldHomogen
 					* firingRate;
 		}
 		double feedbackDelta = sum * spec.getH(0) * spec.getH(1);
-		return 0*feedbackDelta;
+		return feedbackDelta;
 	}
 }
