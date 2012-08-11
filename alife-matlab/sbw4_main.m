@@ -13,7 +13,7 @@ options = odeset('Events',@sbw3_test,...
     'RelTol',1e-9,...
     'AbsTol',[1e-9 1e-9 1e-9 1e-9]);
 t0 = 0;
-tfinal = 200;
+tfinal = 600;
 
 tprev = t0;
 tt=[];
@@ -37,6 +37,7 @@ while(tprev < tfinal && ien(length(ien)) == 1 && n<=maxiters)
     qinit = sbw1_switch(qprev);
     n=n+1;
 end
+[tn qn]
 fitness = 0;
 if(~isempty(ien) && ien(length(ien)) == 2)
     fitness = 20000;

@@ -28,8 +28,9 @@ public class TestPocSBW3SimulationOne {
 		logger.info("\nStart testRun");
 		double time = 1;
 		double[] qinit = new double[] { 0, 0 };
+		double k = 81.1293;
 		double gamma = 0.004;
-		APocSBW3Controller controller = new PocSBW3ControllerOne();
+		APocSBW3Controller controller = new PocSBW3ControllerOne(k);
 		/**
 		 * From alife-matlab: sbw3_fitness([0 81.1293],[0 0],true), with Tol =
 		 * 1e-12 and time=1.
@@ -64,8 +65,9 @@ public class TestPocSBW3SimulationOne {
 		logger.info("\nStart testRunWithSwitch");
 		double time = 14.781589013421927;
 		double[] qinit = new double[] { 0, 0 };
+		double k = 81.1293;
 		double gamma = 0.004;
-		APocSBW3Controller controller = new PocSBW3ControllerOne();
+		APocSBW3Controller controller = new PocSBW3ControllerOne(k);
 		/**
 		 * From alife-matlab: sbw3_fitness([0 81.1293],[0 0],true), with Tol =
 		 * 1e-12 and time=10 (which simulates up to time=14.781589013421927).
@@ -93,6 +95,47 @@ public class TestPocSBW3SimulationOne {
 		assertArrayEquals(
 				"PocSBW3SimulationOne->Future->PocSBW3SimulationResult->getQ equality assertion failed.",
 				qAssert, result.getQ(), TOL);
+	}
+
+	@Test
+	public void testRunWithoutFall() {
+		logger.info("\nStart testRunWithFall");
+		double time = 100;
+		double[] qinit = new double[] { 0.02, -0.39 };
+		double gamma = 0.004d;
+		// We use k_phi=100 as proposed by [Wisse05How]
+		double k = 81.1293;
+		APocSBW3Controller controller = new PocSBW3ControllerOne(k);
+		double timeAssert = 100;
+		/**
+		 * --> Fix From alife-matlab: sbw3_fitness([0 0],[0 0],true), with Tol =
+		 * 1e-12 and time=10.
+		 */
+
+		double[] qAssert = new double[] { -1.570796326794916,
+				-1.082837004367210, -1.417033513607968, -1.556610074585741 };
+
+		Callable<PocSBW3SimulationResult> sim = new PocSBW3Simulation(qinit,
+				gamma, controller, time, true, true);
+		ExecutorService pool = Executors.newFixedThreadPool(1);
+		Future<PocSBW3SimulationResult> future = pool.submit(sim);
+		PocSBW3SimulationResult result = null;
+		try {
+			result = future.get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+
+		assertEquals(
+				"PocSBW3SimulationOne->Future->PocSBW3SimulationResult->getT equality assertion failed.",
+				timeAssert, result.getT(), T_TOL);
+
+		// TODO: Fix assert.
+		// assertArrayEquals(
+		// "PocSBW3SimulationOne->Future->PocSBW3SimulationResult->getQ equality assertion failed.",
+		// qAssert, result.getQ(), TOL);
 	}
 
 	@Test

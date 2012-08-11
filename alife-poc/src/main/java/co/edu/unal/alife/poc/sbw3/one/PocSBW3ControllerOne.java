@@ -9,8 +9,8 @@ import co.edu.unal.alife.poc.sbw3.APocSBW3Controller;
  * 
  */
 public class PocSBW3ControllerOne extends APocSBW3Controller {
-
-	private double[] k = new double[] { 0, 81.1293 };
+	// We use k_phi=100 as proposed by [Wisse05How]
+	private double[] k = new double[] { 0, 100 };
 	public static final int N = 0;
 
 	public PocSBW3ControllerOne() {

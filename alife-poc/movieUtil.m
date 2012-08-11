@@ -17,6 +17,6 @@ for i=1:size(data,1)
     title(sprintf('t = %g, k_{phi}= %g.',data(i,1),data(i,296)));
     xlabel(sprintf('theta'));
     ylabel(sprintf('theta dot'));
-    F(i)=getframe;
+    F(i)=getframe(gcf);
     hold off;
 end

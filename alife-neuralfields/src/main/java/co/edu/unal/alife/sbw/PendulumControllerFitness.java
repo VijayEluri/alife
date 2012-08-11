@@ -59,7 +59,7 @@ public class PendulumControllerFitness extends Fitness {
 		// Setup initial values
 		DeltaPopulation pendulumPopulation = field.getPopulations().get(2);
 		pendulumPopulation.setElementValue(SBWEquation.STATE_THETA, initialAngle);
-		pendulumPopulation.setElementValue(SBWEquation.STATE_X, initialPos);
+		pendulumPopulation.setElementValue(SBWEquation.STATE_PHI, initialPos);
 		Tracer tracer = new Tracer(N);
 		
 		// Add Observer

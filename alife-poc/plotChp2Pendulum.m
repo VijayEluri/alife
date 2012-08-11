@@ -1,0 +1,12 @@
+figure;
+plot(theta_pendulum(:,1),theta_pendulum(:,2),'r--',theta_pendulum_evo(:,1),theta_pendulum_evo(:,2),'k-');
+title('theta');
+xlabel(sprintf('t'));
+ylabel(sprintf('theta'));
+legend('hand-tuned','evolved');
+figure;
+plot(omega_pendulum(:,1),omega_pendulum(:,2),'r--',omega_pendulum_evo(:,1),omega_pendulum_evo(:,2),'k-');
+title('omega');
+xlabel(sprintf('t'));
+ylabel(sprintf('omega'));
+legend('hand-tuned','evolved');

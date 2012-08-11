@@ -1,13 +1,14 @@
-theta0 = 0.4*1.3;
-thetap0 = -0.434;
+theta0 = 0.0*1.3;
+thetap0 = -0.0;
 gamma = 0.004;
 %qprev = [theta0 0 thetap0 0];
 %qinit = sbw1_switch(qprev);
 qinit = [theta0 2*theta0 thetap0 (1-cos(2*theta0))*thetap0];
 fprintf('gamma = %f, theta+ = %f, thetadot+ = %f\n', gamma, qinit(1), qinit(3)); 
 
+k = [0;81.1293]
 %k=[-0;0]; % theta*1 thetap*1
-k=[-0.331;0.694];
+%k=[-0.331;0.694];
 %k=[-0.8;0.45]; % theta*1.3
 %k=[0.2;1.5]; % thetap*1.3
 %k=[0;1.8]; % thetap*1.3
@@ -20,7 +21,7 @@ options = odeset('Events',@swb_test,...
                  'RelTol',1e-12,...
                  'AbsTol',[1e-12 1e-12 1e-12 1e-12]);
 t0 = 0;
-tfinal = 30;
+tfinal = 1;
 %set(gca,'xlim',[tstart tfinal],'ylim',[-4 4]);
 %[t,q,te,ye,ie] = ode45(@sbw1,[t0 tfinal],q0, options);
 %n1 = length(t);

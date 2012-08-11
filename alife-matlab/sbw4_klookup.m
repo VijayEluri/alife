@@ -14,21 +14,21 @@ p = [3.3000         0         0         0         0         0         0         
 %k_phi = p(i1,i2)+0.1;
 
 n=9;
-h = 0.05;
+h = 0.4/(n-1);
 
-q2 = -q(2)/h+1;
+q2 = -q(2)/h+1
 i1a = max(min(floor(q2)+1,n),1);
 i1b = min(i1a+1,n);
-w1b = q2-floor(q2);
+w1b = q2-floor(q2)
 w1a = 1 - w1b;
 
-q1 = q(1)/h-1;
+q1 = q(1)/h-1
 i2a = max(min(floor(q1)+1,n),1);
 i2b = min(i2a+1,n);
-w2b = q1-floor(q1);
+w2b = q1-floor(q1)
 w2a = 1 - w2b;
 
-p_i = [p(i1a,i2a) p(i1a,i2b); p(i1b,i2a) p(i1b,i2b)];
+p_i = [p(i1a,i2a) p(i1a,i2b); p(i1b,i2a) p(i1b,i2b)]
 k_phi = [w1a w1b]*p_i*[w2a; w2b]+0.1;
 
 end

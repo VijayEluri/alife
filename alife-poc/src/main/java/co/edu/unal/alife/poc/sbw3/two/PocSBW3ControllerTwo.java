@@ -66,6 +66,7 @@ public class PocSBW3ControllerTwo extends APocSBW3Controller {
 		sb.append("Simple lookup controller with K:");
 		for (int i = 0; i < PocSBW3Lookup.K_LENGTH; i++) {
 			sb.append("\n");
+			sb.append(COMMENT);
 			for (int j = 0; j < PocSBW3Lookup.K_LENGTH; j++) {
 				sb.append(PocSBW3Lookup.K[i][j]);
 				sb.append(TOKEN);

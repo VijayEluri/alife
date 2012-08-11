@@ -25,14 +25,14 @@ public class TestPocSBW3SimulationFour {
 	@Test
 	public void testRunWithoutFall() {
 		logger.info("\nStart testRunWithFall");
-		double time = 300;
+		double time = 100;
 		double h = 1d / 17;
-		double[] qinit = new double[] { h / 2, -0.4 + h / 2 };
+		double[] qinit = new double[] { 0.02, -0.39 };
 		double gamma = 0.004d;
 		APocSBW3Controller controller = new PocSBW3ControllerFour();
 
-		// Should not fall within 5min
-		double timeAssert = 300;
+		// Should not fall within 100s
+		double timeAssert = 100;
 
 		Callable<PocSBW3SimulationResult> sim = new PocSBW3Simulation(qinit,
 				gamma, controller, time, true, true);

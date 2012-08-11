@@ -6,7 +6,7 @@ thetap0 = qi(2);
 gamma = 0.004;
 %qprev = [theta0 0 thetap0 0];
 %qinit = sbw1_switch(qprev);
-qinit = [theta0 2*theta0 thetap0 (1-cos(2*theta0))*thetap0];
+qinit = [theta0 2*theta0 thetap0 (1-cos(2*theta0))*thetap0]
 %fprintf('gamma = %f, theta+ = %f, thetadot+ = %f\n', gamma, qinit(1), qinit(3));
 
 %k=[-0;0]; % theta*1 thetap*1
@@ -19,10 +19,11 @@ maxiters = 1000;
 refine = 1;
 options = odeset('Events',@sbw3_test,...
     'Refine',refine,...
-    'RelTol',1e-9,...
-    'AbsTol',[1e-9 1e-9 1e-9 1e-9]);
+    'RelTol',1e-12,...
+    'AbsTol',[1e-12 1e-12 1e-12 1e-12]);
 t0 = 0;
-tfinal = 100;
+%tfinal = 100;
+tfinal = 10;
 
 tprev = t0;
 tt=[];
@@ -43,6 +44,8 @@ while(tprev < tfinal && ien(length(ien)) == 1 && n<=maxiters)
     qinit = sbw1_switch(qprev);
     n=n+1;
 end
+[tt qt]
+[tet yet]
 fitness = 0;
 if(~isempty(ien) && ien(length(ien)) == 2)
     fitness = 20000;
